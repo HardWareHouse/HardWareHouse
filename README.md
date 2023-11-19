@@ -27,3 +27,5 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 5. Run `docker compose down --remove-orphans` to stop the Docker containers.
 6. Run `docker compose logs -f` to display current logs, `docker compose logs -f [CONTAINER_NAME]` to display specific container's current logs 
 
+
+# Installation npm
