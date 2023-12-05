@@ -29,3 +29,6 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 
 
 # Installation npm
+
+1. docker compose exec php npm install
+2. docker compose exec php npm run dev
