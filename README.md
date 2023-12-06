@@ -32,3 +32,8 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 
 1. docker compose exec php npm install
 2. docker compose exec php npm run dev
+
+# SETUP BDD 
+
+1. Si la BDD n'est pas créée, faites la commande : php bin/console doctrine:database:create
+2. Ensuite php bin/console doctrine:migrations:migrate
