@@ -23,6 +23,9 @@ class Paiement
     #[ORM\Column(length: 255)]
     private ?string $methodePaiement = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paiementId')]
+    private ?Facture $factureId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Paiement
     public function setMethodePaiement(string $methodePaiement): static
     {
         $this->methodePaiement = $methodePaiement;
+
+        return $this;
+    }
+
+    public function getFactureId(): ?Facture
+    {
+        return $this->factureId;
+    }
+
+    public function setFactureId(?Facture $factureId): static
+    {
+        $this->factureId = $factureId;
 
         return $this;
     }

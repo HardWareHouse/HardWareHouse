@@ -29,6 +29,18 @@ class Produit
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    private ?Entreprise $entrepriseId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    private ?Categorie $categorieId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    private ?Devis $devisId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    private ?Facture $factureId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +102,54 @@ class Produit
     public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getEntrepriseId(): ?Entreprise
+    {
+        return $this->entrepriseId;
+    }
+
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    {
+        $this->entrepriseId = $entrepriseId;
+
+        return $this;
+    }
+
+    public function getCategorieId(): ?Categorie
+    {
+        return $this->categorieId;
+    }
+
+    public function setCategorieId(?Categorie $categorieId): static
+    {
+        $this->categorieId = $categorieId;
+
+        return $this;
+    }
+
+    public function getDevisId(): ?Devis
+    {
+        return $this->devisId;
+    }
+
+    public function setDevisId(?Devis $devisId): static
+    {
+        $this->devisId = $devisId;
+
+        return $this;
+    }
+
+    public function getFactureId(): ?Facture
+    {
+        return $this->factureId;
+    }
+
+    public function setFactureId(?Facture $factureId): static
+    {
+        $this->factureId = $factureId;
 
         return $this;
     }

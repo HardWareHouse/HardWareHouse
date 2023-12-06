@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EntrepriseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,34 @@ class Entreprise
 
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $userId = null;
+
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Client::class)]
+    private Collection $clientId;
+
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Produit::class)]
+    private Collection $produitId;
+
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Categorie::class)]
+    private Collection $categorieId;
+
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Devis::class)]
+    private Collection $devisId;
+
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Facture::class)]
+    private Collection $factureId;
+
+    public function __construct()
+    {
+        $this->clientId = new ArrayCollection();
+        $this->produitId = new ArrayCollection();
+        $this->categorieId = new ArrayCollection();
+        $this->devisId = new ArrayCollection();
+        $this->factureId = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +120,168 @@ class Entreprise
     public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): static
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Client>
+     */
+    public function getClients(): Collection
+    {
+        return $this->clientId;
+    }
+
+    public function addClient(Client $clientId): static
+    {
+        if (!$this->clientId->contains($clientId)) {
+            $this->clientId->add($clientId);
+            $clientId->setEntrepriseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClient(Client $clientId): static
+    {
+        if ($this->clientId->removeElement($clientId)) {
+            // set the owning side to null (unless already changed)
+            if ($clientId->getEntrepriseId() === $this) {
+                $clientId->setEntrepriseId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduitId(): Collection
+    {
+        return $this->produitId;
+    }
+
+    public function addProduitId(Produit $produitId): static
+    {
+        if (!$this->produitId->contains($produitId)) {
+            $this->produitId->add($produitId);
+            $produitId->setEntrepriseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitId(Produit $produitId): static
+    {
+        if ($this->produitId->removeElement($produitId)) {
+            // set the owning side to null (unless already changed)
+            if ($produitId->getEntrepriseId() === $this) {
+                $produitId->setEntrepriseId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategorieId(): Collection
+    {
+        return $this->categorieId;
+    }
+
+    public function addCategorieId(Categorie $categorieId): static
+    {
+        if (!$this->categorieId->contains($categorieId)) {
+            $this->categorieId->add($categorieId);
+            $categorieId->setEntrepriseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorieId(Categorie $categorieId): static
+    {
+        if ($this->categorieId->removeElement($categorieId)) {
+            // set the owning side to null (unless already changed)
+            if ($categorieId->getEntrepriseId() === $this) {
+                $categorieId->setEntrepriseId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Devis>
+     */
+    public function getDevisId(): Collection
+    {
+        return $this->devisId;
+    }
+
+    public function addDevisId(Devis $devisId): static
+    {
+        if (!$this->devisId->contains($devisId)) {
+            $this->devisId->add($devisId);
+            $devisId->setEntrepriseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisId(Devis $devisId): static
+    {
+        if ($this->devisId->removeElement($devisId)) {
+            // set the owning side to null (unless already changed)
+            if ($devisId->getEntrepriseId() === $this) {
+                $devisId->setEntrepriseId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Facture>
+     */
+    public function getFactureId(): Collection
+    {
+        return $this->factureId;
+    }
+
+    public function addFactureId(Facture $factureId): static
+    {
+        if (!$this->factureId->contains($factureId)) {
+            $this->factureId->add($factureId);
+            $factureId->setEntrepriseId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactureId(Facture $factureId): static
+    {
+        if ($this->factureId->removeElement($factureId)) {
+            // set the owning side to null (unless already changed)
+            if ($factureId->getEntrepriseId() === $this) {
+                $factureId->setEntrepriseId(null);
+            }
+        }
 
         return $this;
     }
