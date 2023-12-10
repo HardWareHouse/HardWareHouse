@@ -32,8 +32,8 @@ class Entreprise
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'entreprises')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $userId = null;
+    #[ORM\JoinColumn(name: "user_uuid", referencedColumnName: "uuid", nullable: false)]
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Client::class)]
     private Collection $clientId;
@@ -124,14 +124,14 @@ class Entreprise
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->userId;
+        return $this->user;
     }
 
-    public function setUserId(?User $userId): static
+    public function setUser(?User $user): self
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }

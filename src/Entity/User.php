@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -15,15 +16,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['uuid'], message: 'There is already an account with this uuid')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "NONE")] // Indique à Doctrine de ne pas générer automatiquement cette valeur
+    private ?Uuid $uuid = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    private ?string $uuid = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private array $roles = [];
 
     /**
@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Entreprise::class, orphanRemoval: true)]
@@ -49,15 +49,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->uuid  = Uuid::v4();
         $this->entreprises = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getUuid(): ?string
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }
@@ -170,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->entreprises->contains($entreprise)) {
             $this->entreprises->add($entreprise);
-            $entreprise->setUserId($this);
+            $entreprise->setUser($this);
         }
 
         return $this;
@@ -180,8 +177,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->entreprises->removeElement($entreprise)) {
             // set the owning side to null (unless already changed)
-            if ($entreprise->getUserId() === $this) {
-                $entreprise->setUserId(null);
+            if ($entreprise->getUser() === $this) {
+                $entreprise->setUser(null);
             }
         }
 
