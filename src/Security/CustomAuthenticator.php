@@ -28,7 +28,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $uuid = $request->request->get('uuid', '');
+        $uuid = $request->request->get('email', '');
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $uuid);
 
@@ -49,8 +49,8 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+         return new RedirectResponse($this->urlGenerator->generate('app_home'));
+//        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
