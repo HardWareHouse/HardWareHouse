@@ -5,14 +5,15 @@ namespace App\Entity;
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "NONE")] // Indique à Doctrine de ne pas générer automatiquement cette valeur
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -29,8 +30,8 @@ class Produit
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produitId')]
-    private ?Entreprise $entrepriseId = null;
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    private ?Entreprise $entreprise = null;
 
     #[ORM\ManyToOne(inversedBy: 'produitId')]
     private ?Categorie $categorieId = null;
@@ -41,9 +42,20 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'produitId')]
     private ?Facture $factureId = null;
 
-    public function getId(): ?int
+    public function __construct()
     {
-        return $this->id;
+        $this->uuid = Uuid::v4(); // Initialize UUID
+        // Initialize other properties if necessary
+    }
+    public function getUuid(): ?Uuid
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     public function getNom(): ?string
@@ -106,15 +118,14 @@ class Produit
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->entrepriseId;
+        return $this->entreprise;
     }
 
-    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    public function setEntreprise(?Entreprise $entreprise): self
     {
-        $this->entrepriseId = $entrepriseId;
-
+        $this->entreprise = $entreprise;
         return $this;
     }
 

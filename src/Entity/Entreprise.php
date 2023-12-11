@@ -7,14 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
 class Entreprise
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "NONE")]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
@@ -31,37 +32,44 @@ class Entreprise
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'entreprises')]
+    #[ORM\ManyToOne(inversedBy: 'userUuid')]
     #[ORM\JoinColumn(name: "user_uuid", referencedColumnName: "uuid", nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Client::class)]
-    private Collection $clientId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Client::class)]
+    private Collection $clients;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Produit::class)]
-    private Collection $produitId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Produit::class)]
+    private Collection $produits;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Categorie::class)]
-    private Collection $categorieId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Categorie::class)]
+    private Collection $categories;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Devis::class)]
-    private Collection $devisId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Devis::class)]
+    private Collection $devis;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Facture::class)]
-    private Collection $factureId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Facture::class)]
+    private Collection $factures;
 
     public function __construct()
     {
-        $this->clientId = new ArrayCollection();
-        $this->produitId = new ArrayCollection();
-        $this->categorieId = new ArrayCollection();
-        $this->devisId = new ArrayCollection();
-        $this->factureId = new ArrayCollection();
+        $this->uuid = Uuid::v4();
+        $this->clients = new ArrayCollection();
+        $this->produits = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->factures = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getUuid(): ?Uuid
     {
-        return $this->id;
+        return $this->uuid;
+    }
+
+    public function setUuid(Uuid $uuid): static
+    {
+        $this->uuid = $uuid;
+        return $this;
     }
 
     public function getNom(): ?string
@@ -141,25 +149,25 @@ class Entreprise
      */
     public function getClients(): Collection
     {
-        return $this->clientId;
+        return $this->clients;
     }
 
-    public function addClient(Client $clientId): static
+    public function addClient(Client $clients): static
     {
-        if (!$this->clientId->contains($clientId)) {
-            $this->clientId->add($clientId);
-            $clientId->setEntrepriseId($this);
+        if (!$this->clients->contains($clients)) {
+            $this->clients->add($clients);
+            $clients->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $clientId): static
+    public function removeClient(Client $clients): static
     {
-        if ($this->clientId->removeElement($clientId)) {
+        if ($this->clients->removeElement($clients)) {
             // set the owning side to null (unless already changed)
-            if ($clientId->getEntrepriseId() === $this) {
-                $clientId->setEntrepriseId(null);
+            if ($clients->getEntreprise() === $this) {
+                $clients->setEntreprise(null);
             }
         }
 
@@ -171,25 +179,25 @@ class Entreprise
      */
     public function getProduitId(): Collection
     {
-        return $this->produitId;
+        return $this->produits;
     }
 
-    public function addProduitId(Produit $produitId): static
+    public function addProduitId(Produit $produits): static
     {
-        if (!$this->produitId->contains($produitId)) {
-            $this->produitId->add($produitId);
-            $produitId->setEntrepriseId($this);
+        if (!$this->produits->contains($produits)) {
+            $this->produits->add($produits);
+            $produits->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeProduitId(Produit $produitId): static
+    public function removeProduitId(Produit $produits): static
     {
-        if ($this->produitId->removeElement($produitId)) {
+        if ($this->produits->removeElement($produits)) {
             // set the owning side to null (unless already changed)
-            if ($produitId->getEntrepriseId() === $this) {
-                $produitId->setEntrepriseId(null);
+            if ($produits->getEntreprise() === $this) {
+                $produits->setEntreprise(null);
             }
         }
 
@@ -201,25 +209,25 @@ class Entreprise
      */
     public function getCategorieId(): Collection
     {
-        return $this->categorieId;
+        return $this->categories;
     }
 
-    public function addCategorieId(Categorie $categorieId): static
+    public function addCategorieId(Categorie $categories): static
     {
-        if (!$this->categorieId->contains($categorieId)) {
-            $this->categorieId->add($categorieId);
-            $categorieId->setEntrepriseId($this);
+        if (!$this->categories->contains($categories)) {
+            $this->categories->add($categories);
+            $categories->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeCategorieId(Categorie $categorieId): static
+    public function removeCategorieId(Categorie $categories): static
     {
-        if ($this->categorieId->removeElement($categorieId)) {
+        if ($this->categories->removeElement($categories)) {
             // set the owning side to null (unless already changed)
-            if ($categorieId->getEntrepriseId() === $this) {
-                $categorieId->setEntrepriseId(null);
+            if ($categories->getEntreprise() === $this) {
+                $categories->setEntreprise(null);
             }
         }
 
@@ -231,25 +239,25 @@ class Entreprise
      */
     public function getDevisId(): Collection
     {
-        return $this->devisId;
+        return $this->devis;
     }
 
-    public function addDevisId(Devis $devisId): static
+    public function addDevisId(Devis $devis): static
     {
-        if (!$this->devisId->contains($devisId)) {
-            $this->devisId->add($devisId);
-            $devisId->setEntrepriseId($this);
+        if (!$this->devis->contains($devis)) {
+            $this->devis->add($devis);
+            $devis->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeDevisId(Devis $devisId): static
+    public function removeDevisId(Devis $devis): static
     {
-        if ($this->devisId->removeElement($devisId)) {
+        if ($this->devis->removeElement($devis)) {
             // set the owning side to null (unless already changed)
-            if ($devisId->getEntrepriseId() === $this) {
-                $devisId->setEntrepriseId(null);
+            if ($devis->getEntreprise() === $this) {
+                $devis->setEntreprise(null);
             }
         }
 
@@ -261,25 +269,25 @@ class Entreprise
      */
     public function getFactureId(): Collection
     {
-        return $this->factureId;
+        return $this->factures;
     }
 
-    public function addFactureId(Facture $factureId): static
+    public function addFactureId(Facture $factures): static
     {
-        if (!$this->factureId->contains($factureId)) {
-            $this->factureId->add($factureId);
-            $factureId->setEntrepriseId($this);
+        if (!$this->factures->contains($factures)) {
+            $this->factures->add($factures);
+            $factures->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeFactureId(Facture $factureId): static
+    public function removeFactureId(Facture $factures): static
     {
-        if ($this->factureId->removeElement($factureId)) {
+        if ($this->factures->removeElement($factures)) {
             // set the owning side to null (unless already changed)
-            if ($factureId->getEntrepriseId() === $this) {
-                $factureId->setEntrepriseId(null);
+            if ($factures->getEntreprise() === $this) {
+                $factures->setEntreprise(null);
             }
         }
 

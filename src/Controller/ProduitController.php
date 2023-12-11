@@ -10,8 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/produit')]
+#[IsGranted('ROLE_USER')]
 class ProduitController extends AbstractController
 {
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
@@ -71,7 +73,7 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$produit->getUuid(), $request->request->get('_token'))) {
             $entityManager->remove($produit);
             $entityManager->flush();
         }

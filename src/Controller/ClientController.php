@@ -10,8 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/client')]
+#[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
@@ -71,7 +73,7 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$client->getUuid(), $request->request->get('_token'))) {
             $entityManager->remove($client);
             $entityManager->flush();
         }

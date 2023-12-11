@@ -7,14 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: DevisRepository::class)]
 class Devis
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: "uuid", unique: true)]
+    #[ORM\GeneratedValue(strategy: "NONE")]
+    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 255)]
     private ?string $numero = null;
@@ -31,8 +32,8 @@ class Devis
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'devisId')]
-    private ?Entreprise $entrepriseId = null;
+    #[ORM\ManyToOne(inversedBy: 'devis')]
+    private ?Entreprise $entreprise = null;
 
     #[ORM\ManyToOne(inversedBy: 'devisId')]
     private ?Client $clientId = null;
@@ -45,12 +46,13 @@ class Devis
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->produitId = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getUuid(): ?Uuid
     {
-        return $this->id;
+        return $this->uuid;
     }
 
     public function getNumero(): ?string
@@ -113,15 +115,14 @@ class Devis
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->entrepriseId;
+        return $this->entreprise;
     }
 
-    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    public function setEntreprise(?Entreprise $entreprise): self
     {
-        $this->entrepriseId = $entrepriseId;
-
+        $this->entreprise = $entreprise;
         return $this;
     }
 

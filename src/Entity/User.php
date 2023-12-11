@@ -41,7 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Entreprise::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'userUuid', targetEntity: Entreprise::class, orphanRemoval: true)]
     private Collection $entreprises;
 
     #[ORM\Column(type: 'boolean')]
@@ -62,7 +62,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUuid(string $uuid): static
     {
         $this->uuid = $uuid;
-
         return $this;
     }
 
