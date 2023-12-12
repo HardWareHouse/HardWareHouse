@@ -25,15 +25,15 @@ class Categorie
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'categorieId')]
-    private ?Entreprise $entrepriseId = null;
+    #[ORM\ManyToOne(inversedBy: 'categorie')]
+    private ?Entreprise $entreprise = null;
 
-    #[ORM\OneToMany(mappedBy: 'categorieId', targetEntity: Produit::class)]
-    private Collection $produitId;
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Produit::class)]
+    private Collection $produit;
 
     public function __construct()
     {
-        $this->produitId = new ArrayCollection();
+        $this->produit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,14 +77,14 @@ class Categorie
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->entrepriseId;
+        return $this->entreprise;
     }
 
-    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    public function setEntreprise(?Entreprise $entreprise): static
     {
-        $this->entrepriseId = $entrepriseId;
+        $this->entreprise = $entreprise;
 
         return $this;
     }
@@ -92,27 +92,27 @@ class Categorie
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduitId(): Collection
+    public function getProduit(): Collection
     {
-        return $this->produitId;
+        return $this->produit;
     }
 
-    public function addProduitId(Produit $produitId): static
+    public function addProduit(Produit $produit): static
     {
-        if (!$this->produitId->contains($produitId)) {
-            $this->produitId->add($produitId);
-            $produitId->setCategorieId($this);
+        if (!$this->produit->contains($produit)) {
+            $this->produit->add($produit);
+            $produit->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeProduitId(Produit $produitId): static
+    public function removeProduit(Produit $produit): static
     {
-        if ($this->produitId->removeElement($produitId)) {
+        if ($this->produit->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($produitId->getCategorieId() === $this) {
-                $produitId->setCategorieId(null);
+            if ($produit->getCategorie() === $this) {
+                $produit->setCategorie(null);
             }
         }
 

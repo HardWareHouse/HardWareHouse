@@ -25,8 +25,8 @@ class DetailDevis
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'detailDevisId', cascade: ['persist', 'remove'])]
-    private ?Devis $devisId = null;
+    #[ORM\OneToOne(mappedBy: 'detailDevis', cascade: ['persist', 'remove'])]
+    private ?Devis $devis = null;
 
     public function getId(): ?int
     {
@@ -81,24 +81,24 @@ class DetailDevis
         return $this;
     }
 
-    public function getDevisId(): ?Devis
+    public function getDevis(): ?Devis
     {
-        return $this->devisId;
+        return $this->devis;
     }
 
-    public function setDevisId(?Devis $devisId): static
+    public function setDevis(?Devis $devis): static
     {
         // unset the owning side of the relation if necessary
-        if ($devisId === null && $this->devisId !== null) {
-            $this->devisId->setDetailDevisId(null);
+        if ($devis === null && $this->devis !== null) {
+            $this->devis->setDetailDevis(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($devisId !== null && $devisId->getDetailDevisId() !== $this) {
-            $devisId->setDetailDevisId($this);
+        if ($devis !== null && $devis->getDetailDevis() !== $this) {
+            $devis->setDetailDevis($this);
         }
 
-        $this->devisId = $devisId;
+        $this->devis = $devis;
 
         return $this;
     }

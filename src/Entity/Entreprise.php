@@ -35,28 +35,28 @@ class Entreprise
     #[ORM\JoinColumn(name: "user_uuid", referencedColumnName: "uuid", nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Client::class)]
-    private Collection $clientId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Client::class)]
+    private Collection $client;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Produit::class)]
-    private Collection $produitId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Produit::class)]
+    private Collection $produit;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Categorie::class)]
-    private Collection $categorieId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Categorie::class)]
+    private Collection $categorie;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Devis::class)]
-    private Collection $devisId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Devis::class)]
+    private Collection $devis;
 
-    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Facture::class)]
-    private Collection $factureId;
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Facture::class)]
+    private Collection $facture;
 
     public function __construct()
     {
-        $this->clientId = new ArrayCollection();
-        $this->produitId = new ArrayCollection();
-        $this->categorieId = new ArrayCollection();
-        $this->devisId = new ArrayCollection();
-        $this->factureId = new ArrayCollection();
+        $this->client = new ArrayCollection();
+        $this->produit = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->facture = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,25 +141,25 @@ class Entreprise
      */
     public function getClients(): Collection
     {
-        return $this->clientId;
+        return $this->client;
     }
 
-    public function addClient(Client $clientId): static
+    public function addClient(Client $client): static
     {
-        if (!$this->clientId->contains($clientId)) {
-            $this->clientId->add($clientId);
-            $clientId->setEntrepriseId($this);
+        if (!$this->client->contains($client)) {
+            $this->client->add($client);
+            $client->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeClient(Client $clientId): static
+    public function removeClient(Client $client): static
     {
-        if ($this->clientId->removeElement($clientId)) {
+        if ($this->client->removeElement($client)) {
             // set the owning side to null (unless already changed)
-            if ($clientId->getEntrepriseId() === $this) {
-                $clientId->setEntrepriseId(null);
+            if ($client->getEntreprise() === $this) {
+                $client->setEntreprise(null);
             }
         }
 
@@ -169,27 +169,27 @@ class Entreprise
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduitId(): Collection
+    public function getProduit(): Collection
     {
-        return $this->produitId;
+        return $this->produit;
     }
 
-    public function addProduitId(Produit $produitId): static
+    public function addProduit(Produit $produit): static
     {
-        if (!$this->produitId->contains($produitId)) {
-            $this->produitId->add($produitId);
-            $produitId->setEntrepriseId($this);
+        if (!$this->produit->contains($produit)) {
+            $this->produit->add($produit);
+            $produit->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeProduitId(Produit $produitId): static
+    public function removeProduit(Produit $produit): static
     {
-        if ($this->produitId->removeElement($produitId)) {
+        if ($this->produit->removeElement($produit)) {
             // set the owning side to null (unless already changed)
-            if ($produitId->getEntrepriseId() === $this) {
-                $produitId->setEntrepriseId(null);
+            if ($produit->getEntreprise() === $this) {
+                $produit->setEntreprise(null);
             }
         }
 
@@ -199,27 +199,27 @@ class Entreprise
     /**
      * @return Collection<int, Categorie>
      */
-    public function getCategorieId(): Collection
+    public function getCategorie(): Collection
     {
-        return $this->categorieId;
+        return $this->categorie;
     }
 
-    public function addCategorieId(Categorie $categorieId): static
+    public function addCategorie(Categorie $categorie): static
     {
-        if (!$this->categorieId->contains($categorieId)) {
-            $this->categorieId->add($categorieId);
-            $categorieId->setEntrepriseId($this);
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie->add($categorie);
+            $categorie->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeCategorieId(Categorie $categorieId): static
+    public function removeCategorie(Categorie $categorie): static
     {
-        if ($this->categorieId->removeElement($categorieId)) {
+        if ($this->categorie->removeElement($categorie)) {
             // set the owning side to null (unless already changed)
-            if ($categorieId->getEntrepriseId() === $this) {
-                $categorieId->setEntrepriseId(null);
+            if ($categorie->getEntreprise() === $this) {
+                $categorie->setEntreprise(null);
             }
         }
 
@@ -229,27 +229,27 @@ class Entreprise
     /**
      * @return Collection<int, Devis>
      */
-    public function getDevisId(): Collection
+    public function getDevis(): Collection
     {
-        return $this->devisId;
+        return $this->devis;
     }
 
-    public function addDevisId(Devis $devisId): static
+    public function addDevis(Devis $devis): static
     {
-        if (!$this->devisId->contains($devisId)) {
-            $this->devisId->add($devisId);
-            $devisId->setEntrepriseId($this);
+        if (!$this->devis->contains($devis)) {
+            $this->devis->add($devis);
+            $devis->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeDevisId(Devis $devisId): static
+    public function removeDevis(Devis $devis): static
     {
-        if ($this->devisId->removeElement($devisId)) {
+        if ($this->devis->removeElement($devis)) {
             // set the owning side to null (unless already changed)
-            if ($devisId->getEntrepriseId() === $this) {
-                $devisId->setEntrepriseId(null);
+            if ($devis->getEntreprise() === $this) {
+                $devis->setEntreprise(null);
             }
         }
 
@@ -259,27 +259,27 @@ class Entreprise
     /**
      * @return Collection<int, Facture>
      */
-    public function getFactureId(): Collection
+    public function getFacture(): Collection
     {
-        return $this->factureId;
+        return $this->facture;
     }
 
-    public function addFactureId(Facture $factureId): static
+    public function addFacture(Facture $facture): static
     {
-        if (!$this->factureId->contains($factureId)) {
-            $this->factureId->add($factureId);
-            $factureId->setEntrepriseId($this);
+        if (!$this->facture->contains($facture)) {
+            $this->facture->add($facture);
+            $facture->setEntreprise($this);
         }
 
         return $this;
     }
 
-    public function removeFactureId(Facture $factureId): static
+    public function removeFacture(Facture $facture): static
     {
-        if ($this->factureId->removeElement($factureId)) {
+        if ($this->facture->removeElement($facture)) {
             // set the owning side to null (unless already changed)
-            if ($factureId->getEntrepriseId() === $this) {
-                $factureId->setEntrepriseId(null);
+            if ($facture->getEntreprise() === $this) {
+                $facture->setEntreprise(null);
             }
         }
 

@@ -31,20 +31,20 @@ class Client
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'clientId')]
+    #[ORM\ManyToOne(inversedBy: 'client')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Entreprise $entrepriseId = null;
+    private ?Entreprise $entreprise = null;
 
-    #[ORM\OneToMany(mappedBy: 'clientId', targetEntity: Devis::class)]
-    private Collection $devisId;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Devis::class)]
+    private Collection $devis;
 
-    #[ORM\OneToMany(mappedBy: 'clientId', targetEntity: Facture::class)]
-    private Collection $factureId;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Facture::class)]
+    private Collection $facture;
 
     public function __construct()
     {
-        $this->devisId = new ArrayCollection();
-        $this->factureId = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->facture = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,14 +112,14 @@ class Client
         return $this;
     }
 
-    public function getEntrepriseId(): ?Entreprise
+    public function getEntreprise(): ?Entreprise
     {
-        return $this->entrepriseId;
+        return $this->entreprise;
     }
 
-    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    public function setEntreprise(?Entreprise $entreprise): static
     {
-        $this->entrepriseId = $entrepriseId;
+        $this->entreprise = $entreprise;
 
         return $this;
     }
@@ -127,27 +127,27 @@ class Client
     /**
      * @return Collection<int, Devis>
      */
-    public function getDevisId(): Collection
+    public function getDevis(): Collection
     {
-        return $this->devisId;
+        return $this->devis;
     }
 
-    public function addDevisId(Devis $devisId): static
+    public function addDevis(Devis $devis): static
     {
-        if (!$this->devisId->contains($devisId)) {
-            $this->devisId->add($devisId);
-            $devisId->setClientId($this);
+        if (!$this->devis->contains($devis)) {
+            $this->devis->add($devis);
+            $devis->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeDevisId(Devis $devisId): static
+    public function removeDevis(Devis $devis): static
     {
-        if ($this->devisId->removeElement($devisId)) {
+        if ($this->devis->removeElement($devis)) {
             // set the owning side to null (unless already changed)
-            if ($devisId->getClientId() === $this) {
-                $devisId->setClientId(null);
+            if ($devis->getClient() === $this) {
+                $devis->setClient(null);
             }
         }
 
@@ -157,27 +157,27 @@ class Client
     /**
      * @return Collection<int, Facture>
      */
-    public function getFactureId(): Collection
+    public function getFacture(): Collection
     {
-        return $this->factureId;
+        return $this->facture;
     }
 
-    public function addFactureId(Facture $factureId): static
+    public function addFacture(Facture $facture): static
     {
-        if (!$this->factureId->contains($factureId)) {
-            $this->factureId->add($factureId);
-            $factureId->setClientId($this);
+        if (!$this->facture->contains($facture)) {
+            $this->facture->add($facture);
+            $facture->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeFactureId(Facture $factureId): static
+    public function removeFacture(Facture $facture): static
     {
-        if ($this->factureId->removeElement($factureId)) {
+        if ($this->facture->removeElement($facture)) {
             // set the owning side to null (unless already changed)
-            if ($factureId->getClientId() === $this) {
-                $factureId->setClientId(null);
+            if ($facture->getClient() === $this) {
+                $facture->setClient(null);
             }
         }
 
