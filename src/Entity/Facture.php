@@ -7,15 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: FactureRepository::class)]
 class Facture
 {
     #[ORM\Id]
-    #[ORM\Column(type: "uuid", unique: true)]
-    #[ORM\GeneratedValue(strategy: "NONE")]
-    private ?Uuid $uuid = null;
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $numero = null;
@@ -35,8 +34,8 @@ class Facture
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'factures')]
-    private ?Entreprise $entreprise = null;
+    #[ORM\ManyToOne(inversedBy: 'factureId')]
+    private ?Entreprise $entrepriseId = null;
 
     #[ORM\ManyToOne(inversedBy: 'factureId')]
     private ?Client $clientId = null;
@@ -52,7 +51,6 @@ class Facture
 
     public function __construct()
     {
-        $this->uuid = Uuid::v4();
         $this->produitId = new ArrayCollection();
         $this->paiementId = new ArrayCollection();
     }
@@ -134,14 +132,15 @@ class Facture
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    public function getEntrepriseId(): ?Entreprise
     {
-        return $this->entreprise;
+        return $this->entrepriseId;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): self
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
     {
-        $this->entreprise = $entreprise;
+        $this->entrepriseId = $entrepriseId;
+
         return $this;
     }
 

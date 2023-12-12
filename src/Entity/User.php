@@ -62,6 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUuid(string $uuid): static
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 
