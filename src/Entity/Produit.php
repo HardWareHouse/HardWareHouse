@@ -29,17 +29,21 @@ class Produit
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    private ?Entreprise $entreprise = null;
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    #[ORM\JoinColumn(name: "entreprise", referencedColumnName: "id")]
+    private ?Entreprise $entrepriseId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    private ?Categorie $categorie = null;
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    #[ORM\JoinColumn(name: "categorie", referencedColumnName: "id")]
+    private ?Categorie $categorieId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    private ?Devis $devis = null;
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
+    private ?Devis $devisId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    private ?Facture $facture = null;
+    #[ORM\ManyToOne(inversedBy: 'produitId')]
+    #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
+    private ?Facture $factureId = null;
 
     public function getId(): ?int
     {
@@ -106,50 +110,50 @@ class Produit
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    public function getEntrepriseId(): ?Entreprise
     {
-        return $this->entreprise;
+        return $this->entrepriseId;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
     {
-        $this->entreprise = $entreprise;
+        $this->entrepriseId = $entrepriseId;
 
         return $this;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getCategorieId(): ?Categorie
     {
-        return $this->categorie;
+        return $this->categorieId;
     }
 
-    public function setCategorie(?Categorie $categorie): static
+    public function setCategorieId(?Categorie $categorieId): static
     {
-        $this->categorie = $categorie;
+        $this->categorieId = $categorieId;
 
         return $this;
     }
 
-    public function getDevis(): ?Devis
+    public function getDevisId(): ?Devis
     {
-        return $this->devis;
+        return $this->devisId;
     }
 
-    public function setDevis(?Devis $devis): static
+    public function setDevisId(?Devis $devisId): static
     {
-        $this->devis = $devis;
+        $this->devisId = $devisId;
 
         return $this;
     }
 
-    public function getFacture(): ?Facture
+    public function getFactureId(): ?Facture
     {
-        return $this->facture;
+        return $this->factureId;
     }
 
-    public function setFacture(?Facture $facture): static
+    public function setFactureId(?Facture $factureId): static
     {
-        $this->facture = $facture;
+        $this->factureId = $factureId;
 
         return $this;
     }

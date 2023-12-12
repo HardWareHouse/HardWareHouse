@@ -25,8 +25,9 @@ class DetailFacture
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'detailFacture', cascade: ['persist', 'remove'])]
-    private ?Facture $facture = null;
+    #[ORM\OneToOne(mappedBy: 'detailFactureId', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
+    private ?Facture $factureId = null;
 
     public function getId(): ?int
     {
@@ -81,24 +82,24 @@ class DetailFacture
         return $this;
     }
 
-    public function getFacture(): ?Facture
+    public function getFactureId(): ?Facture
     {
-        return $this->facture;
+        return $this->factureId;
     }
 
-    public function setFacture(?Facture $facture): static
+    public function setFactureId(?Facture $factureId): static
     {
         // unset the owning side of the relation if necessary
-        if ($facture === null && $this->facture !== null) {
-            $this->facture->setDetailFacture(null);
+        if ($factureId === null && $this->factureId !== null) {
+            $this->factureId->setDetailFactureId(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($facture !== null && $facture->getDetailFacture() !== $this) {
-            $facture->setDetailFacture($this);
+        if ($factureId !== null && $factureId->getDetailFactureId() !== $this) {
+            $factureId->setDetailFactureId($this);
         }
 
-        $this->facture = $facture;
+        $this->factureId = $factureId;
 
         return $this;
     }

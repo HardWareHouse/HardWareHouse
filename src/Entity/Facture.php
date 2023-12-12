@@ -34,25 +34,30 @@ class Facture
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'facture')]
-    private ?Entreprise $entreprise = null;
+    #[ORM\ManyToOne(inversedBy: 'factureId')]
+    #[ORM\JoinColumn(name: "entreprise", referencedColumnName: "id")]
+    private ?Entreprise $entrepriseId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'facture')]
-    private ?Client $client = null;
+    #[ORM\ManyToOne(inversedBy: 'factureId')]
+    #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
+    private ?Client $clientId = null;
 
-    #[ORM\OneToOne(inversedBy: 'facture', cascade: ['persist', 'remove'])]
-    private ?DetailFacture $detailFacture = null;
+    #[ORM\OneToOne(inversedBy: 'factureId', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "detailfacture", referencedColumnName: "id")]
+    private ?DetailFacture $detailFactureId = null;
 
-    #[ORM\OneToMany(mappedBy: 'facture', targetEntity: Produit::class)]
-    private Collection $produit;
+    #[ORM\OneToMany(mappedBy: 'factureId', targetEntity: Produit::class)]
+    #[ORM\JoinColumn(name: "produit", referencedColumnName: "id")]
+    private Collection $produitId;
 
-    #[ORM\OneToMany(mappedBy: 'facture', targetEntity: Paiement::class)]
-    private Collection $paiement;
+    #[ORM\OneToMany(mappedBy: 'factureId', targetEntity: Paiement::class)]
+    #[ORM\JoinColumn(name: "paiement", referencedColumnName: "id")]
+    private Collection $paiementId;
 
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
-        $this->paiement = new ArrayCollection();
+        $this->produitId = new ArrayCollection();
+        $this->paiementId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,38 +137,38 @@ class Facture
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    public function getEntrepriseId(): ?Entreprise
     {
-        return $this->entreprise;
+        return $this->entrepriseId;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
     {
-        $this->entreprise = $entreprise;
+        $this->entrepriseId = $entrepriseId;
 
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getClientId(): ?Client
     {
-        return $this->client;
+        return $this->clientId;
     }
 
-    public function setClient(?Client $client): static
+    public function setClientId(?Client $clientId): static
     {
-        $this->client = $client;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
-    public function getDetailFacture(): ?DetailFacture
+    public function getDetailFactureId(): ?DetailFacture
     {
-        return $this->detailFacture;
+        return $this->detailFactureId;
     }
 
-    public function setDetailFacture(?DetailFacture $detailFacture): static
+    public function setDetailFactureId(?DetailFacture $detailFactureId): static
     {
-        $this->detailFacture = $detailFacture;
+        $this->detailFactureId = $detailFactureId;
 
         return $this;
     }
@@ -171,27 +176,27 @@ class Facture
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduit(): Collection
+    public function getProduitId(): Collection
     {
-        return $this->produit;
+        return $this->produitId;
     }
 
-    public function addProduit(Produit $produit): static
+    public function addProduitId(Produit $produitId): static
     {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
-            $produit->setFacture($this);
+        if (!$this->produitId->contains($produitId)) {
+            $this->produitId->add($produitId);
+            $produitId->setFactureId($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): static
+    public function removeProduitId(Produit $produitId): static
     {
-        if ($this->produit->removeElement($produit)) {
+        if ($this->produitId->removeElement($produitId)) {
             // set the owning side to null (unless already changed)
-            if ($produit->getFacture() === $this) {
-                $produit->setFacture(null);
+            if ($produitId->getFactureId() === $this) {
+                $produitId->setFactureId(null);
             }
         }
 
@@ -201,27 +206,27 @@ class Facture
     /**
      * @return Collection<int, Paiement>
      */
-    public function getPaiement(): Collection
+    public function getPaiementId(): Collection
     {
-        return $this->paiement;
+        return $this->paiementId;
     }
 
-    public function addPaiement(Paiement $paiement): static
+    public function addPaiementId(Paiement $paiementId): static
     {
-        if (!$this->paiement->contains($paiement)) {
-            $this->paiement->add($paiement);
-            $paiement->setFacture($this);
+        if (!$this->paiementId->contains($paiementId)) {
+            $this->paiementId->add($paiementId);
+            $paiementId->setFactureId($this);
         }
 
         return $this;
     }
 
-    public function removePaiement(Paiement $paiement): static
+    public function removePaiementId(Paiement $paiementId): static
     {
-        if ($this->paiement->removeElement($paiement)) {
+        if ($this->paiementId->removeElement($paiementId)) {
             // set the owning side to null (unless already changed)
-            if ($paiement->getFacture() === $this) {
-                $paiement->setFacture(null);
+            if ($paiementId->getFactureId() === $this) {
+                $paiementId->setFactureId(null);
             }
         }
 

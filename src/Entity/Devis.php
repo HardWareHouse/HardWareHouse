@@ -31,21 +31,25 @@ class Devis
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'devis')]
-    private ?Entreprise $entreprise = null;
+    #[ORM\ManyToOne(inversedBy: 'devisId')]
+    #[ORM\JoinColumn(name: "entreprise", referencedColumnName: "id")]
+    private ?Entreprise $entrepriseId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'devis')]
-    private ?Client $client = null;
+    #[ORM\ManyToOne(inversedBy: 'devisId')]
+    #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
+    private ?Client $clientId = null;
 
-    #[ORM\OneToOne(inversedBy: 'devis', cascade: ['persist', 'remove'])]
-    private ?DetailDevis $detailDevis = null;
+    #[ORM\OneToOne(inversedBy: 'devisId', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "detaildevis", referencedColumnName: "id")]
+    private ?DetailDevis $detailDevisId = null;
 
-    #[ORM\OneToMany(mappedBy: 'devis', targetEntity: Produit::class)]
-    private Collection $produit;
+    #[ORM\OneToMany(mappedBy: 'devisId', targetEntity: Produit::class)]
+    #[ORM\JoinColumn(name: "produit", referencedColumnName: "id")]
+    private Collection $produitId;
 
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
+        $this->produitId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,38 +117,38 @@ class Devis
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    public function getEntrepriseId(): ?Entreprise
     {
-        return $this->entreprise;
+        return $this->entrepriseId;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
     {
-        $this->entreprise = $entreprise;
+        $this->entrepriseId = $entrepriseId;
 
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getClientId(): ?Client
     {
-        return $this->client;
+        return $this->clientId;
     }
 
-    public function setClient(?Client $client): static
+    public function setClientId(?Client $clientId): static
     {
-        $this->client = $client;
+        $this->clientId = $clientId;
 
         return $this;
     }
 
-    public function getDetailDevis(): ?DetailDevis
+    public function getDetailDevisId(): ?DetailDevis
     {
-        return $this->detailDevis;
+        return $this->detailDevisId;
     }
 
-    public function setDetailDevis(?DetailDevis $detailDevis): static
+    public function setDetailDevisId(?DetailDevis $detailDevisId): static
     {
-        $this->detailDevis = $detailDevis;
+        $this->detailDevisId = $detailDevisId;
 
         return $this;
     }
@@ -152,27 +156,27 @@ class Devis
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduit(): Collection
+    public function getProduitId(): Collection
     {
-        return $this->produit;
+        return $this->produitId;
     }
 
-    public function addProduit(Produit $produit): static
+    public function addProduitId(Produit $produitId): static
     {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
-            $produit->setDevis($this);
+        if (!$this->produitId->contains($produitId)) {
+            $this->produitId->add($produitId);
+            $produitId->setDevisId($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produit $produit): static
+    public function removeProduitId(Produit $produitId): static
     {
-        if ($this->produit->removeElement($produit)) {
+        if ($this->produitId->removeElement($produitId)) {
             // set the owning side to null (unless already changed)
-            if ($produit->getDevis() === $this) {
-                $produit->setDevis(null);
+            if ($produitId->getDevisId() === $this) {
+                $produitId->setDevisId(null);
             }
         }
 
