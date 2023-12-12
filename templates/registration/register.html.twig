@@ -1,24 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+<div class="flex h-screen">
+    <div class="w-3/5 bg-blue-500 flex items-center justify-center">
+        <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.17 56" width="50%" height="50%">
+            <defs>
+                <style>
+                    .cls-1 {
+                        stroke-width: 2px;
+                    }
 
-    <h1>Register</h1>
+                    .cls-1,
+                    .cls-2 {
+                        fill: none;
+                        stroke: #ffffff;
+                        stroke-miterlimit: 5;
+                    }
 
-    {{ form_errors(registrationForm) }}
+                    .cls-2 {
+                        stroke-width: 1.8px;
+                    }
+                </style>
+            </defs>
+            <g id="Layer_2-2">
+                <rect class="cls-1" x="8" y="27" width="30" height="27" rx="2.17" ry="2.17" />
+                <rect class="cls-1" x="8" y="7" width="30" height="17" rx="2.17" ry="2.17" />
+                <rect class="cls-1" x="38" y="27" width="7" height="9" rx="2.17" ry="2.17" />
+                <rect class="cls-1" x="1" y="27" width="7" height="9" rx="2.17" ry="2.17" />
+                <rect class="cls-1" x="8" y="49" width="30" height="5" rx="2.17" ry="2.17" />
+                <rect class="cls-1" x="3" y="37" width="5" height="5" rx="1.38" ry="1.38" />
+                <rect class="cls-1" x="3" y="42" width="5" height="5" rx="1.38" ry="1.38" />
+                <rect class="cls-1" x="3" y="47" width="5" height="8" rx="1.38" ry="1.38" />
+                <rect class="cls-1" x="16" y="24" width="12" height="3" />
+                <rect class="cls-1" x="45" y="29" width="5" height="5" rx="1.38" ry="1.38" />
+                <rect class="cls-1" x="50" y="29" width="5" height="5" rx="1.38" ry="1.38" />
+                <rect class="cls-1" x="50" y="20" width="5" height="9" rx="1.38" ry="1.38" />
+                <path class="cls-2" d="m38,10.51c2.4-.02,4.34,2.18,4.34,4.88s-1.95,4.85-4.34,4.88v-9.76Z" />
+                <path class="cls-2" d="m7,10.22c-2.4-.02-4.34,2.18-4.34,4.88s1.95,4.85,4.34,4.88v-9.76Z" />
+                <path class="cls-1" d="m26.6,6.34c.02-2.95-1.8-5.34-4.01-5.34s-3.99,2.39-4.01,5.34h8.02Z" />
+                <path class="cls-1" d="m32.93,6.34c.01-1.47-1.19-2.67-2.66-2.67s-2.64,1.2-2.66,2.67h5.31Z" />
+                <path class="cls-1" d="m17.55,6.34c.01-1.47-1.19-2.67-2.66-2.67s-2.64,1.2-2.66,2.67h5.31Z" />
+                <polygon class="cls-1" points="12.24 32 32.93 32 22.59 40.28 12.24 32" />
+                <path class="cls-2" d="m22.42,17h-3.66c-.02,2.11,1.8,3.83,4.03,3.83s4.01-1.71,4.03-3.83h-4.4Z" />
+                <line class="cls-2" x1="30" y1="14" x2="30" y2="17" />
+                <line class="cls-2" x1="15" y1="14" x2="15" y2="17" />
+                <path class="cls-1"
+                    d="m54.87,16.1c0-1.5,1.3-6.96,2.23-6.34.96.63,3.32,7.66,1.24,8.82-.21.12-.52.07-.87-.07" />
+                <path class="cls-1" d="m47.64,18.59s4.84,3.62,11.08-.34" />
+                <path class="cls-1"
+                    d="m55.89,16.1h-5.04c0-1.68-1.3-6.96-2.23-6.34-.96.63-3.32,7.66-1.24,8.82.21.12.52.07.87-.07" />
+                <path class="cls-1" d="m58.08,18.59s-4.84,3.62-11.08-.34" />
+            </g>
+        </svg>
+    </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    <div class="w-2/5 flex flex-col justify-center px-12">
+        {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700">
+            {{ flash_error }}
+        </div>
+        {% endfor %}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">Inscription</h1>
+
+        {{ form_start(registrationForm, {'attr': {'class': 'space-y-4'}}) }}
+        <div class="space-y-2">
+            <label for="registrationForm_mail" class="text-blue-600">Email</label>
+            {{ form_widget(registrationForm.mail, {'id': 'registrationForm_mail', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(registrationForm.mail) }}
+        </div>
+
+        <div class="space-y-2">
+            <label for="registrationForm_username" class="text-blue-600">Nom</label>
+            {{ form_widget(registrationForm.username, {'id': 'registrationForm_username', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(registrationForm.username) }}
+        </div>
+
+        <div class="space-y-2">
+            <label for="registrationForm_plainPassword" class="text-blue-600">Mot de passe</label>
+            {{ form_widget(registrationForm.plainPassword, {'id': 'registrationForm_plainPassword', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(registrationForm.plainPassword) }}
+        </div>
+
+        <div class="flex items-center mb-6">
+            {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2'}}) }}
+            <label for="registrationForm_agreeTerms" class="text-blue-600">J'accepte les conditions d'utilisation</label>
+            {{ form_errors(registrationForm.agreeTerms) }}
+        </div>
+
+        <button type="submit"
+            class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none">
+            S'inscrire
+        </button>
+
+        <div>
+            Déjà inscrit ? <a href="{{ path('app_login') }}" class="text-blue-600">Connectez-vous</a>
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
 {% endblock %}
