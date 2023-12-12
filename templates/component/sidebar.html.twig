@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="bg-blue-600">
+  <span class="absolute text-white text-4xl top-5 left-4 cursor-pointer" onclick="openSidebar()">
+    <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
+  </span>
+  <div class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900">
+    <div class="text-gray-100 text-xl">
+      <div class="p-2.5 mt-1 flex items-center">
+        <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.17 56" width="25%" height="25%">
+          <defs>
+            <style>
+              .cls-1 {
+                stroke-width: 2px;
+              }
+
+              .cls-1,
+              .cls-2 {
+                fill: none;
+                stroke: #ffffff;
+                stroke-miterlimit: 5;
+              }
+
+              .cls-2 {
+                stroke-width: 1.8px;
+              }
+            </style>
+          </defs>
+          <g id="Layer_2-2">
+            <rect class="cls-1" x="8" y="27" width="30" height="27" rx="2.17" ry="2.17" />
+            <rect class="cls-1" x="8" y="7" width="30" height="17" rx="2.17" ry="2.17" />
+            <rect class="cls-1" x="38" y="27" width="7" height="9" rx="2.17" ry="2.17" />
+            <rect class="cls-1" x="1" y="27" width="7" height="9" rx="2.17" ry="2.17" />
+            <rect class="cls-1" x="8" y="49" width="30" height="5" rx="2.17" ry="2.17" />
+            <rect class="cls-1" x="3" y="37" width="5" height="5" rx="1.38" ry="1.38" />
+            <rect class="cls-1" x="3" y="42" width="5" height="5" rx="1.38" ry="1.38" />
+            <rect class="cls-1" x="3" y="47" width="5" height="8" rx="1.38" ry="1.38" />
+            <rect class="cls-1" x="16" y="24" width="12" height="3" />
+            <rect class="cls-1" x="45" y="29" width="5" height="5" rx="1.38" ry="1.38" />
+            <rect class="cls-1" x="50" y="29" width="5" height="5" rx="1.38" ry="1.38" />
+            <rect class="cls-1" x="50" y="20" width="5" height="9" rx="1.38" ry="1.38" />
+            <path class="cls-2" d="m38,10.51c2.4-.02,4.34,2.18,4.34,4.88s-1.95,4.85-4.34,4.88v-9.76Z" />
+            <path class="cls-2" d="m7,10.22c-2.4-.02-4.34,2.18-4.34,4.88s1.95,4.85,4.34,4.88v-9.76Z" />
+            <path class="cls-1" d="m26.6,6.34c.02-2.95-1.8-5.34-4.01-5.34s-3.99,2.39-4.01,5.34h8.02Z" />
+            <path class="cls-1" d="m32.93,6.34c.01-1.47-1.19-2.67-2.66-2.67s-2.64,1.2-2.66,2.67h5.31Z" />
+            <path class="cls-1" d="m17.55,6.34c.01-1.47-1.19-2.67-2.66-2.67s-2.64,1.2-2.66,2.67h5.31Z" />
+            <polygon class="cls-1" points="12.24 32 32.93 32 22.59 40.28 12.24 32" />
+            <path class="cls-2" d="m22.42,17h-3.66c-.02,2.11,1.8,3.83,4.03,3.83s4.01-1.71,4.03-3.83h-4.4Z" />
+            <line class="cls-2" x1="30" y1="14" x2="30" y2="17" />
+            <line class="cls-2" x1="15" y1="14" x2="15" y2="17" />
+            <path class="cls-1"
+              d="m54.87,16.1c0-1.5,1.3-6.96,2.23-6.34.96.63,3.32,7.66,1.24,8.82-.21.12-.52.07-.87-.07" />
+            <path class="cls-1" d="m47.64,18.59s4.84,3.62,11.08-.34" />
+            <path class="cls-1"
+              d="m55.89,16.1h-5.04c0-1.68-1.3-6.96-2.23-6.34-.96.63-3.32,7.66-1.24,8.82.21.12.52.07.87-.07" />
+            <path class="cls-1" d="m58.08,18.59s-4.84,3.62-11.08-.34" />
+          </g>
+        </svg>
+        <h1 class="font-bold text-gray-200 text-[15px] ml-3">HardWareHouse</h1>
+        <i class="bi bi-x cursor-pointer ml-28 lg:hidden" onclick="openSidebar()"></i>
+      </div>
+      <div class="my-2 bg-gray-600 h-[1px]"></div>
+    </div>
+    <a href="{{ path('app_home') }}">
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-house-door-fill"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Accueil</span>
+      </div>
+    </a>
+    <a href="{{ path('app_client_index') }}">
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-people"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Clients</span>
+      </div>
+    </a>
+    <a href="{{ path('app_facture_index') }}">
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-receipt"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Facturation</span>
+      </div>
+    </a>
+    <a href="{{ path('app_produit_index') }}">
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+
+        <i class="bi bi-bag"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Produits</span>
+      </div>
+    </a>
+    <a href="{{ path('app_produit_index') }}">
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-book"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Rapports</span>
+      </div>
+      <a />
+      <a href="{{ path('app_paiement_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-currency-euro"></i>
+          <span class="text-[15px] ml-4 text-gray-200 font-bold">Paiements</span>
+        </div>
+      </a>
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-gear"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold">Administration</span>
+      </div>
+
+      <div class="my-4 bg-gray-600 h-[1px]"></div>
+      <div
+        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span class="text-[15px] ml-4 text-gray-200 font-bold"><a href="{{ path('app_logout') }}">Logout</a></span>
+      </div>
+  </div>
+  <style>
+    .bi-chevron-down::before {
+      content: "\f282";
+    }
+  </style>
+
+  <script type="text/javascript">
+    function dropdown() {
+      document.querySelector("#submenu").classList.toggle("hidden");
+      document.querySelector("#arrow").classList.toggle("rotate-0");
+    }
+    dropdown();
+
+    function openSidebar() {
+      document.querySelector(".sidebar").classList.toggle("hidden");
+    }
+  </script>
+
+
+
+
+
+</div>
+{% endblock %}
