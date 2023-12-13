@@ -5,14 +5,14 @@
 {% block content %}
     <h1>Liste des clients</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Email</th>
-                <th>Telephone</th>
-                <th>Actions</th>
+    <table id="clientTable" class="dataTable display compact mb-2">
+        <thead class="thead-dark">
+            <tr class="text-center">
+                <th scope="col">Nom</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telephone</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +29,19 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">Aucun client trouvé</td>
+                <td colspan="5">Aucun client trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('app_client_new') }}">Ajouter un nouveau client</a>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/clientDatatable.js', 'local')}}"> </script>
+
 {% endblock %}
