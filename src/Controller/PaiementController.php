@@ -14,11 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/paiement')]
 class PaiementController extends AbstractController
 {
+    private $userEntrepriseId;
+
+    public function __construct()
+    {
+        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
+    }
+
     #[Route('/', name: 'app_paiement_index', methods: ['GET'])]
     public function index(PaiementRepository $paiementRepository): Response
     {
         return $this->render('paiement/index.html.twig', [
-            'paiements' => $paiementRepository->findAll(),
+            'paiements' => $paiementRepository->findByEntreprise($this->userEntrepriseId);,
         ]);
     }
 

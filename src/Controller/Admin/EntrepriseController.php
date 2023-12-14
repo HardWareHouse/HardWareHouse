@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/entreprise')]
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
+#[Route('/admin/entreprise')]
 class EntrepriseController extends AbstractController
 {
     #[Route('/', name: 'app_entreprise_index', methods: ['GET'])]
     public function index(EntrepriseRepository $entrepriseRepository): Response
     {
-        return $this->render('entreprise/index.html.twig', [
+        return $this->render('admin/entreprise/index.html.twig', [
             'entreprises' => $entrepriseRepository->findAll(),
         ]);
     }
@@ -38,7 +38,7 @@ class EntrepriseController extends AbstractController
             return $this->redirectToRoute('app_entreprise_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('entreprise/new.html.twig', [
+        return $this->render('admin/entreprise/new.html.twig', [
             'entreprise' => $entreprise,
             'form' => $form,
         ]);
@@ -47,7 +47,7 @@ class EntrepriseController extends AbstractController
     #[Route('/{id}', name: 'app_entreprise_show', methods: ['GET'])]
     public function show(Entreprise $entreprise): Response
     {
-        return $this->render('entreprise/show.html.twig', [
+        return $this->render('admin/entreprise/show.html.twig', [
             'entreprise' => $entreprise,
         ]);
     }
@@ -64,7 +64,7 @@ class EntrepriseController extends AbstractController
             return $this->redirectToRoute('app_entreprise_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('entreprise/edit.html.twig', [
+        return $this->render('admin/entreprise/edit.html.twig', [
             'entreprise' => $entreprise,
             'form' => $form,
         ]);
