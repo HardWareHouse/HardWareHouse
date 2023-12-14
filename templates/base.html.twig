@@ -14,7 +14,7 @@
     <body>
         {% block body %}
             {% include 'component/sidebar.html.twig' %}
-            <div style="margin-left:15%">
+            <div style="margin-left:18%">
                 {% block content %}{% endblock %}
             </div>
         {% endblock %}
@@ -23,5 +23,6 @@
         {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
             <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+            <script src="https://kit.fontawesome.com/26894fcbfe.js" crossorigin="anonymous"></script>
         {% endblock %}
 </html>
