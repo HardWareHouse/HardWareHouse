@@ -16,11 +16,18 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ProduitController extends AbstractController
 {
+    private $userEntrepriseId;
+
+    public function __construct()
+    {
+        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
+    }
+
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produitRepository->findByEntreprise($this->userEntrepriseId);,
         ]);
     }
 

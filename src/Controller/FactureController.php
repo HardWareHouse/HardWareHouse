@@ -16,11 +16,18 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class FactureController extends AbstractController
 {
+    private $userEntrepriseId;
+
+    public function __construct()
+    {
+        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
+    }
+
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
         return $this->render('facture/index.html.twig', [
-            'factures' => $factureRepository->findAll(),
+            'factures' => $factureRepository->findByEntreprise($this->userEntrepriseId);,
         ]);
     }
 
