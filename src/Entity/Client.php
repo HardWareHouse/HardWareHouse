@@ -28,7 +28,7 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'clientId')]

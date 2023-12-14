@@ -6,6 +6,8 @@ use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Entreprise;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ClientType extends AbstractType
 {
@@ -16,8 +18,10 @@ class ClientType extends AbstractType
             ->add('adresse')
             ->add('email')
             ->add('telephone')
-            ->add('CreatedAt')
-            ->add('entrepriseId')
+            ->add('entrepriseId', EntityType::class, [
+                'class' => Entreprise::class,
+                'choice_label' => 'nom',
+            ])
         ;
     }
 

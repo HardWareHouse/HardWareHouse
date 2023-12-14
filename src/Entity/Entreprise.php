@@ -71,7 +71,7 @@ class Entreprise
 
     public function __toString()
     {
-        return $this->id;
+        return $this->nom;
     }
 
     public function getNom(): ?string
