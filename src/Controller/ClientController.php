@@ -16,18 +16,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {   
-    private $userEntrepriseId;
-
-    public function __construct()
-    {
-        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
-    }
 
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findByEntreprise($this->userEntrepriseId);,
+            'clients' => $clientRepository->findAll(),
         ]);
     }
 

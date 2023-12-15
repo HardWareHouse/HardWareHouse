@@ -16,18 +16,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CategorieController extends AbstractController
 {   
-    private $userEntrepriseId;
-
-    public function __construct()
-    {
-        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
-    }
     
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository): Response
     {
         return $this->render('categorie/index.html.twig', [
-            'categories' => $categorieRepository->findByEntreprise($this->userEntrepriseId);,
+            'categories' => $categorieRepository->findAll(),
         ]);
     }
 

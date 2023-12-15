@@ -16,18 +16,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class DevisController extends AbstractController
 {
-    private $userEntrepriseId;
-
-    public function __construct()
-    {
-        $this->userEntrepriseId = $this->getUser()->getEntreprise()->getId();
-    }
 
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
     {
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findByEntreprise($this->userEntrepriseId);,
+            'devis' => $devisRepository->findAll(),
         ]);
     }
 
