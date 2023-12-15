@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-#[Route('/admin', name: 'app_admin')]
+#[Route('/admin')]
 class MainController extends AbstractController
 {
     #[Route('/', name: 'app_admin')]
