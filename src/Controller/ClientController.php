@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[Route('/client')]
 #[IsGranted('ROLE_USER')]
@@ -18,17 +19,30 @@ class ClientController extends AbstractController
 {   
     private $userEntreprise;
 
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
-        ]);
+       
+        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            return $this->render('client/index.html.twig', [
+                'clients' => $clientRepository->findAll(),
+            ]);
+        } else {
+             $this->userEntreprise = $this->getUser()->getEntreprise();
+            return $this->render('client/index.html.twig', [
+                'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
+            ]);
+        }
     }
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {   
         $this->userEntreprise = $this->getUser()->getEntreprise();
         $client = new Client();
@@ -39,8 +53,8 @@ class ClientController extends AbstractController
             $client = $form->getData();
             $client->setEntrepriseId($this->userEntreprise);
 
-            $entityManager->persist($client);
-            $entityManager->flush();
+            $this->entityManager->persist($client);
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -60,13 +74,13 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Client $client, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Client $client): Response
     {
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -78,11 +92,11 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
-    public function delete(Request $request, Client $client, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Client $client): Response
     {
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($client);
-            $entityManager->flush();
+            $this->entityManager->remove($client);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
