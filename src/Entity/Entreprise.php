@@ -31,9 +31,9 @@ class Entreprise
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: User::class)]
-    #[ORM\JoinColumn(name: "user_uuid", referencedColumnName: "uuid")]
-    private Collection $users;
+    #[ORM\ManyToOne(inversedBy: 'entreprises')]
+    #[ORM\JoinColumn(name: "user_uuid", referencedColumnName: "uuid", nullable: false)]
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Client::class)]
     #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
@@ -62,7 +62,6 @@ class Entreprise
         $this->categorieId = new ArrayCollection();
         $this->devisId = new ArrayCollection();
         $this->factureId = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -135,31 +134,14 @@ class Entreprise
         return $this;
     }
 
-        /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): static
+    public function setUser(?User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            // Set the inverse side of the relationship
-            $user->setEntreprise($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            // Set the inverse side of the relationship to null
-            $user->setEntreprise(null);
-        }
+        $this->user = $user;
 
         return $this;
     }

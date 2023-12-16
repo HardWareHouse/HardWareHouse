@@ -43,7 +43,7 @@ class CategorieController extends AbstractController
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);

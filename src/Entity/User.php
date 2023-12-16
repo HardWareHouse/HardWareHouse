@@ -41,9 +41,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(name: "entreprise_id", referencedColumnName: "id")]
-    private ?Entreprise $entreprise = null;
+    #[ORM\OneToMany(mappedBy: 'userUuid', targetEntity: Entreprise::class, orphanRemoval: true)]
+    private Collection $entreprises;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
@@ -51,6 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->uuid  = Uuid::v4();
+        $this->entreprises = new ArrayCollection();
         $this->CreatedAt = new \DateTimeImmutable();
     }
 
@@ -160,14 +160,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEntreprise(): ?Entreprise
+    /**
+     * @return Collection<int, Entreprise>
+     */
+    public function getEntreprises(): Collection
     {
-        return $this->entreprise;
+        return $this->entreprises;
     }
 
-    public function setEntreprise(?Entreprise $entreprise): static
+    public function addEntreprise(Entreprise $entreprise): static
     {
-        $this->entreprise = $entreprise;
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises->add($entreprise);
+            $entreprise->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprise $entreprise): static
+    {
+        if ($this->entreprises->removeElement($entreprise)) {
+            // set the owning side to null (unless already changed)
+            if ($entreprise->getUser() === $this) {
+                $entreprise->setUser(null);
+            }
+        }
 
         return $this;
     }

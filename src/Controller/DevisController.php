@@ -38,13 +38,12 @@ class DevisController extends AbstractController
                 'devis' => $devisRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
             ]);
         }
-
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
