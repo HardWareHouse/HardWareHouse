@@ -21,7 +21,7 @@ class ClientController extends AbstractController
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         return $this->render('client/index.html.twig', [
             'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
@@ -30,7 +30,7 @@ class ClientController extends AbstractController
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
