@@ -16,25 +16,28 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class CategorieController extends AbstractController
 {   
-    
+    private $userEntreprise;
+
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
     public function index(CategorieRepository $categorieRepository): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('categorie/index.html.twig', [
-            'categories' => $categorieRepository->findAll(),
+            'categories' => $categorieRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
     #[Route('/new', name: 'app_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categorie = getData();
-            $categorie->setEntrepriseId($this->userEntrepriseId);
+            $categorie->setEntrepriseId($this->userEntreprise);
             $entityManager->persist($categorie);
             $entityManager->flush();
 

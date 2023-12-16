@@ -17,7 +17,6 @@ class EntrepriseType extends AbstractType
             ->add('description')
             ->add('informationFiscale')
             ->add('CreatedAt')
-            ->add('user')
         ;
     }
 
