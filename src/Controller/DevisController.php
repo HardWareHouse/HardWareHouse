@@ -43,7 +43,7 @@ class DevisController extends AbstractController
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprises();
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);

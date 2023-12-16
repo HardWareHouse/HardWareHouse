@@ -32,11 +32,11 @@ class ProduitController extends AbstractController
             return $this->render('produit/index.html.twig', [
                 'produits' => $produitRepository->findAll()]);
         } else {
-            // $user = $this->getUser();
-            // $user->setEntreprise($entrepriseRepository->findOneBy(["id" => 2]));
-            // $this->entityManager->persist($user);
-            // $this->entityManager->flush();
-            // dd($user);
+            $user = $this->getUser();
+            $user->setEntreprise($entrepriseRepository->findOneBy(["id" => 1]));
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+            dump($user);
 
             $this->userEntreprise = $this->getUser()->getEntreprise();
             return $this->render('produit/index.html.twig', [
@@ -48,7 +48,7 @@ class ProduitController extends AbstractController
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprises();
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
