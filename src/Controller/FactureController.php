@@ -21,7 +21,7 @@ class FactureController extends AbstractController
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         return $this->render('facture/index.html.twig', [
             'factures' => $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
@@ -30,7 +30,7 @@ class FactureController extends AbstractController
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $this->userEntreprise = $this->getUser()->getEntreprises();
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
