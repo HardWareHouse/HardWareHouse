@@ -16,23 +16,29 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {   
+    private $userEntreprise;
 
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('client/index.html.twig', [
-            'clients' => $clientRepository->findAll(),
+            'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $client = $form->getData();
+            $client->setEntrepriseId($this->userEntreprise);
+
             $entityManager->persist($client);
             $entityManager->flush();
 

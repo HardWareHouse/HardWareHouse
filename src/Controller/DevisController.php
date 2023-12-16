@@ -16,23 +16,29 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class DevisController extends AbstractController
 {
+    private $userEntreprise;
 
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('devis/index.html.twig', [
-            'devis' => $devisRepository->findAll(),
+            'devis' => $devisRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $devi = $form->getData();
+            $devi->setEntrepriseId($this->userEntreprise);
+
             $entityManager->persist($devi);
             $entityManager->flush();
 

@@ -15,24 +15,30 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/produit')]
 #[IsGranted('ROLE_USER')]
 class ProduitController extends AbstractController
-{
+{   
+    private $userEntreprise;
 
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
-    public function index(ProduitRepository $produitRepository): Response
-    {
+    public function index(ProduitRepository $produitRepository, EntityManagerInterface $entityManager): Response
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('produit/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produitRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $produit = new Produit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $produit = $form->getData();
+            $produit->setEntrepriseId($this->userEntreprise);
+
             $entityManager->persist($produit);
             $entityManager->flush();
 

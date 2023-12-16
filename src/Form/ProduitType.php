@@ -17,10 +17,6 @@ class ProduitType extends AbstractType
             ->add('prix')
             ->add('stock')
             ->add('CreatedAt')
-            ->add('entrepriseId')
-            ->add('categorieId')
-            ->add('devisId')
-            ->add('factureId')
         ;
     }
 

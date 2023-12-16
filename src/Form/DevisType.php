@@ -17,7 +17,6 @@ class DevisType extends AbstractType
             ->add('status')
             ->add('total')
             ->add('CreatedAt')
-            ->add('entrepriseId')
             ->add('clientId')
             ->add('detailDevisId')
         ;

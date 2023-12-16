@@ -18,7 +18,6 @@ class FactureType extends AbstractType
             ->add('statutPaiement')
             ->add('total')
             ->add('CreatedAt')
-            ->add('entrepriseId')
             ->add('clientId')
             ->add('detailFactureId')
         ;

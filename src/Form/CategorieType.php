@@ -15,7 +15,6 @@ class CategorieType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('CreatedAt')
-            ->add('entrepriseId')
         ;
     }
 

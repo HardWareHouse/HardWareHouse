@@ -16,23 +16,29 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_USER')]
 class FactureController extends AbstractController
 {
+    private $userEntreprise;
 
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('facture/index.html.twig', [
-            'factures' => $factureRepository->findAll(),
+            'factures' => $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $facture = $form->getData();
+            $facture->setEntrepriseId($this->userEntreprise);
+
             $entityManager->persist($facture);
             $entityManager->flush();
 
