@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Facture{% endblock %}
+{% block title %}Modification Facture{% endblock %}
 
 {% block body %}
 
@@ -8,12 +8,12 @@
 
     <div class="flex flex-col items-center justify-start pt-4 min-h-screen">
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Modifier le Client</h1>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Modifier la facture</h1>
             <a href="{{ path('app_facture_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
             </a>
         </div>
 
-        {{ include('facture/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('facture/_form.html.twig', {'button_label': 'Modifier'}) }}
     </div>
 {% endblock %}

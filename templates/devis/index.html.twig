@@ -1,43 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Devis index{% endblock %}
+{% block title %}Devis{% endblock %}
 
 {% block content %}
-    <h1>Devis index</h1>
+<div class="container mx-auto my-8">
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-semibold text-gray-700">Liste des Devis</h1>
+        <a href="{{ path('app_devis_new') }}" 
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+            <i class="fas fa-plus mr-2"></i> Créer un nouveau devis
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Numero</th>
-                <th>DateCreation</th>
-                <th>Status</th>
-                <th>Total</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for devi in devis %}
-            <tr>
-                <td>{{ devi.id }}</td>
-                <td>{{ devi.numero }}</td>
-                <td>{{ devi.dateCreation ? devi.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ devi.status }}</td>
-                <td>{{ devi.total }}</td>
-                <td>{{ devi.CreatedAt ? devi.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_devis_show', {'id': devi.id}) }}">show</a>
-                    <a href="{{ path('app_devis_edit', {'id': devi.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-6">
+        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="py-3 px-6">Numero</th>
+                    <th scope="col" class="py-3 px-6">Date de création</th>
+                    <th scope="col" class="py-3 px-6">Statut</th>
+                    <th scope="col" class="py-3 px-6">Total</th>
+                    <th scope="col" class="py-3 px-6">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            {% for devi in devis %}
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="py-4 px-6">{{ devi.numero }}</td>
+                    <td class="py-4 px-6">{{ devi.dateCreation ? devi.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td class="py-4 px-6">{{ devi.status }}</td>
+                    <td class="py-4 px-6">{{ devi.total }}€</td>
+                    <td>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ path('app_devis_show', {'id': devi.id}) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ path('app_devis_edit', {'id': devi.id}) }}" class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                            <div class="ml-4">
+                                {{ include('devis/_delete_form.html.twig', {'devis': devis}) }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="py-4 px-6 text-center">Aucun devis trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
 
-    <a href="{{ path('app_devis_new') }}">Create new</a>
+{% block javascripts %}
+{{ parent() }}
+
+<script src="{{ asset('js/devisDatatable.js', 'local') }}"> </script>
+
 {% endblock %}

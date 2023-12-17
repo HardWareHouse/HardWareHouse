@@ -15,10 +15,6 @@
         <table class="w-full text-sm text-left text-gray-500">
             <tbody class="bg-white divide-y divide-gray-200">
             <tr>
-                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Id</th>
-                <td class="px-6 py-4">{{ facture.id }}</td>
-            </tr>
-            <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Numero</th>
                 <td class="px-6 py-4">{{ facture.numero }}</td>
             </tr>
@@ -36,11 +32,7 @@
             </tr>
             <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Total</th>
-                <td class="px-6 py-4">{{ facture.total }}</td>
-            </tr>
-            <tr>
-                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">CreatedAt</th>
-                <td class="px-6 py-4">{{ facture.CreatedAt ? facture.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="px-6 py-4">{{ facture.total }}€</td>
             </tr>
             </tbody>
         </table>
