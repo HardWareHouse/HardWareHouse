@@ -22,7 +22,7 @@ class PdfService
     public function showPdfFile($html) {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
-        $this->domPdf->stream("Facture.pdf", [
+        $this->domPdf->stream("PDF.pdf", [
             'Attachement' => true
         ]);
     }

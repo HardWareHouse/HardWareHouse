@@ -35,12 +35,12 @@
         <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 2px solid #e5e7eb;">
             <span style="color: #4b5563;">Item</span>
             <span style="color: #4b5563;">Prix</span>
-        {% for produit in produits %}
-            <div style="display: flex; justify-content: space-between; padding: 8px;">
-                <span>{{ produit.nom }}</span>
-                <span>{{ produit.prix }}€</span>
-            </div>
-        {% endfor %}
+{#        {% for produit in produits %}#}
+{#            <div style="display: flex; justify-content: space-between; padding: 8px;">#}
+{#                <span>{{ produit.nom }}</span>#}
+{#                <span>{{ produit.prix }}€</span>#}
+{#            </div>#}
+{#        {% endfor %}#}
         <div style="display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 2px solid #e5e7eb;">
             <span style="font-size: 18px; font-weight: bold;">Total</span>
             <span style="font-size: 18px; font-weight: bold;">{{ facture.total }}€</span>
