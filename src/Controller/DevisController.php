@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Devis;
+use App\Entity\Entreprise;
 use App\Form\DevisType;
 use App\Repository\DevisRepository;
+use App\Service\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +71,22 @@ class DevisController extends AbstractController
     {
         return $this->render('devis/show.html.twig', [
             'devi' => $devi,
+        ]);
+    }
+
+    #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
+    public function downloadPdf(Entreprise $entreprise, Devis $devis, PdfService $pdfService): Response
+    {
+
+        $html = $this->renderView('devis/pdf.html.twig', [
+            'devis' => $devis,
+            'entreprise' => $entreprise,
+        ]);
+
+        $pdfService->showPdfFile($html);
+
+        return new Response('', 200, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 
