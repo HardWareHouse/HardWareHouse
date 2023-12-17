@@ -27,7 +27,7 @@ class PaiementType extends AbstractType
             ])
             ->add('factureId', EntityType::class, [
                 'class' => Facture::class,
-'choice_label' => 'numero',
+                'choice_label' => 'numero',
             ])
         ;
     }
