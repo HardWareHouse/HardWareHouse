@@ -1,4 +1,4 @@
-# HardWareHouse
+# 0HardWareHouse
 
 ### Description du projet
 
@@ -28,10 +28,11 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 6. Run `docker compose logs -f` to display current logs, `docker compose logs -f [CONTAINER_NAME]` to display specific container's current logs 
 
 
-# Installation npm
+# Installation 
 
 1. docker compose exec php npm install
-2. docker compose exec php npm run dev
+2. docker compose exec php npm run dev (Nous préconisons de faire cette commande à chaque git pull pour être sûr d'avoir les dernière modifications côté front.)
+3. docker compose exec php php bin/console doctrine:fixture:load (pour avoir une base de données déjà remplie)
 
 # SETUP BDD 
 
