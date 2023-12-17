@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
+use App\Service\PdfService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +71,21 @@ class FactureController extends AbstractController
     {
         return $this->render('facture/show.html.twig', [
             'facture' => $facture,
+        ]);
+    }
+    #[Route('/{id}/pdf', name: 'app_facture_pdf', methods: ['GET'])]
+    public function downloadPdf(Client $client, Facture $facture, PdfService $pdfService): Response
+    {
+
+        $html = $this->renderView('facture/pdf.html.twig', [
+            'facture' => $facture,
+            'client' => $client,
+        ]);
+
+        $pdfService->showPdfFile($html);
+
+        return new Response('', 200, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 
