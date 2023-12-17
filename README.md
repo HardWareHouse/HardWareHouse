@@ -1,4 +1,4 @@
-# HardWareHouse
+# 0HardWareHouse
 
 ### Description du projet
 
@@ -35,5 +35,3 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 ### Répo du projet 
 
 Lien : https://github.com/HardWareHouse/HardWareHouse
-
-
