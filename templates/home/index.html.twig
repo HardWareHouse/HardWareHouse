@@ -5,7 +5,7 @@
 {% block content %}
 <div class="flex flex-col items-center text-center justify-around min-h-screen ml-8 overflow-auto">
     <div>
-        <h1>Bienvenue {{ app.user.username }}!</h1>
+        <h1 class="text-4xl font-semibold my-2">Bienvenue {{ app.user.username }}!</h1>
         <h2>Votre entreprise en bref</h2>
     </div>
     <div class="flex w-full">
@@ -13,11 +13,68 @@
             <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
                 <h3 class="text-darkBlue font-bold">Chiffre d'affaires</h3>
             </div>
+            <h5 class="italic text-sm text-gray-600 pt-5 py-2">Global</h5>
+            <p class="font-semibold text-5xl py-3">2535,22€</p>
+            <div class="flex justify-around pt-10">
+                <div>
+                    <h5 class="italic text-sm text-gray-600 py-1">Ce mois</h5>
+                    <div class="flex items-center">
+                        <i class="bi bi-caret-down-fill pe-1 text-red-600 text-xl"></i><i class="bi bi-caret-up-fill pe-1 text-green-600 text-xl"></i>
+                        <p class="font-semibold text-xl py-1">2535,22€</p>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="italic text-sm text-gray-600 py-1">Aujourd'hui</h5>
+                    <div class="flex items-center">
+                        <i class="bi bi-caret-down-fill pe-1 text-red-600 text-xl"></i><i class="bi bi-caret-up-fill pe-1 text-green-600 text-xl"></i>
+                        <p class="font-semibold text-xl py-1">2535,22€</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="border border-gray-300 h-72 w-3/4 m-8">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+        <div class="border border-gray-300 h-72 w-3/4 m-8 flex flex-col overflow-y-scroll">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center shrink-0 sticky top-0">
                 <h3 class="text-darkBlue font-bold">Mes meilleurs produits</h3>
             </div>
+            <table class="w-11/12 self-center my-2">
+                <tbody class="">
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-left py-2">Contrôleur De Moteur CC Simple</td>
+                        <td class="italic font-extralight w-1/5 text-right py-2">Vendu: 32</td>
+                        <td class="italic w-1/5 text-right py-2">350,00€</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
      <div class="flex w-full">
@@ -25,16 +82,103 @@
             <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
                 <h3 class="text-darkBlue font-bold">Mes factures</h3>
             </div>
+            <div class="flex flex-col h-3/4 justify-around">
+                <h4 class="text-md font-semibold py-3">A régler</h4>
+                <div class="flex text-center justify-around">
+                    <div>
+                        <p class="font-semibold text-lg">1</p>
+                        <p>Factures</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-lg">65,19€</p>
+                        <p>Montant</p>
+                    </div>
+                </div>
+
+                <hr class="w-1/2 mt-4 place-self-center">
+
+                <h4 class="text-md font-semibold py-3">En retard<h4>
+                <div class="flex text-center justify-around">
+                    <div>
+                        <p class="font-semibold text-lg">0</p>
+                        <p>Factures</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-lg">00,00€</p>
+                        <p>Montant</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="border border-gray-300 h-72 w-3/4 m-8">
             <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
                 <h3 class="text-darkBlue font-bold">Mes devis</h3>
             </div>
+            <div class="flex flex-col h-3/4 justify-around">
+                <h4 class="text-md font-semibold py-3">En attente</h4>
+                <div class="flex text-center justify-around">
+                    <div>
+                        <p class="font-semibold text-lg">1</p>
+                        <p>Factures</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-lg">65,19€</p>
+                        <p>Montant</p>
+                    </div>
+                </div>
+
+                <hr class="w-1/2 mt-4 place-self-center">
+
+                <h4 class="text-md font-semibold py-3">Expiré<h4>
+                <div class="flex text-center justify-around">
+                    <div>
+                        <p class="font-semibold text-lg">0</p>
+                        <p>Factures</p>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-lg">00,00€</p>
+                        <p>Montant</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="border border-gray-300 h-72 w-3/4 m-8">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+        <div class="border border-gray-300 h-72 w-3/4 m-8 flex flex-col overflow-y-scroll">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center shrink-0 sticky top-0">
                 <h3 class="text-darkBlue font-bold">Mes derniers produits</h3>
             </div>
+            <table class="w-11/12 self-center my-2">
+                <tbody class="">
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">15h32</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">12/12/23</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">10/12/23</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">10/12/23</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">10/12/23</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">10/12/23</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="w-3/5 text-sm text-left py-2">Contrôleur De Moteur</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2">09/12/23</td>
+                    </tr>
+
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
