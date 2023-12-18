@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -43,9 +45,10 @@ class FactureController extends AbstractController
     }
 
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
-    {   
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PdfService $pdfService): Response
+    {
         $this->userEntreprise = $this->getUser()->getEntreprise();
+
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
@@ -53,9 +56,30 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $facture = $form->getData();
             $facture->setEntrepriseId($this->userEntreprise);
+            $client = $facture->getClientId();
 
             $this->entityManager->persist($facture);
             $this->entityManager->flush();
+
+            // Générer le contenu du PDF
+            $html = $this->renderView('facture/pdf.html.twig', [
+                'facture' => $facture,
+                'client' => $client,
+            ]);
+            $pdfContent = $pdfService->showPdfFile($html);
+
+            // Créer l'email
+            $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
+            $email = (new Email())
+                ->from('facture@hardwarehouse.com')
+                ->to($userEmail)
+                ->subject('Votre facture')
+                ->html('Voici votre facture en pièce jointe.')
+                ->attach($pdfContent, 'facture.pdf', 'application/pdf');
+
+            // Envoyer l'email
+            $mailer->send($email);
+
 
             return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
         }
