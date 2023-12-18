@@ -9,12 +9,12 @@
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.dateCreation) }}
+        {{ form_label(form.dateCreation, 'Date de création') }}
         {{ form_widget(form.dateCreation, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.status) }}
+        {{ form_label(form.status, 'Statut') }}
         {{ form_widget(form.status, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
@@ -29,12 +29,12 @@
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.clientId) }}
+        {{ form_label(form.clientId, 'Client') }}
         {{ form_widget(form.clientId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.detailDevisId) }}
+        {{ form_label(form.detailDevisId, 'Détail du devis') }}
         {{ form_widget(form.detailDevisId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
@@ -42,7 +42,7 @@
         <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit">
-            {{ button_label|default('Save') }}
+            {{ button_label|default('Ajouter') }}
         </button>
     </div>
 </div>
