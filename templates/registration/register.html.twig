@@ -86,9 +86,12 @@
 
         <div class="flex items-center mb-6">
             {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2'}}) }}
-            <label for="registrationForm_agreeTerms" class="text-blue-600">J'accepte les conditions d'utilisation</label>
+            <label for="registrationForm_agreeTerms" class="text-blue-600">
+                J'accepte les <a href="{{ path('app_cgu') }}" class="text-blue-600 hover:underline" target="_blank">conditions d'utilisation</a>
+            </label>
             {{ form_errors(registrationForm.agreeTerms) }}
         </div>
+        
 
         <button type="submit"
             class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none">

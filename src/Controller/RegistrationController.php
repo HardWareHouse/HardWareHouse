@@ -83,4 +83,11 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_home');
 
     }
+
+    #[Route('/register/cgu', name: 'app_cgu')]
+    public function cgu(): Response
+    {
+        return $this->render('registration/cgu.html.twig');
+    }
+
 }
