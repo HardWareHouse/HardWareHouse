@@ -10,20 +10,20 @@
                 Échéance: {{ devis.CreatedAt ? devis.CreatedAt|date('d/m/Y') : '' }}
             </div>
         </div>
-        <div style="display: flex; margin-bottom: 40px; flex-direction: row;">
-            <div>
-                <h2 style="font-weight: bold;">Facturé à</h2>
-                <p>{{ entreprise.nom }}</p>
-                <p>{{ entreprise.informationFiscale }}</p>
-                <p>{{ entreprise.adresse }}</p>
-            </div>
-            <div>
-                <h2 style="font-weight: bold;">Envoyé à</h2>
-                <p>{{ entreprise.nom }}</p>
-                <p>{{ entreprise.informationFiscale }}</p>
-                <p>{{ entreprise.adresse }}</p>
-            </div>
-        </div>
+{#        <div style="display: flex; margin-bottom: 40px; flex-direction: row;">#}
+{#            <div>#}
+{#                <h2 style="font-weight: bold;">Facturé à</h2>#}
+{#                <p>{{ entreprise.nom }}</p>#}
+{#                <p>{{ entreprise.informationFiscale }}</p>#}
+{#                <p>{{ entreprise.adresse }}</p>#}
+{#            </div>#}
+{#            <div>#}
+{#                <h2 style="font-weight: bold;">Envoyé à</h2>#}
+{#                <p>{{ entreprise.nom }}</p>#}
+{#                <p>{{ entreprise.informationFiscale }}</p>#}
+{#                <p>{{ entreprise.adresse }}</p>#}
+{#            </div>#}
+{#        </div>#}
         <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #e5e7eb;">
             <span style="font-weight: bold;">Méthode de paiement</span>
             <span>{{ devis.status }}</span>

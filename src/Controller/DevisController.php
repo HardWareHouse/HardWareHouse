@@ -11,6 +11,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -43,7 +45,7 @@ class DevisController extends AbstractController
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PdfService $pdfService): Response
     {
         $this->userEntreprise = $this->getUser()->getEntreprise();
         $devi = new Devis();
@@ -56,6 +58,25 @@ class DevisController extends AbstractController
 
             $entityManager->persist($devi);
             $entityManager->flush();
+
+            // Générer le contenu du PDF
+            $html = $this->renderView('devis/pdf.html.twig', [
+                'devis' => $devi,
+                'entreprise' => $this->userEntreprise,
+            ]);
+            $pdfContent = $pdfService->showPdfFile($html);
+
+            // Créer l'email
+            $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
+            $email = (new Email())
+                ->from('devis@hardwarehouse.com')
+                ->to($userEmail)
+                ->subject('Votre devis')
+                ->html('Voici votre devis en pièce jointe.')
+                ->attach($pdfContent, 'devis.pdf', 'application/pdf');
+
+            // Envoyer l'email
+            $mailer->send($email);
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
