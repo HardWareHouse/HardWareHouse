@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 
-$grey: white;
+$principal: #1190CB;
+$secondaire: #483D3F;
+$tertiaire: #F4EBD9;
+$quaternaire: #001242;
+$grey: #DCDCDD;
+
 
 body {
-    background-color: $grey;
+    background-color: white;
 }
