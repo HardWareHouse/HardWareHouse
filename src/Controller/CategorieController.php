@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/categorie')]
+#[Route('/{_locale<%app.supported_locales%>}/categorie')]
 #[IsGranted('ROLE_USER')]
 class CategorieController extends AbstractController
 {   
@@ -23,6 +23,19 @@ class CategorieController extends AbstractController
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->entityManager = $entityManager;
+    }
+
+    private function checkUserAccessToCategorie($userEntreprise, $categorie): ?Response
+    {
+        $categorieEntreprise = $categorie->getEntrepriseId();
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $categorieEntreprise->getId()) {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas accéder à cette categorie!'
+            );
+            return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return null;
     }
 
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
@@ -66,6 +79,12 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToCategorie($this->userEntreprise, $categorie);
+        if ($response !== null) {
+            return $response;
+        }
+
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
         ]);
@@ -74,6 +93,12 @@ class CategorieController extends AbstractController
     #[Route('/{id}/edit', name: 'app_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Categorie $categorie): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToCategorie($this->userEntreprise, $categorie);
+        if ($response !== null) {
+            return $response;
+        }
+
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
 
@@ -92,6 +117,12 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, Categorie $categorie): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToCategorie($this->userEntreprise, $categorie);
+        if ($response !== null) {
+            return $response;
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$categorie->getUuid(), $request->request->get('_token'))) {
             $this->entityManager->remove($categorie);
             $this->entityManager->flush();

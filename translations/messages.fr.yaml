@@ -1,3 +1,4 @@
+#Accueil
 welcome: Bienvenue
 revenue: Chiffre d'affaires
 global: Global
@@ -15,6 +16,7 @@ in_progress: En attente
 expired: Expiré
 my_recent_products: Mes derniers produits
 in_brief: Votre entreprise en bref
+#Nav
 home: Accueil
 billing: Facturation
 estimates: Devis
@@ -23,3 +25,76 @@ reports: Rapports
 payments: Paiements
 company: Entreprise
 logout: Déconnexion
+#Categories
+delete: Supprimer
+confirm_delete: Vous êtes sûr de vouloir supprimer cet objet ?
+save: Sauvgarder
+category_edit: Modifier la categorie
+back_to_list: Retourner à la liste
+category: Categorie
+categories: Categories
+name: Name
+description: Description
+createdat: Créé à
+actions: Actions
+show: Afficher
+edit: Modifier
+no_records: Aucun résultat
+new_category: Nouvelle Categorie
+#Client
+client_modification: Modification du client
+client_list: Liste des clients
+add_client: Ajouter un nouveau client
+address: Adresse
+email: Email
+telephone: Téléphone
+no_client: Aucun client trouvé
+new_client: Nouveau client
+client_details: Détails du client
+#Devis
+created_on: Créé le
+status: Statut
+estimate_details: Détails du devis
+add: Ajouter
+estimate_edit: Modifier le devis
+estimate_list: Liste des devis
+estimate_new: Créer un nouveau devis
+estimate: Devis
+number: Numéro
+total: Total
+no_estimate: Aucun devis trouvé
+expires: Échéance
+billing_info: Facturé à
+shipping_info: Envoyé à
+payment_method: Méthode de paiement
+item: Objet
+price: Prix
+#Emails
+email_header: Welcome %username% dans la famille !
+email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
+click_here: Cliquez ici !
+#Entreprise
+company_edit: Modifier Entreprise
+companies: Entreprises
+tax_info: Information fiscale
+company_new: Create new company
+#Facture
+invoice_modify: Modifier la facture
+invoice_list: Liste des factures
+invoice_new: Ajouter une nouvelle facture
+duedate: Date de paiement due
+no_invoice: Aucune facture trouvée
+invoice: Facture
+#Paiement
+payment_modify: Modifier le paiement
+payment_new: Ajouter un nouveau paiement
+payment_date: Date et heure de paiement
+no_payment: Il n'existe aucun paiement.
+payment_details: Détails du paiement
+#Product
+product_modify: Modifier le produit
+product_new: Ajouter un nouveau produit
+stock: Stock
+no_product: Aucun produit trouvé
+product: Produit
+product_details: Détails du produit

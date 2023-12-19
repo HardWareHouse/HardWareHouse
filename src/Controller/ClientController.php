@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/client')]
+#[Route('/{_locale<%app.supported_locales%>}/client')]
 #[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {   
@@ -25,6 +25,19 @@ class ClientController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    private function checkUserAccessToClient($userEntreprise, $client): ?Response
+    {
+        $clientEntreprise = $client->getEntrepriseId();
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $clientEntreprise->getId()) {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas accéder à ce client!'
+            );
+            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return null;
+    }
+
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     {  
@@ -33,7 +46,7 @@ class ClientController extends AbstractController
                 'clients' => $clientRepository->findAll(),
             ]);
         } else {
-             $this->userEntreprise = $this->getUser()->getEntreprise();
+            $this->userEntreprise = $this->getUser()->getEntreprise();
             return $this->render('client/index.html.twig', [
                 'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
             ]);
@@ -66,7 +79,13 @@ class ClientController extends AbstractController
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
+        if ($response !== null) {
+            return $response;
+        }
+
         return $this->render('client/show.html.twig', [
             'client' => $client,
         ]);
@@ -75,6 +94,12 @@ class ClientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Client $client): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
+        if ($response !== null) {
+            return $response;
+        }
+
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
@@ -92,7 +117,13 @@ class ClientController extends AbstractController
 
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
+        if ($response !== null) {
+            return $response;
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($client);
             $this->entityManager->flush();

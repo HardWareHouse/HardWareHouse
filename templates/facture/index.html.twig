@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des factures{% endblock %}
+{% block title %}{{'invoice_list'|trans}}{% endblock %}
 
 {% block content %}
 <div class="container mx-auto my-8">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">Liste des factures</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">{{'invoice_list'|trans}}</h1>
         <a href="{{ path('app_facture_new') }}"
             class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-            <i class="fas fa-plus mr-2"></i> Ajouter une nouvelle facture
+            <i class="fas fa-plus mr-2"></i> {{'invoice_new'|trans}}
         </a>
     </div>
 
@@ -16,12 +16,12 @@
         <table id="clientTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6">Numéro</th>
-                    <th scope="col" class="py-3 px-6">Date de facturation</th>
-                    <th scope="col" class="py-3 px-6">Date de paiement due</th>
-                    <th scope="col" class="py-3 px-6">Statut du paiement</th>
-                    <th scope="col" class="py-3 px-6">Total</th>
-                    <th scope="col" class="py-3 px-6">Actions</th>
+                    <th scope="col" class="py-3 px-6">{{'number'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'duedate'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'status'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'total'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -56,12 +56,17 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="5" class="py-4 px-6 text-center">Aucune facture trouvée</td>
+                    <td colspan="5" class="py-4 px-6 text-center">{{'no_invoice'|trans}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    {% for message in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger">
+            <p>Message flash: {{ message }}</p>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
 

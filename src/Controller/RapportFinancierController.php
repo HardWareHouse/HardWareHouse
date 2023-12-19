@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RapportFinancierController extends AbstractController
 {
-    #[Route('/rapport', name: 'app_rapport_financier')]
+    #[Route('/{_locale<%app.supported_locales%>}/rapport', name: 'app_rapport_financier')]
     public function index(AuthorizationCheckerInterface $authChecker): Response    
     {
         if (!$authChecker->isGranted('ROLE_ADMIN') && !$authChecker->isGranted('ROLE_COMPTABLE')) {
