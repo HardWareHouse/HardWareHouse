@@ -3,31 +3,31 @@
 <div class="w-full max-w-md mx-auto"> {{ form_errors(form) }}
 
     <div class="mb-4">
-        {{ form_label(form.numero) }}
+        {{ form_label(form.numero, 'Numéro de facture') }}
         {{ form_widget(form.numero, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.dateFacturation) }}
+        {{ form_label(form.dateFacturation, 'Date de facturation') }}
         {{ form_widget(form.dateFacturation, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.datePaiementDue) }}
+        {{ form_label(form.datePaiementDue,'Date de paiement due') }}
         {{ form_widget(form.datePaiementDue, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.statutPaiement) }}
+        {{ form_label(form.statutPaiement, 'Statut du paiement') }}
         {{ form_widget(form.statutPaiement, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.total) }}
+        {{ form_label(form.total, 'Total (€)') }}
         {{ form_widget(form.total, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
@@ -45,7 +45,7 @@
     </div> #}
 
     <div class="mb-4">
-        {{ form_label(form.clientId) }}
+        {{ form_label(form.clientId, 'Client') }}
         {{ form_widget(form.clientId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>

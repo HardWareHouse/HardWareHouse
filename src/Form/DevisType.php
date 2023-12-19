@@ -9,15 +9,20 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DevisType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('numero')
+            ->add('numero', TextType::class, [
+            'attr' => ['placeholder' => 'DEVIS####']
+            ])             
             ->add('dateCreation', DateType::class, [
                 'widget' => 'single_text',
+                'data' => new \DateTime('now'),
+
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
