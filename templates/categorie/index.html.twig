@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categorie index{% endblock %}
+{% block title %}{{'categories'|trans}}{% endblock %}
 
 {% block content %}
-    <h1>Categorie index</h1>
+    <h1>{{'categories'|trans}}</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
+                <th>{{'name'|trans}}</th>
+                <th>{{'description'|trans}}</th>
+                <th>{{'createdat'|trans}}</th>
+                <th>{{'actions'|trans}}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,19 +23,19 @@
                 <td>{{ categorie.description }}</td>
                 <td>{{ categorie.CreatedAt ? categorie.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">{{'show'|trans}}</a>
+                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">{{'edit'|trans}}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">{{'no_records'|trans}}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_new') }}">Create new</a>
+    <a href="{{ path('app_categorie_new') }}">{{'new_category'|trans}}</a>
     {% for message in app.session.flashbag.get('danger') %}
         <div class="alert alert-danger">
             <p>Message flash: {{ message }}</p>

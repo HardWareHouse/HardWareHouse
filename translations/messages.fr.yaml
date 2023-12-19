@@ -1,3 +1,4 @@
+#Accueil
 welcome: Bienvenue
 revenue: Chiffre d'affaires
 global: Global
@@ -15,6 +16,7 @@ in_progress: En attente
 expired: Expiré
 my_recent_products: Mes derniers produits
 in_brief: Votre entreprise en bref
+#Nav
 home: Accueil
 billing: Facturation
 estimates: Devis
@@ -23,3 +25,19 @@ reports: Rapports
 payments: Paiements
 company: Entreprise
 logout: Déconnexion
+#Categories
+delete: Supprimer
+confirm_delete: Vous êtes sûr de vouloir supprimer cet objet ?
+save: Sauvgarder
+category_edit: Modifier la categorie
+back_to_list: Retourner à la liste
+category: Categorie
+categories: Categories
+name: Name
+description: Description
+createdat: Créé à
+actions: Actions
+show: Afficher
+edit: Modifier
+no_records: Aucun résultat
+new_category: Nouvelle Categorie

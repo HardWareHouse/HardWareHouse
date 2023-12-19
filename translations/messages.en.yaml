@@ -1,3 +1,4 @@
+#Home
 welcome: Welcome
 revenue: Revenue
 global: Global
@@ -15,6 +16,7 @@ in_progress: In progress
 expired: Expired
 my_recent_products: My latest products
 in_brief: Your company at a glance
+#Navbar
 home: Home
 billing: Billing
 estimates: Estimates
@@ -23,3 +25,19 @@ reports: Reports
 payments: Payments
 company: Company
 logout: Logout
+#Categories
+delete: Delete
+confirm_delete: Are you sure you want to delete this item?
+save: Save
+category_edit: Edit Category
+back_to_list: Back to list
+category: Category
+categories: Categories
+name: Name
+description: Descriptions
+createdat: Created at
+actions: Actions
+show: Show
+edit: Edit
+no_records: No records found
+new_category: New Category
