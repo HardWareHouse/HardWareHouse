@@ -27,9 +27,9 @@ class PdfService
         ]);
     }
 
-    public function generateBinaryPDF($html) {
+    public function generatePdfContent($html) {
         $this->domPdf->loadHtml($html);
         $this->domPdf->render();
-        $this->domPdf->output();
+        return $this->domPdf->output(['Attachement' => true]);
     }
 }
