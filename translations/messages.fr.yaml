@@ -78,3 +78,10 @@ company_edit: Modifier Entreprise
 companies: Entreprises
 tax_info: Information fiscale
 company_new: Create new company
+#Facture
+invoice_modify: Modifier la facture
+invoice_list: Liste des factures
+invoice_new: Ajouter une nouvelle facture
+duedate: Date de paiement due
+no_invoice: Aucune facture trouvée
+invoice: Facture

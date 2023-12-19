@@ -77,3 +77,10 @@ click_here: Click here!
 company_edit: Edit Company
 companies: Companies
 tax_info: Tax information
+#Invoice
+invoice_modify: Modify invoice
+invoice_list: Invoices
+invoice_new: Add a new invoice
+duedate: Due date
+no_invoice: No invoice found
+invoice: Invoice
