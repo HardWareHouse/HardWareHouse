@@ -15,7 +15,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use App\Repository\EntrepriseRepository;
 
-#[Route('/produit')]
+#[Route('/{_locale<%app.supported_locales%>}/produit')]
 #[IsGranted('ROLE_USER')]
 class ProduitController extends AbstractController
 {   

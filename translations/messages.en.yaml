@@ -1,3 +1,4 @@
+#Home
 welcome: Welcome
 revenue: Revenue
 global: Global
@@ -14,7 +15,8 @@ my_estimates: My estimates
 in_progress: In progress
 expired: Expired
 my_recent_products: My latest products
-in_brief: Your company in a glance
+in_brief: Your company at a glance
+#Navbar
 home: Home
 billing: Billing
 estimates: Estimates
@@ -23,3 +25,75 @@ reports: Reports
 payments: Payments
 company: Company
 logout: Logout
+#Categories
+delete: Delete
+confirm_delete: Are you sure you want to delete this item?
+save: Save
+category_edit: Edit Category
+back_to_list: Back to list
+category: Category
+categories: Categories
+name: Name
+description: Descriptions
+createdat: Created at
+actions: Actions
+show: Show
+edit: Edit
+no_records: No records found
+new_category: New Category
+#Client
+client_modification: Modify a client
+client_list: Client list
+add_client: Add a new client
+address: Address
+email: Email
+telephone: Telephone
+no_client: No clients found
+new_client: New client
+client_details: Client details
+#Estimates
+created_on: Created on
+status: Status
+estimate_details: Estimate details
+add: Add
+estimate_edit: Modify estimate
+estimate_list: Estimates
+estimate_new: Create a new estimate
+estimate: Estimates
+number: Number
+total: Total
+no_estimate: No estimates found
+expires: Expires on
+billing_info: Billing information
+shipping_info: Shipping information
+payment_method: Payment method
+item: Item
+price: Price
+#Email
+email_header: Welcome to the family %username%!
+email_body: Thank you for signing up on our website. Please click on the link below to activate your account.
+click_here: Click here!
+#Company
+company_edit: Edit Company
+companies: Companies
+tax_info: Tax information
+#Invoice
+invoice_modify: Modify invoice
+invoice_list: Invoices
+invoice_new: Add a new invoice
+duedate: Due date
+no_invoice: No invoice found
+invoice: Invoice
+#Payment
+payment_modify: Modify payment
+payment_new: Add a new payment
+payment_date: Date and time of payment
+no_payment: No payments found.
+payment_details: Payment details
+#Product
+product_modify: Modify product
+product_new: Add a product
+stock: Stock
+no_product: No products found
+product: Producte
+product_details: Product details

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/categorie')]
+#[Route('/{_locale<%app.supported_locales%>}/categorie')]
 #[IsGranted('ROLE_USER')]
 class CategorieController extends AbstractController
 {   

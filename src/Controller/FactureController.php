@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/facture')]
+#[Route('/{_locale<%app.supported_locales%>}/facture')]
 #[IsGranted('ROLE_USER')]
 class FactureController extends AbstractController
 {

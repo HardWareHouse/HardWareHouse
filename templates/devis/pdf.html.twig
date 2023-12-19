@@ -1,40 +1,40 @@
 {% block body %}
     <div style="max-width: 640px; margin: auto; padding: 40px; background: white; box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.1);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
-            <h1 style="font-size: 24px; font-weight: bold;">Devis {{ devis.numero }}</h1>
+            <h1 style="font-size: 24px; font-weight: bold;">{{'estimate'|trans}} {{ devis.numero }}</h1>
             <img src="../../public/assets/icon/hwh_logo.png" alt="Logo" style="height: 80px;">
         </div>
         <div style="margin-bottom: 32px;">
             <div style="font-size: 14px;">
-                Créée: {{ devis.dateCreation ? devis.dateCreation|date('d/m/Y') : '' }}<br>
-                Échéance: {{ devis.CreatedAt ? devis.CreatedAt|date('d/m/Y') : '' }}
+                {{'created_on'|trans}}: {{ devis.dateCreation ? devis.dateCreation|date('d/m/Y') : '' }}<br>
+                {{'expires'|trans}}: {{ devis.CreatedAt ? devis.CreatedAt|date('d/m/Y') : '' }}
             </div>
         </div>
 {#        <div style="display: flex; margin-bottom: 40px; flex-direction: row;">#}
 {#            <div>#}
-{#                <h2 style="font-weight: bold;">Facturé à</h2>#}
+{#                <h2 style="font-weight: bold;">{{'billing_info'|trans}}</h2>#}
 {#                <p>{{ entreprise.nom }}</p>#}
 {#                <p>{{ entreprise.informationFiscale }}</p>#}
 {#                <p>{{ entreprise.adresse }}</p>#}
 {#            </div>#}
 {#            <div>#}
-{#                <h2 style="font-weight: bold;">Envoyé à</h2>#}
+{#                <h2 style="font-weight: bold;">{{'shipping_info'|trans}}</h2>#}
 {#                <p>{{ entreprise.nom }}</p>#}
 {#                <p>{{ entreprise.informationFiscale }}</p>#}
 {#                <p>{{ entreprise.adresse }}</p>#}
 {#            </div>#}
 {#        </div>#}
         <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #e5e7eb;">
-            <span style="font-weight: bold;">Méthode de paiement</span>
+            <span style="font-weight: bold;">{{'payment_method'|trans}}</span>
             <span>{{ devis.status }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #f3f4f6;">
-            <span style="font-weight: bold;">Montant</span>
+            <span style="font-weight: bold;">{{'amount'|trans}}</span>
             <span>{{ devis.total }}€</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 2px solid #e5e7eb;">
-            <span style="color: #4b5563;">Item</span>
-            <span style="color: #4b5563;">Prix</span>
+            <span style="color: #4b5563;">{{'item'|trans}}</span>
+            <span style="color: #4b5563;">{{'price'|trans}}</span>
 {#        {% for produit in produits %}#}
 {#            <div style="display: flex; justify-content: space-between; padding: 8px;">#}
 {#                <span>{{ produit.nom }}</span>#}
@@ -42,7 +42,7 @@
 {#            </div>#}
 {#        {% endfor %}#}
         <div style="display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 2px solid #e5e7eb;">
-            <span style="font-size: 18px; font-weight: bold;">Total</span>
+            <span style="font-size: 18px; font-weight: bold;">{{'total'|trans}}</span>
             <span style="font-size: 18px; font-weight: bold;">{{ devis.total }}€</span>
         </div>
     </div>
