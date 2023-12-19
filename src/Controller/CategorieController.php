@@ -28,7 +28,7 @@ class CategorieController extends AbstractController
     private function checkUserAccessToCategorie($userEntreprise, $categorie): ?Response
     {
         $categorieEntreprise = $categorie->getEntrepriseId();
-        if ($userEntreprise->getId() !== $categorieEntreprise->getId()) {
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $categorieEntreprise->getId()) {
             $this->addFlash(
                 'danger',
                 'Vous ne pouvez pas accéder à cette categorie!'

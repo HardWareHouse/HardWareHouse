@@ -32,7 +32,7 @@ class FactureController extends AbstractController
     private function checkUserAccessToFacture($userEntreprise, $facture): ?Response
     {
         $factureEntreprise = $facture->getEntrepriseId();
-        if ($userEntreprise->getId() !== $factureEntreprise->getId()) {
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $factureEntreprise->getId()) {
             $this->addFlash(
                 'danger',
                 'Vous ne pouvez pas accéder à cette facture!'

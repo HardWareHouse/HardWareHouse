@@ -32,7 +32,7 @@ class DevisController extends AbstractController
     private function checkUserAccessToDevis($userEntreprise, $devi): ?Response
     {
         $devisEntreprise = $devi->getEntrepriseId();
-        if ($userEntreprise->getId() !== $devisEntreprise->getId()) {
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devisEntreprise->getId()) {
             $this->addFlash(
                 'danger',
                 'Vous ne pouvez pas accéder à ce devis!'
