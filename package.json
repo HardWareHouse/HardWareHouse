@@ -25,6 +25,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "echarts": "^5.4.3",
         "flag-icons": "^7.1.0"
     }
 }
