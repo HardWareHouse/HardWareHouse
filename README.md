@@ -1,4 +1,4 @@
-# 0HardWareHouse
+# HardWareHouse
 
 ### Description du projet
 
