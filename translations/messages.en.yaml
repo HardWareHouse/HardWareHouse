@@ -84,3 +84,9 @@ invoice_new: Add a new invoice
 duedate: Due date
 no_invoice: No invoice found
 invoice: Invoice
+#Payment
+payment_modify: Modify payment
+payment_new: Add a new payment
+payment_date: Date and time of payment
+no_payment: No payments found.
+payment_details: Payment details

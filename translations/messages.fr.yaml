@@ -85,3 +85,9 @@ invoice_new: Ajouter une nouvelle facture
 duedate: Date de paiement due
 no_invoice: Aucune facture trouvée
 invoice: Facture
+#Paiement
+payment_modify: Modifier le paiement
+payment_new: Ajouter un nouveau paiement
+payment_date: Date et heure de paiement
+no_payment: Il n'existe aucun paiement.
+payment_details: Détails du paiement

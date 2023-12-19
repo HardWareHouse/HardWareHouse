@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paiements{% endblock %}
+{% block title %}{{'payments'|trans}}{% endblock %}
 
 {% block content %}
 <div class="container mx-auto my-8">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">Liste des paiements</h1>
+        <h1 class="text-2xl font-semibold text-gray-700">{{'payments'|trans}}</h1>
         <a href="{{ path('app_paiement_new') }}"
             class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-            <i class="fas fa-plus mr-2"></i> Ajouter un nouveau paiement
+            <i class="fas fa-plus mr-2"></i> {{'payment_new'|trans}}
         </a>
     </div>
 
@@ -16,10 +16,10 @@
         <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6">Date et heure de paiement</th>
-                    <th scope="col" class="py-3 px-6">Montant</th>
-                    <th scope="col" class="py-3 px-6">Methode de paiement</th>
-                    <th scope="col" class="py-3 px-6">Actions</th>
+                    <th scope="col" class="py-3 px-6">{{'payment_date'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'amount'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'payment_method'|trans}}</th>
+                    <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -47,7 +47,7 @@
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="5" class="py-4 px-6 text-center">Il n'existe aucun paiement.</td>
+                    <td colspan="5" class="py-4 px-6 text-center">{{'no_payment'|trans}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
