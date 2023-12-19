@@ -56,7 +56,7 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $facture = $form->getData();
             $facture->setEntrepriseId($this->userEntreprise);
-            $client = $facture->getClientId();
+//            $client = $facture->getClientId();
 
             $this->entityManager->persist($facture);
             $this->entityManager->flush();
@@ -64,12 +64,12 @@ class FactureController extends AbstractController
             // Générer le contenu du PDF
             $html = $this->renderView('facture/pdf.html.twig', [
                 'facture' => $facture,
-                'client' => $client,
             ]);
-            $pdfContent = $pdfService->showPdfFile($html);
+            $pdfContent = $pdfService->generatePdfContent($html);
+
 
             // Créer l'email
-            $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
+            $userEmail = $this->getUser()->getMail();
             $email = (new Email())
                 ->from('facture@hardwarehouse.com')
                 ->to($userEmail)

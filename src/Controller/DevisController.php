@@ -56,15 +56,15 @@ class DevisController extends AbstractController
             $devi = $form->getData();
             $devi->setEntrepriseId($this->userEntreprise);
 
-            $entityManager->persist($devi);
-            $entityManager->flush();
+            $this->entityManager->persist($devi);
+            $this->entityManager->flush();
 
             // Générer le contenu du PDF
             $html = $this->renderView('devis/pdf.html.twig', [
                 'devis' => $devi,
                 'entreprise' => $this->userEntreprise,
             ]);
-            $pdfContent = $pdfService->showPdfFile($html);
+            $pdfContent = $pdfService->generatePdfContent($html);
 
             // Créer l'email
             $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
