@@ -24,7 +24,7 @@ class RegistrationFormType extends AbstractType
             ->add('entreprise', EntityType::class, [
                 'class' => 'App\Entity\Entreprise',
                 'choice_label' => 'nom',
-                'placeholder' => 'Choisisser votre entreprise', 
+                'placeholder' => 'Choisissez votre entreprise', 
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -39,11 +39,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez saisir un mot-de-passe',
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères',
                         'max' => 4096,
                     ]),
                 ],
