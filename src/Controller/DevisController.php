@@ -29,6 +29,19 @@ class DevisController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+    private function checkUserAccessToDevis($userEntreprise, $devi): ?Response
+    {
+        $devisEntreprise = $devi->getEntrepriseId();
+        if ($userEntreprise->getId() !== $devisEntreprise->getId()) {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas accéder à ce devis!'
+            );
+            return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return null;
+    }
+
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
     {   
@@ -89,7 +102,13 @@ class DevisController extends AbstractController
 
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
     public function show(Devis $devi): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
+        if ($response !== null) {
+            return $response;
+        }
+
         return $this->render('devis/show.html.twig', [
             'devi' => $devi,
         ]);
@@ -98,6 +117,11 @@ class DevisController extends AbstractController
     #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
     public function downloadPdf(Entreprise $entreprise, Devis $devis, PdfService $pdfService): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devis);
+        if ($response !== null) {
+            return $response;
+        }
 
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devis,
@@ -113,7 +137,13 @@ class DevisController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Devis $devi): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
+        if ($response !== null) {
+            return $response;
+        }
+
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
 
@@ -132,6 +162,12 @@ class DevisController extends AbstractController
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
     public function delete(Request $request, Devis $devi): Response
     {
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
+        if ($response !== null) {
+            return $response;
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($devi);
             $this->entityManager->flush();

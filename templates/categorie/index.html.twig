@@ -36,4 +36,9 @@
     </table>
 
     <a href="{{ path('app_categorie_new') }}">Create new</a>
+    {% for message in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger">
+            <p>Message flash: {{ message }}</p>
+        </div>
+    {% endfor %}
 {% endblock %}

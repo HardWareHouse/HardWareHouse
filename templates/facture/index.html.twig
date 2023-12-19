@@ -62,6 +62,11 @@
             </tbody>
         </table>
     </div>
+    {% for message in app.session.flashbag.get('danger') %}
+        <div class="alert alert-danger">
+            <p>Message flash: {{ message }}</p>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
