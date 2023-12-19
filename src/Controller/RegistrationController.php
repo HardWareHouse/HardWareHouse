@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
+    #[Route('/{_locale<%app.supported_locales%>}/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {
         $user = $this->getUser();
@@ -81,7 +81,7 @@ class RegistrationController extends AbstractController
 
     }
 
-    #[Route('/register/cgu', name: 'app_cgu')]
+    #[Route('/{_locale<%app.supported_locales%>}/register/cgu', name: 'app_cgu')]
     public function cgu(): Response
     {
         return $this->render('registration/cgu.html.twig');

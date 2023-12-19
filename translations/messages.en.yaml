@@ -97,3 +97,51 @@ stock: Stock
 no_product: No products found
 product: Producte
 product_details: Product details
+#Reports
+financial_reports: Financial Reports
+#CGU
+cgu: Terms and Conditions
+intro: Introduction
+intro_text: Welcome to HardwareHouse, your platform for selling computer components. By using our service, you agree to the terms and conditions set forth in this document.
+usage: Using the Service
+usage_text: HardwareHouse is subject to certain conditions. It is forbidden to resell our services or to use them for illegal purposes.
+accounts: Accounts and Registration
+accounts_text: To access certain services, you must create an account. You are responsible for the security of your account and the confidentiality of your information.
+privacy: Privacy Policy
+privacy_text: We take your privacy seriously. Please read our privacy policy to understand how we collect and use your information.
+intprop: Intellectual Property
+intprop_text: HardwareHouse content, including trademarks, logos and copyrighted material, is the property of HardwareHouse or its licensors.
+responsibility: Limitation of Liability
+responsibility_text: HardwareHouse shall not be liable for any consequential damages resulting from the use of the service. No warranty is provided as to the performance of the service.
+cgu_modifications: Modifications to the Service and T&Cs
+cgu_modifications_text: We reserve the right to modify the service and these TOS at any time. Users will be notified of major changes.
+conflicts: Resolution of Conflicts
+conflicts_text: In the event of a dispute, the parties will endeavor to resolve the dispute amicably. The TOS are governed by the laws of the country where HardwareHouse is based.
+contact: Contact
+contact_text: For any question or issue, please contact hardwarehouse@assistance.fr.
+#Registration
+registration: Registeration
+password: Password
+signup: Signup
+already_user: Already have an account?
+login: Login
+i_accept: I accept the
+#Password Reset
+reset_sent: Password reset email sent
+reset_sent_text: If an account matching your email exists, an email has just been sent containing a link you can use to reset your password. This link will expire in %token%.
+reset_error: If you don't receive an email, please check your spam folder, or
+retry: try again
+hello: Hello!
+reset_message: To reset your password, please click the following link
+link_expiration: This link will expire in %token%
+sincerely: Sincerely
+reset_password: Reset your password
+reset_password_email: Enter your email address and we will send you a link to reset your password.
+send_email: Send email
+new_password: New password
+repeat_password: Repeat the new password
+#Login
+user_connected: You are connected as %user%
+rememberme: Remember me
+forgot_password: Forgot your password?
+no_account: Don't have an account?

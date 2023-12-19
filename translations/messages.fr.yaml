@@ -33,7 +33,7 @@ category_edit: Modifier la categorie
 back_to_list: Retourner à la liste
 category: Categorie
 categories: Categories
-name: Name
+name: Nom
 description: Description
 createdat: Créé à
 actions: Actions
@@ -98,3 +98,51 @@ stock: Stock
 no_product: Aucun produit trouvé
 product: Produit
 product_details: Détails du produit
+#Reports
+financial_reports: Rapports Financières
+#CGU
+cgu: Conditions Générales d'Utilisation
+intro: Introduction
+intro_text: Bienvenue sur HardwareHouse, votre plateforme dédiée à la vente de composants informatiques. En utilisant notre service, vous acceptez les termes et conditions énoncés dans ce document.
+usage: Utilisation du Service
+usage_text: L'utilisation de HardwareHouse est soumise à certaines conditions. Il est interdit de revendre nos services ou de les utiliser à des fins illégales.
+accounts: Comptes et Inscription
+accounts_text: Pour accéder à certains services, vous devez créer un compte. Vous êtes responsable de la sécurité de votre compte et de la confidentialité de vos informations.
+privacy: Politique de Confidentialité
+privacy_text: Nous prenons la confidentialité au sérieux. Veuillez consulter notre politique de confidentialité pour comprendre comment nous collectons et utilisons vos informations.
+intprop: Propriété Intellectuelle
+intprop_text: Le contenu de HardwareHouse, y compris les marques, logos et tout matériel protégé par le droit d'auteur, appartient à HardwareHouse ou à ses licenciés.
+responsibility: Limitation de Responsabilité
+responsibility_text: HardwareHouse ne peut être tenu responsable des dommages indirects résultant de l'utilisation du service. Aucune garantie n'est fournie quant à la performance du service.
+cgu_modifications: Modifications du Service et des CGU
+cgu_modifications_text: Nous nous réservons le droit de modifier le service et ces CGU à tout moment. Les utilisateurs seront informés des changements majeurs.
+conflicts: Résolution des Conflits
+conflicts_text: En cas de litige, les parties s'efforceront de résoudre le conflit à l'amiable. Les CGU sont régies par les lois du pays où est basée HardwareHouse.
+contact: Contact
+contact_text: Pour toute question ou problème, veuillez nous contacter à hardwarehouse@assistance.fr.
+#Inscription
+registration: Inscription
+password: Mot de passe
+signup: S'inscrire
+already_user: Déjà inscrit ?
+login: Connectez-vous
+i_accept: J'accepte les
+#Password Reset
+reset_sent: Email de Réinitialisation du Mot de Passe Envoyé
+reset_sent_text: Si un compte correspondant à votre email existe, un email vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans %token%
+reset_error: Si vous ne recevez pas d'email, veuillez vérifier votre dossier spam ou
+retry: réessayer
+hello: Bonjour !
+reset_message: Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant
+link_expiration: Ce lien expirera dans %token%
+sincerely: Cordialement !
+reset_password: Réinitialiser votre mot de passe
+reset_password_email: Saisissez votre adresse mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+send_email: Envoyer un email
+new_password: Nouveau mot de passe
+repeat_password: Répéter le mote de passe
+#Login
+user_connected: Vous êtes connectées en tant que %user%
+rememberme: Se souvenir de moi
+forgot_password: Mot de passe oublié ?
+no_account: Vous ne possédez pas de compte ?
