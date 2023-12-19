@@ -33,7 +33,7 @@ class ProduitController extends AbstractController
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $produitEntreprise->getId()) {
             $this->addFlash(
                 'danger',
-                'Vous ne pouvez pas accéder à ce produit!'
+                'Vous ne pouvez pas accéder à ce produit !'
             );
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }

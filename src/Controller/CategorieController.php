@@ -31,7 +31,7 @@ class CategorieController extends AbstractController
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $categorieEntreprise->getId()) {
             $this->addFlash(
                 'danger',
-                'Vous ne pouvez pas accéder à cette categorie!'
+                'Vous ne pouvez pas accéder à cette categorie !'
             );
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -31,7 +31,7 @@ class ClientController extends AbstractController
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $clientEntreprise->getId()) {
             $this->addFlash(
                 'danger',
-                'Vous ne pouvez pas accéder à ce client!'
+                'Vous ne pouvez pas accéder à ce client !'
             );
             return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
         }
