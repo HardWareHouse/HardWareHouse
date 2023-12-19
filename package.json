@@ -25,6 +25,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "datatables": "^1.10.18",
+        "datatables.net-dt": "^1.13.8",
         "flag-icons": "^7.1.0"
     }
 }
