@@ -90,3 +90,10 @@ payment_new: Add a new payment
 payment_date: Date and time of payment
 no_payment: No payments found.
 payment_details: Payment details
+#Product
+product_modify: Modify product
+product_new: Add a product
+stock: Stock
+no_product: No products found
+product: Producte
+product_details: Product details

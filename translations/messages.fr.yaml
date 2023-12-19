@@ -91,3 +91,10 @@ payment_new: Ajouter un nouveau paiement
 payment_date: Date et heure de paiement
 no_payment: Il n'existe aucun paiement.
 payment_details: Détails du paiement
+#Product
+product_modify: Modifier le produit
+product_new: Ajouter un nouveau produit
+stock: Stock
+no_product: Aucun produit trouvé
+product: Produit
+product_details: Détails du produit
