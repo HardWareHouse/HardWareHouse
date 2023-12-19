@@ -127,3 +127,22 @@ signup: S'inscrire
 already_user: Déjà inscrit ?
 login: Connectez-vous
 i_accept: J'accepte les
+#Password Reset
+reset_sent: Email de Réinitialisation du Mot de Passe Envoyé
+reset_sent_text: Si un compte correspondant à votre email existe, un email vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans %token%
+reset_error: Si vous ne recevez pas d'email, veuillez vérifier votre dossier spam ou
+retry: réessayer
+hello: Bonjour !
+reset_message: Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant
+link_expiration: Ce lien expirera dans %token%
+sincerely: Cordialement !
+reset_password: Réinitialiser votre mot de passe
+reset_password_email: Saisissez votre adresse mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+send_email: Envoyer un email
+new_password: Nouveau mot de passe
+repeat_password: Répéter le mote de passe
+#Login
+user_connected: Vous êtes connectées en tant que %user%
+rememberme: Se souvenir de moi
+forgot_password: Mot de passe oublié ?
+no_account: Vous ne possédez pas de compte ?

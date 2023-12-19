@@ -20,7 +20,7 @@ use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-#[Route('/{_locale<%app.supported_locales%>}/reset-password') ]
+#[Route(path:'/{_locale<%app.supported_locales%>}/reset-password')]
 class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
@@ -44,7 +44,8 @@ class ResetPasswordController extends AbstractController
             return $this->processSendingPasswordResetEmail(
                 $form->get('mail')->getData(),
                 $mailer,
-                $translator
+                $translator,
+                $request
             );
         }
 
@@ -130,7 +131,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
+    private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator, Request $request): RedirectResponse
     {
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'mail' => $emailFormData,
@@ -138,7 +139,7 @@ class ResetPasswordController extends AbstractController
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('app_check_email', ['_locale' => $request->getLocale()]);
         }
 
         try {

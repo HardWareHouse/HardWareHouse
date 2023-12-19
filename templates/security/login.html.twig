@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{{'login'|trans}}{% endblock %}
 
 {% block body %}
 <div class="flex h-screen">
@@ -64,21 +64,21 @@
 
         {% if app.user %}
         <div class="mb-3">
-            Vous êtes connectées en tant que {{ app.user.userIdentifier }}, <a
-                href="{{ path('app_logout') }}">Deconnexion</a>
+        {{ 'user_connected'|trans({'%user%': app.user.userIdentifier}) }}, <a
+                href="{{ path('app_logout') }}">{{'logout'|trans}}</a>
         </div>
         {% endif %}
 
-        <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">Connexion</h1>
+        <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">{{'login'|trans}}</h1>
         <form action="{{ path('app_login') }}" method="post">
             <div class="mb-4">
-                <label for="inputEmail" class="block text-lg mb-2 text-blue-600">Email</label>
+                <label for="inputEmail" class="block text-lg mb-2 text-blue-600">{{'email'|trans}}</label>
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" required
                     class="w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500"
                     autocomplete="username" autofocus>
             </div>
             <div class="mb-4">
-                <label for="inputPassword" class="block text-lg mb-2 text-blue-600">Mot de passe</label>
+                <label for="inputPassword" class="block text-lg mb-2 text-blue-600">{{'password'|trans}}</label>
                 <input type="password" name="password" id="inputPassword" required
                     class="w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500"
                     autocomplete="current-password">
@@ -89,19 +89,17 @@
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center">
                     <input type="checkbox" id="remember_me" name="_remember_me" class="mr-2">
-                    <label for="remember_me" class="text-sm text-blue-600">Se souvenir de moi</label>
+                    <label for="remember_me" class="text-sm text-blue-600">{{'rememberme'|trans}}</label>
                 </div>
-                <a href="/reset-password" class="text-sm text-blue-600 hover:underline">Mot de passe
-                    oublié ?</a>
+                <a href="{{ path('app_forgot_password_request', {'_locale': app.request.locale}) }}" class="text-sm text-blue-600 hover:underline">{{'forgot_password'|trans}}</a>
             </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700">Se
-                connecter</button>
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700">{{'login'|trans}}</button>
         </form>
 
         <p class="mt-4 text-center ">
-            Vous ne possédez pas de compte ?
-            <a href="{{ path('app_register') }}" class="text-blue-600 hover:underline">Inscrivez-vous</a>
+            {{'no_account'|trans}}
+            <a href="{{ path('app_register') }}" class="text-blue-600 hover:underline">{{'signup'|trans}}</a>
         </p>
     </div>
 </div>
