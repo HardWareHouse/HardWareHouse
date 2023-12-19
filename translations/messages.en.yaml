@@ -69,6 +69,11 @@ shipping_info: Shipping information
 payment_method: Payment method
 item: Item
 price: Price
+#Email
 email_header: Welcome to the family %username%!
 email_body: Thank you for signing up on our website. Please click on the link below to activate your account.
 click_here: Click here!
+#Company
+company_edit: Edit Company
+companies: Companies
+tax_info: Tax information

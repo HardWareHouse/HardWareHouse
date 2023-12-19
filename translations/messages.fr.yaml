@@ -69,7 +69,12 @@ shipping_info: Envoyé à
 payment_method: Méthode de paiement
 item: Objet
 price: Prix
-#emails
+#Emails
 email_header: Welcome %username% dans la famille !
 email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
 click_here: Cliquez ici !
+#Entreprise
+company_edit: Modifier Entreprise
+companies: Entreprises
+tax_info: Information fiscale
+company_new: Create new company
