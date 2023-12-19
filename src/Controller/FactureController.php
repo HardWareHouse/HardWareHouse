@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/facture')]
+#[Route('/{_locale<%app.supported_locales%>}/facture')]
 #[IsGranted('ROLE_USER')]
 class FactureController extends AbstractController
 {
@@ -27,6 +27,19 @@ class FactureController extends AbstractController
     {
         $this->authorizationChecker = $authorizationChecker;
         $this->entityManager = $entityManager;
+    }
+
+    private function checkUserAccessToFacture($userEntreprise, $facture): ?Response
+    {
+        $factureEntreprise = $facture->getEntrepriseId();
+        if ($userEntreprise->getId() !== $factureEntreprise->getId()) {
+            $this->addFlash(
+                'danger',
+                'Vous ne pouvez pas accéder à cette facture!'
+            );
+            return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return null;
     }
 
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
@@ -56,7 +69,7 @@ class FactureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $facture = $form->getData();
             $facture->setEntrepriseId($this->userEntreprise);
-//            $client = $facture->getClientId();
+            //$client = $facture->getClientId();
 
             $this->entityManager->persist($facture);
             $this->entityManager->flush();
@@ -92,14 +105,25 @@ class FactureController extends AbstractController
 
     #[Route('/{id}', name: 'app_facture_show', methods: ['GET'])]
     public function show(Facture $facture): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
+        if ($response !== null) {
+            return $response;
+        }
+
         return $this->render('facture/show.html.twig', [
             'facture' => $facture,
         ]);
     }
     #[Route('/{id}/pdf', name: 'app_facture_pdf', methods: ['GET'])]
     public function downloadPdf(Client $client, Facture $facture, PdfService $pdfService): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
+        if ($response !== null) {
+            return $response;
+        }
 
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
@@ -115,7 +139,13 @@ class FactureController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_facture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facture $facture): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
+        if ($response !== null) {
+            return $response;
+        }
+
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
 
@@ -133,7 +163,13 @@ class FactureController extends AbstractController
 
     #[Route('/{id}', name: 'app_facture_delete', methods: ['POST'])]
     public function delete(Request $request, Facture $facture): Response
-    {
+    {   
+        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
+        if ($response !== null) {
+            return $response;
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$facture->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($facture);
             $this->entityManager->flush();
