@@ -30,7 +30,7 @@ class ProduitController extends AbstractController
     private function checkUserAccessToProduit($userEntreprise, $produit): ?Response
     {
         $produitEntreprise = $produit->getEntrepriseId();
-        if ($userEntreprise->getId() !== $produitEntreprise->getId()) {
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $produitEntreprise->getId()) {
             $this->addFlash(
                 'danger',
                 'Vous ne pouvez pas accéder à ce produit!'

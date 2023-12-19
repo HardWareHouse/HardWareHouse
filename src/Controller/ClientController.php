@@ -28,7 +28,7 @@ class ClientController extends AbstractController
     private function checkUserAccessToClient($userEntreprise, $client): ?Response
     {
         $clientEntreprise = $client->getEntrepriseId();
-        if ($userEntreprise->getId() !== $clientEntreprise->getId()) {
+        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $clientEntreprise->getId()) {
             $this->addFlash(
                 'danger',
                 'Vous ne pouvez pas accéder à ce client!'
