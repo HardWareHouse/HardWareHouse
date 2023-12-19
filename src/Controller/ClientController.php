@@ -40,7 +40,7 @@ class ClientController extends AbstractController
 
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
-    {  
+    { 
         if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             return $this->render('client/index.html.twig', [
                 'clients' => $clientRepository->findAll(),
@@ -79,7 +79,7 @@ class ClientController extends AbstractController
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response
-    {   
+    {
         $this->userEntreprise = $this->getUser()->getEntreprise();
         $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
         if ($response !== null) {

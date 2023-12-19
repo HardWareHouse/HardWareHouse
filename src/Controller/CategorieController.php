@@ -62,7 +62,7 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categorie = getData();
+            $categorie = $form->getData();
             $categorie->setEntrepriseId($this->userEntreprise);
             $this->entityManager->persist($categorie);
             $this->entityManager->flush();
