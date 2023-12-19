@@ -51,3 +51,21 @@ telephone: Téléphone
 no_client: Aucun client trouvé
 new_client: Nouveau client
 client_details: Détails du client
+#Devis
+created_on: Créé le
+status: Statut
+estimate_details: Détails du devis
+add: Ajouter
+estimate_edit: Modifier le devis
+estimate_list: Liste des devis
+estimate_new: Créer un nouveau devis
+estimate: Devis
+number: Numéro
+total: Total
+no_estimate: Aucun devis trouvé
+expires: Échéance
+billing_info: Facturé à
+shipping_info: Envoyé à
+payment_method: Méthode de paiement
+item: Objet
+price: Prix

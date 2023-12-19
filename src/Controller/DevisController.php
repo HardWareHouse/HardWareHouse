@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/devis')]
+#[Route('/{_locale<%app.supported_locales%>}/devis')]
 #[IsGranted('ROLE_USER')]
 class DevisController extends AbstractController
 {
