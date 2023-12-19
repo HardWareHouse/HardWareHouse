@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-#[Route('/client')]
+#[Route('/{_locale<%app.supported_locales%>}/client')]
 #[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {   

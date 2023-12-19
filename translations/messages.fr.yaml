@@ -41,3 +41,13 @@ show: Afficher
 edit: Modifier
 no_records: Aucun résultat
 new_category: Nouvelle Categorie
+#Client
+client_modification: Modification du client
+client_list: Liste des clients
+add_client: Ajouter un nouveau client
+address: Adresse
+email: Email
+telephone: Téléphone
+no_client: Aucun client trouvé
+new_client: Nouveau client
+client_details: Détails du client
