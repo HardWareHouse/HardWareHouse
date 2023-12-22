@@ -35,7 +35,7 @@ class FactureController extends AbstractController
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $factureEntreprise->getId()) {
             $this->addFlash(
                 'danger',
-                'Vous ne pouvez pas accéder à cette facture !'
+                'La requête que vous essayez de faire est illégal !'
             );
             return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
         }

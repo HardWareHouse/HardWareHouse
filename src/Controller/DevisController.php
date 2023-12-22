@@ -35,7 +35,7 @@ class DevisController extends AbstractController
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devisEntreprise->getId()) {
             $this->addFlash(
                 'danger',
-                'Vous ne pouvez pas accéder à ce devis !'
+                'La requête que vous essayez de faire est illégal !'
             );
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
         }
