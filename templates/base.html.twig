@@ -13,13 +13,17 @@
         {% endblock %}
     </head>
 
-    <body>
-        {% block body %}
+    <body class="flex h-screen">
+    {% block body %}
+        <!-- Sidebar -->
+        <div class="flex-shrink-0 w-[250px]">
             {% include 'component/sidebar.html.twig' %}
-            <div style="margin-left:18%">
-                {% block content %}{% endblock %}
-            </div>
-        {% endblock %}
+        </div>
+        <!-- Contenu Principal -->
+        <div class="flex-grow min-w-0 pl-8">
+            {% block content %}{% endblock %}
+        </div>
+    {% endblock %}
     </body>
 
         {% block javascripts %}
