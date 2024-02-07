@@ -4,9 +4,16 @@
 
 {% block content %}
 
-        <div id="mainLineChart" style="width: 600px;height:400px;"></div>
-
+        <div id="methodesContainer">
+                <div id="methodes" style="width: 600px; height: 400px;"></div>
+                <div id="dropdownContainer"></div>
+                </div>
+        <div id="paiementsAnnee" style="width: 600px;height:400px;"></div>
+        
         {{ encore_entry_script_tags('line_chart') }}
 
-
+<script>
+    var paiementsData = {{ paiements | raw }};
+    
+</script>
 {% endblock %}

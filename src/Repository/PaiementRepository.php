@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Paiement;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Entreprise;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Paiement>
@@ -24,6 +25,16 @@ class PaiementRepository extends ServiceEntityRepository
 //    /**
 //     * @return Paiement[] Returns an array of Paiement objects
 //     */
+
+public function findPaiementsByEntreprise(Entreprise $entreprise): array
+    {
+        return $this->createQueryBuilder('p')
+            ->join('p.factureId', 'f')
+            ->where('f.entrepriseId = :entreprise')
+            ->setParameter('entreprise', $entreprise)
+            ->getQuery()
+            ->getResult();
+    }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('p')
