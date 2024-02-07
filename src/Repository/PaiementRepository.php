@@ -22,6 +22,20 @@ class PaiementRepository extends ServiceEntityRepository
         parent::__construct($registry, Paiement::class);
     }
 
+    public function getTotalPaiementsByEntrepriseId($entrepriseId)
+{
+    $qb = $this->createQueryBuilder('p');
+
+    $qb->select('SUM(p.montant) as totalPaiements')
+       ->where('p.entrepriseId = :entrepriseId')
+       ->setParameter('entrepriseId', $entrepriseId);
+
+    $query = $qb->getQuery();
+
+    // Execute the query and return the result
+    return $query->getSingleScalarResult();
+}
+
 //    /**
 //     * @return Paiement[] Returns an array of Paiement objects
 //     */

@@ -96,7 +96,7 @@ var revenue = echarts.init(document.getElementById("paiementsAnnee"));
 
 revenue.setOption({
   title: {
-    text: "Montant des paiements par mois",
+    text: "Totale des paiements par mois",
     left: "center", // Center the title
     top: 20, // Adjust top margin
   },
