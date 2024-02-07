@@ -44,15 +44,32 @@ methodes.setOption({
 // PAIEMENTS PAR MOIS/ANNEE
 var revenue = echarts.init(document.getElementById("paiementsAnnee"));
 
+// Initialize monthlyData object with all months set to 0 for all years
 var monthlyData = {};
+
+// Extract the unique years from the data
+var uniqueYears = [
+  ...new Set(
+    paiementsData.map((paiement) =>
+      new Date(paiement.datePaiement).getFullYear()
+    )
+  ),
+];
+
+// Initialize monthly data for each year
+uniqueYears.forEach((year) => {
+  for (var i = 1; i <= 12; i++) {
+    var monthKey = year + "-" + (i < 10 ? "0" + i : i);
+    monthlyData[monthKey] = 0;
+  }
+});
+
+// Iterate through payments and update monthly data
 paiementsData.forEach(function (paiement) {
   var date = new Date(paiement.datePaiement);
   var year = date.getFullYear();
   var month = date.getMonth() + 1; // Months are zero-based, so add 1
-  var key = year + "-" + month;
-  if (!monthlyData[key]) {
-    monthlyData[key] = 0;
-  }
+  var key = year + "-" + (month < 10 ? "0" + month : month); // Ensure month format is 'MM'
   monthlyData[key] += paiement.montant;
 });
 
@@ -60,7 +77,23 @@ paiementsData.forEach(function (paiement) {
 var xAxisData = Object.keys(monthlyData);
 var montantData = Object.values(monthlyData);
 
-// Create the line chart
+// Filter out future months from xAxisData and montantData
+var currentDate = new Date();
+var currentYear = currentDate.getFullYear();
+var currentMonth = currentDate.getMonth() + 1; // Add 1 because months are zero-based
+
+var filteredXAxisData = xAxisData.filter(function (yearMonth) {
+  var [year, month] = yearMonth.split("-");
+  return year < currentYear || (year == currentYear && month <= currentMonth);
+});
+
+var filteredMontantData = filteredXAxisData.map(function (yearMonth) {
+  return monthlyData[yearMonth];
+});
+
+// Create the line chart with filtered data
+var revenue = echarts.init(document.getElementById("paiementsAnnee"));
+
 revenue.setOption({
   title: {
     text: "Montant des paiements par mois",
@@ -77,7 +110,7 @@ revenue.setOption({
   },
   xAxis: {
     type: "category",
-    data: xAxisData,
+    data: filteredXAxisData,
   },
   yAxis: {
     type: "value",
@@ -85,10 +118,11 @@ revenue.setOption({
   series: [
     {
       type: "line",
-      data: montantData,
+      data: filteredMontantData,
     },
   ],
 });
+
 // Extract years from the dataset
 var years = [];
 xAxisData.forEach(function (yearMonth) {
@@ -141,7 +175,7 @@ if (years.length > 1) {
 }
 
 // Initially display only the data for the current year
-var initialFilteredData = xAxisData.filter(function (yearMonth) {
+var initialFilteredData = filteredXAxisData.filter(function (yearMonth) {
   return yearMonth.startsWith(currentYear);
 });
 var initialFilteredMontantData = initialFilteredData.map(function (yearMonth) {
@@ -156,4 +190,19 @@ revenue.setOption({
       data: initialFilteredMontantData,
     },
   ],
+});
+
+// Sort the xAxisData array based on year and month
+xAxisData.sort(function (a, b) {
+  // Split the year and month parts
+  var [yearA, monthA] = a.split("-");
+  var [yearB, monthB] = b.split("-");
+
+  // Compare years
+  if (yearA !== yearB) {
+    return yearA - yearB;
+  } else {
+    // If years are equal, compare months
+    return monthA - monthB;
+  }
 });

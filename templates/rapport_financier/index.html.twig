@@ -3,11 +3,14 @@
 {% block title %}Rapport Financiers{% endblock %}
 
 {% block content %}
-        <div id="methodesContainer">
-                <div id="methodes" style="width: 600px; height: 400px;"></div>
-                <div id="dropdownContainer"></div>
-                </div>
-        <div id="paiementsAnnee" style="width: 600px;height:400px;"></div>
+        <div id="methodes" style="width: 600px; height: 400px;"></div>
+
+        <div id="anneeContainer" class="flex flex-col w-fit">
+                <div id="dropdownContainer" class="self-end"></div>
+                <div id="paiementsAnnee" style="width: 900px;height:400px;"></div>
+        </div>
+
+        
         
         {{ encore_entry_script_tags('line_chart') }}
 
