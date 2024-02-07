@@ -1,10 +1,8 @@
-{% extends 'base.html.twig' %}
-
 {% block body %}
-<div class="bg-blue-600">
-
-  <div class="sidebar fixed top-0 bottom-0 lg:left-0 p-2 w-[300px] overflow-y-auto text-center bg-gray-900 ">
-    <div class="text-gray-100 text-xl">
+<div class=" dark:bg-blue-600">
+  <div class="sidebar fixed top-0 bottom-0 w-full left-0 p-2 overflow-y-auto text-center bg-[#101827] border-r-2 color-black bottom-0 top-0 md:w-72">
+    <div class="">
+    <div class="text-black text-xl">
       <div class="p-2.5 mt-1 flex items-center">
         <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.17 56" width="25%" height="25%">
           <defs>
@@ -55,112 +53,113 @@
             <path class="cls-1" d="m58.08,18.59s-4.84,3.62-11.08-.34" />
           </g>
         </svg>
-        <h1 class="font-bold text-gray-200 text-[15px] ml-3">HardWareHouse</h1>
-        <i class="bi bi-x cursor-pointer ml-28 " onclick="openSidebar()"></i>
+        <h1 class="font-bold text-white text-[15px] ml-3">HardWareHouse</h1>
+        <i class="bi bi-x cursor-pointer ml-28 text-white" onclick="openSidebar()"></i>
       </div>
       <div class="my-2 bg-gray-600 h-[1px]"></div>
     </div>
-    <a href="{{ path('app_home') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-house-door-fill"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'home'|trans}}</span>
-      </div>
-    </a>
-    {% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and not is_granted('ROLE_COMPTABLE') %}
-    <a href="{{ path('app_client_index') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-people"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">Clients</span>
-      </div>
-    </a>
-    {% endif %}
-    <a href="{{ path('app_facture_index') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-receipt"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'billing'|trans}}</span>
-      </div>
-    </a>
-    <a href="{{ path('app_devis_index') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-file-earmark-check"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'estimates'|trans}}</span>
-      </div>
-    </a>
-    {% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and not is_granted('ROLE_COMPTABLE') %}
-    <a href="{{ path('app_produit_index') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-
-        <i class="bi bi-bag"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'products'|trans}}</span>
-      </div>
-    </a>
-    {% endif %}
-    <a href="{{ path('app_categorie_index') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-
-        <i class="bi bi-tags"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'category'|trans}}</span>
-      </div>
-    </a>
-    {% if is_granted('ROLE_COMPTABLE') or is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('app_rapport_financier') }}">
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-book"></i>
-        <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'reports'|trans}}</span>
-      </div>
-    </a>
-      {% endif %}
-      <a href="{{ path('app_paiement_index') }}">
+      <a href="{{ path('app_home') }}">
         <div
           class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-          <i class="bi bi-currency-euro"></i>
-          <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'payments'|trans}}</span>
+          <i class="bi bi-house-door-fill"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'home'|trans}}</span>
         </div>
       </a>
-      {% if is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('app_entreprise_index') }}">
-          <div
-                  class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="bi bi-building"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'company'|trans}}</span>
-          </div>
-        </a>
-        <a href="{{ path('app_admin_index') }}">
+      {% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and not is_granted('ROLE_COMPTABLE') %}
+      <a href="{{ path('app_client_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-people"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">Clients</span>
+        </div>
+      </a>
+      {% endif %}
+      <a href="{{ path('app_facture_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-receipt"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'billing'|trans}}</span>
+        </div>
+      </a>
+      <a href="{{ path('app_devis_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-file-earmark-check"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'estimates'|trans}}</span>
+        </div>
+      </a>
+      {% if (is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')) and not is_granted('ROLE_COMPTABLE') %}
+      <a href="{{ path('app_produit_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+
+          <i class="bi bi-bag"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'products'|trans}}</span>
+        </div>
+      </a>
+      {% endif %}
+      <a href="{{ path('app_categorie_index') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+
+          <i class="bi bi-tags"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'category'|trans}}</span>
+        </div>
+      </a>
+      {% if is_granted('ROLE_COMPTABLE') or is_granted('ROLE_ADMIN') %}
+      <a href="{{ path('app_rapport_financier') }}">
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-book"></i>
+          <span class="text-[15px] ml-4 font-bold text-white">{{'reports'|trans}}</span>
+        </div>
+      </a>
+        {% endif %}
+        <a href="{{ path('app_paiement_index') }}">
           <div
             class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-            <i class="bi bi-gear"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Administration</span>
+            <i class="bi bi-currency-euro"></i>
+            <span class="text-[15px] ml-4 font-bold text-white">{{'payments'|trans}}</span>
           </div>
         </a>
-      {% endif %}
+        {% if is_granted("ROLE_ADMIN") %}
+          <a href="{{ path('app_entreprise_index') }}">
+            <div
+                    class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+              <i class="bi bi-building"></i>
+              <span class="text-[15px] ml-4 font-bold text-white">{{'company'|trans}}</span>
+            </div>
+          </a>
+          <a href="{{ path('app_admin_index') }}">
+            <div
+              class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+              <i class="bi bi-gear"></i>
+              <span class="text-[15px] ml-4 font-bold text-white">Administration</span>
+            </div>
+          </a>
+        {% endif %}
 
-      <div class="my-4 bg-gray-600 h-[1px]"></div>
-      <div
-        class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
-        <i class="bi bi-box-arrow-in-right"></i>
-        <a href="{{ path('app_logout') }}"><span class="text-[15px] ml-4 text-gray-200 font-bold">{{'logout'|trans}}</span></a>
-      </div>
+        <div class="my-4 bg-gray-600 h-[1px]"></div>
+        <div
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <a href="{{ path('app_logout') }}"><span class="text-[15px] ml-4 font-bold">{{'logout'|trans}}</span></a>
+        </div>
 
-      <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md dark:bg-red-700">
-          <ul class="text-white">
-            {% if app.request.locale == 'fr' %}
-              <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
-            {% else %}
-              <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'fr'}) }}"><span class="fi fi-fr me-1"></span> Français</a></li>
-            {% endif %}
-          </ul>
-      </div>
-    <button id="theme-toggle" type="button" class=" mt-10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-      <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-      <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
-    </button>
+        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center justify-center rounded-md dark:bg-red-700">
+            <ul class="text-white">
+              {% if app.request.locale == 'fr' %}
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
+              {% else %}
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'fr'}) }}"><span class="fi fi-fr me-1"></span> Français</a></li>
+              {% endif %}
+            </ul>
+        </div>
+      <button id="theme-toggle" type="button" class=" mt-10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+      </button>
+    </div>
   </div>
   <style>
     .bi-chevron-down::before {
@@ -171,7 +170,6 @@
   <script type="text/javascript">
     function openSidebar() {
       document.querySelector("#sidebar").classList.toggle("hidden");
-
     }
 
 

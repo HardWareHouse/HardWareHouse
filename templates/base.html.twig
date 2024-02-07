@@ -10,7 +10,6 @@
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
         {% endblock %}
 
         <script>
@@ -30,7 +29,7 @@
             {% include 'component/sidebar.html.twig' %}
         </div>
         <!-- Contenu Principal -->
-        <div class="flex-grow min-w-0">
+        <div class="flex-grow min-w-0 pl-6">
         <span class="absolute text-white text-4xl top-5 left-4 cursor-pointer z-0" onclick="openSidebar()">
                 <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
         </span>
@@ -45,6 +44,5 @@
         {{ encore_entry_script_tags('app') }}
             <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
             <script src="https://kit.fontawesome.com/26894fcbfe.js" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
         {% endblock %}
 </html>

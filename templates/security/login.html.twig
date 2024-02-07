@@ -3,8 +3,8 @@
 {% block title %}{{'login'|trans}}{% endblock %}
 
 {% block body %}
-<div class="flex h-screen">
-    <div class="w-3/5 bg-blue-500 flex items-center justify-center"> 
+<div class="flex h-screen w-full">
+    <div class="w-3/5 bg-blue-500 flex items-center justify-center hidden sm:block">
         <svg id="Layer_2"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60.17 56" width="50%" height="50%">
             <defs>
@@ -57,7 +57,7 @@
         </svg>
     </div>
 
-    <div class="w-2/5 flex flex-col justify-center px-12">
+    <div class="w-full flex flex-col justify-center px-12 sm:w-2/5">
         {% if error %}
         <div class="text-red-500">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
