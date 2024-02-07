@@ -41,6 +41,14 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // $roles = $user->getRoles();
+
+            // // For example, adding a new role
+            // $roles[] = 'ROLE_ADMIN';
+
+            // // Set the modified roles array back to the user
+            // $user->setRoles($roles);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
