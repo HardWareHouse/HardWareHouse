@@ -25,16 +25,6 @@ class PaiementRepository extends ServiceEntityRepository
 //    /**
 //     * @return Paiement[] Returns an array of Paiement objects
 //     */
-
-public function findPaiementsByEntreprise(Entreprise $entreprise): array
-    {
-        return $this->createQueryBuilder('p')
-            ->join('p.factureId', 'f')
-            ->where('f.entrepriseId = :entreprise')
-            ->setParameter('entreprise', $entreprise)
-            ->getQuery()
-            ->getResult();
-    }
 //    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('p')

@@ -18,10 +18,7 @@ class RapportFinancierController extends AbstractController
         if (!$authChecker->isGranted('ROLE_ADMIN') && !$authChecker->isGranted('ROLE_COMPTABLE')) {
             throw new AccessDeniedException('Access Denied.');
         }
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
-        $company = $user->getEntreprise(); 
-        $paiements = $repository->findByEntreprise($company);
+        $paiements = $repository->findAll();
         $paiementsArray = [];
         foreach ($paiements as $paiement) {
             $paiementsArray[] = [
