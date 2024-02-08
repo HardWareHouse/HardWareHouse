@@ -33,7 +33,6 @@ class HomeController extends AbstractController
 
     // Retrieve factures for the user's entreprise
     $factures = $factureRepository->findByEntrepriseId($entrepriseId);
-    var_dump($factures);
 
     // Initialize total paiements sum
     $totalPaiements = 0;
