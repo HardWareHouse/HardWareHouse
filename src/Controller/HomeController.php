@@ -39,17 +39,47 @@ class HomeController extends AbstractController
 ): Response {
     $factures = [];
     /** @var \App\Entity\User $user */
+    $entrepriseId = $this->getUser()->getEntreprise()->getId();
     if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $factures = $factureRepository->findAll();
+            $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
+            $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
+            
         } else {
-            $this->userEntreprise = $this->getUser()->getEntreprise();
-            $factures = $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]);
+            $factures = $factureRepository->findBy(["entrepriseId" => $entrepriseId]);
+            $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
+            $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
+        }
+
+        $devisAttenteCount = count($devisAttente);
+        $devisApprouveCount = count($devisApprouve);
+        $devisAttenteMontant = 0;
+        $devisApprouveMontant = 0;
+        foreach ($devisAttente as $attente){
+            $devisAttenteMontant += $attente->getTotal();
+        }
+        foreach ($devisApprouve as $approuve){
+            $devisApprouveMontant += $approuve->getTotal();
+        }
+
+        $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'non payé']);
+        $facturesLate = $factureRepository->findBy(["statutPaiement" => 'en retard']);
+        $facturesAttenteCount = count($facturesAttente);
+        $facturesLateCount = count($facturesLate);
+        $facturesAttenteMontant = 0;
+        $facturesLateMontant = 0;
+        foreach ($facturesAttente as $attente){
+            $facturesAttenteMontant += $attente->getTotal();
+        }
+        foreach ($facturesLate as $late){
+            $facturesLateMontant += $late->getTotal();
         }
 
     // dump($factures);
 
     // Initialize total paiements sum
     $totalPaiements = 0;
+    
 
     // Loop through each facture to find associated paiements and sum their amounts
     foreach ($factures as $facture) {
@@ -62,15 +92,20 @@ class HomeController extends AbstractController
         }
     }
 
-    // Retrieve devis for the user's entreprise
-    // $devis = $devisRepository->findByEntrepriseId($entrepriseId);
-
     // Pass data to Twig template
     return $this->render('home/index.html.twig', [
         'controller_name' => 'HomeController',
         'totalPaiements' => $totalPaiements,
         'factures' => $factures,
-        // 'devis' => $devis,
+        'devisAttente' => $devisAttenteCount,
+        'devisApprouve' => $devisApprouveCount,
+        'devisAttenteMontant' => $devisAttenteMontant,
+        'devisApprouveMontant' => $devisApprouveMontant,
+        'facturesAttente' => $facturesAttenteCount,
+        'facturesLate' => $facturesLateCount,
+        'facturesAttenteMontant' => $facturesAttenteMontant,
+        'facturesLateMontant' => $facturesLateMontant,
+        
     ]);
 }
 }
