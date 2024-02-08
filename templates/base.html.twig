@@ -25,11 +25,11 @@
     <body class="flex h-screen">
     {% block body %}
         <!-- Sidebar -->
-        <div id="sidebar" class="flex-shrink-0 w-[250px] z-10">
+        <div id="sidebar" class="flex-shrink-0 z-10 fixed bottom-0 top-0 transition-all">
             {% include 'component/sidebar.html.twig' %}
         </div>
         <!-- Contenu Principal -->
-        <div class="flex-grow min-w-0 pl-6">
+        <div id="MainContent" class="flex-grow min-w-0 pl-72 dark:bg-[#101827] transition-all">
         <span class="absolute text-white text-4xl top-5 left-4 cursor-pointer z-0" onclick="openSidebar()">
                 <i class="bi bi-filter-left px-2 bg-gray-900 rounded-md"></i>
         </span>
