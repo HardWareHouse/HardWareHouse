@@ -20,7 +20,7 @@
                 <div>
                     <h5 class="italic text-sm text-gray-600 py-1 dark:text-white"> {{'this_month'|trans}}</h5>
                     <div class="flex items-center">
-                        {% if totalPaiementsLastMonth > totalPaiementsThisMonth %}<i class="bi bi-caret-down-fill pe-1 text-red-600 text-xl"></i>{% elseif totalPaiementsLastMonth < totalPaiementsThisMonth %}<i class="bi bi-caret-up-fill pe-1 text-green-600 text-xl"></i>{% endif %}
+                        {% if totalPaiementsLastMonth > totalPaiementsThisMonth %}<i class="bi bi-caret-down-fill pe-1 text-red-600 text-xl"></i>{% elseif totalPaiementsLastMonth < totalPaiementsThisMonth %}<i class="bi bi-caret-up-fill pe-1 text-green-600 text-xl"></i>{% else %}<span class="pe-1 text-yellow-400 text-lg font-bold">&#8213;</span>{% endif %}
                         <p class="font-semibold text-xl py-1 dark:text-white">{{totalPaiementsThisMonth | number_format(2, ',', ' ') }} €</p>
                     </div>
                 </div>
