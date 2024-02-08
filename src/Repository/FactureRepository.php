@@ -24,17 +24,6 @@ class FactureRepository extends ServiceEntityRepository
 //    /**
 //     * @return Facture[] Returns an array of Facture objects
 //     */
-   public function findByEntrepriseId($id): array
-{
-    return $this->createQueryBuilder('f')
-        ->andWhere('f.entrepriseId = :entrepriseId')
-        ->setParameter('entrepriseId', $id)
-        ->orderBy('f.id', 'ASC')
-        ->setMaxResults(10)
-        ->getQuery()
-        ->getResult();
-}
-
 
 
 //    public function findOneBySomeField($value): ?Facture
