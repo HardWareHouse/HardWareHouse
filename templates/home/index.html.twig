@@ -87,11 +87,11 @@
                 <h4 class="text-md font-semibold py-3 dark:text-white"> {{'unpaid'|trans}}</h4>
                 <div class="flex text-center justify-around">
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">1</p>
+                        <p class="font-semibold text-lg dark:text-white">{{facturesAttente}}</p>
                         <p class="dark:text-white">{{'invoices'|trans}}</p>
                     </div>
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">65,19€</p>
+                        <p class="font-semibold text-lg dark:text-white">{{facturesAttenteMontant | number_format(2, ',', ' ')}} €</p>
                         <p class="dark:text-white">{{'amount'|trans}}</p>
                     </div>
                 </div>
@@ -101,11 +101,11 @@
                 <h4 class="text-md font-semibold py-3 dark:text-white">{{'late'|trans}}</h4>
                 <div class="flex text-center justify-around">
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">0</p>
+                        <p class="font-semibold text-lg dark:text-white">{{facturesLate}}</p>
                         <p class="dark:text-white">{{'invoices'|trans}}</p>
                     </div>
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">00,00€</p>
+                        <p class="font-semibold text-lg dark:text-white">{{facturesLateMontant | number_format(2, ',', ' ')}} €</p>
                         <p class="dark:text-white">{{'amount'|trans}}</p>
                     </div>
                 </div>
@@ -119,25 +119,25 @@
                 <h4 class="text-md font-semibold py-3 dark:text-white">{{'in_progress'|trans}}</h4>
                 <div class="flex text-center justify-around">
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">1</p>
-                        <p class="dark:text-white">{{'invoices'|trans}}</p>
+                        <p class="font-semibold text-lg dark:text-white">{{devisAttente}}</p>
+                        <p class="dark:text-white">{{'estimates'|trans}}</p>
                     </div>
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">65,19€</p>
+                        <p class="font-semibold text-lg dark:text-white">{{ devisAttenteMontant | number_format(2, ',', ' ')}} €</p>
                         <p class="dark:text-white">{{'amount'|trans}}</p>
                     </div>
                 </div>
 
                 <hr class="w-1/2 mt-4 place-self-center">
 
-                <h4 class="text-md font-semibold py-3 dark:text-white"> {{'expired'|trans}}</h4>
+                <h4 class="text-md font-semibold py-3 dark:text-white"> {{'approved'|trans}}</h4>
                 <div class="flex text-center justify-around">
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">0</p>
-                        <p class="dark:text-white"> {{'invoices'|trans}}</p>
+                        <p class="font-semibold text-lg dark:text-white">{{devisApprouve}}</p>
+                        <p class="dark:text-white"> {{'estimates'|trans}}</p>
                     </div>
                     <div>
-                        <p class="font-semibold text-lg dark:text-white">00,00€</p>
+                        <p class="font-semibold text-lg dark:text-white">{{devisApprouveMontant | number_format(2, ',', ' ')}} €</p>
                         <p class="dark:text-white"> {{'amount'|trans}}</p>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ class FactureFixtures extends Fixture implements OrderedFixtureInterface
             $facture->setNumero($faker->numerify('FACT####'))
                     ->setDateFacturation($faker->dateTimeThisYear())
                     ->setDatePaiementDue($faker->dateTimeThisYear())
-                    ->setStatutPaiement($faker->randomElement(['payé', 'non payé', 'en retard']))
+                    ->setStatutPaiement($faker->randomElement(['Payé', 'Non-payé', 'En retard']))
                     ->setTotal($faker->randomFloat(2, 100, 10000))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
                     ->setEntrepriseId($this->getReference('entreprise-'.rand(0, 9)));
