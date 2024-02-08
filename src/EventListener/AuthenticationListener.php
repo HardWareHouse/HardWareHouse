@@ -18,7 +18,7 @@ class AuthenticationListener
     {
         $this->security = $security;
         $this->urlGenerator = $urlGenerator;
-        $this->excludedRoutes = ['app_entreprise_new', 'app_home', 'app_login', 'app_logout'];
+        $this->excludedRoutes = ['app_my_entreprise_new', 'app_home', 'app_login', 'app_logout'];
     }
 
     public function onKernelRequest(RequestEvent $event)
