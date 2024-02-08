@@ -45,6 +45,9 @@ class Produit
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private ?Facture $factureId = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $tva = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +157,18 @@ class Produit
     public function setFactureId(?Facture $factureId): static
     {
         $this->factureId = $factureId;
+
+        return $this;
+    }
+
+    public function getTva(): ?float
+    {
+        return $this->tva;
+    }
+
+    public function setTva(?float $tva): static
+    {
+        $this->tva = $tva;
 
         return $this;
     }
