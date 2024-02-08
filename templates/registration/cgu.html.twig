@@ -1,41 +1,39 @@
+{% extends 'base.html.twig' %}
+{% set showSidebar = false %}
+
 {% block title %}{{'cgu'|trans}} - HardwareHouse{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-blue-50">
-    <div class="container mx-auto py-12 px-6">
-        <div class="bg-white shadow-lg rounded-lg p-8">
-            <div class="flex justify-center">
-                <img src="#" alt="Logo HardwareHouse" class="h-20 w-20">
-            </div>
-            <h1 class="text-3xl font-bold text-center text-blue-600 my-6">{{'cgu'|trans}}</h1>
-            <div class="text-gray-600">
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">1. {{'intro'|trans}}</h2>
-                <p class="mb-4">{{'intro_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">2. {{'usage'|trans}}</h2>
-                <p class="mb-4">{{'usage_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">3. {{'accounts'|trans}}</h2>
-                <p class="mb-4">{{'accounts_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">4. {{'privacy'|trans}}</h2>
-                <p class="mb-4">{{'privacy_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">5. P{{'intprop'|trans}}</h2>
-                <p class="mb-4">{{'intprop_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">6. {{'responsibility'|trans}}</h2>
-                <p class="mb-4">{{'responsibility_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">7. {{'cgu_modifications'|trans}}</h2>
-                <p class="mb-4">{{'cgu_modifications_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">8. {{'conflicts'|trans}}</h2>
-                <p class="mb-4">{{'conflicts_text'|trans}}</p>
-                
-                <h2 class="text-2xl text-blue-600 mt-6 mb-4">9. {{'contact'|trans}}</h2>
-                <p class="mb-4">{{'contact_text'|trans}}</p>
-            </div>
+<div class="container mx-auto py-12 px-6">
+    <div class="bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-bold text-center text-blue-600 my-6">{{'cgu'|trans}}</h1>
+        <div class="text-gray-600">
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">1. {{'intro'|trans}}</h2>
+            <p class="mb-4">{{'intro_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">2. {{'usage'|trans}}</h2>
+            <p class="mb-4">{{'usage_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">3. {{'accounts'|trans}}</h2>
+            <p class="mb-4">{{'accounts_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">4. {{'privacy'|trans}}</h2>
+            <p class="mb-4">{{'privacy_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">5. {{'intprop'|trans}}</h2>
+            <p class="mb-4">{{'intprop_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">6. {{'responsibility'|trans}}</h2>
+            <p class="mb-4">{{'responsibility_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">7. {{'cgu_modifications'|trans}}</h2>
+            <p class="mb-4">{{'cgu_modifications_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">8. {{'conflicts'|trans}}</h2>
+            <p class="mb-4">{{'conflicts_text'|trans}}</p>
+
+            <h2 class="text-2xl text-blue-600 mt-6 mb-4">9. {{'contact'|trans}}</h2>
+            <p class="mb-4">{{'contact_text'|trans}}</p>
         </div>
     </div>
 </div>
