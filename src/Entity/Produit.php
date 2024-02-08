@@ -46,7 +46,8 @@ class Produit
     private ?Facture $factureId = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $tva = null;
+    private ?int $tva = null;
+
 
     public function getId(): ?int
     {
@@ -161,12 +162,12 @@ class Produit
         return $this;
     }
 
-    public function getTva(): ?float
+    public function getTva(): ?int
     {
         return $this->tva;
     }
 
-    public function setTva(?float $tva): static
+    public function setTva(?int $tva): static
     {
         $this->tva = $tva;
 
