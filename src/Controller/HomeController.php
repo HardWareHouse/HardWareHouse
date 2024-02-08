@@ -21,10 +21,6 @@ class HomeController extends AbstractController
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
     public function index(EntityManagerInterface $entityManager,Security $security): Response
     {   
-        // $this->getUser()->setRoles(['ROLE_ADMIN']);
-        // var_dump($this->getUser()->getRoles());
-        // $isAdmin = $security->isGranted('ROLE_ADMIN');
-        // dd($isAdmin);
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
