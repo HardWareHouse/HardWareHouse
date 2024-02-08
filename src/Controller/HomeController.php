@@ -51,33 +51,47 @@ class HomeController extends AbstractController
             $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
         }
 
-        $devisAttenteCount = count($devisAttente);
-        $devisApprouveCount = count($devisApprouve);
-        $devisAttenteMontant = 0;
-        $devisApprouveMontant = 0;
-        foreach ($devisAttente as $attente){
-            $devisAttenteMontant += $attente->getTotal();
-        }
-        foreach ($devisApprouve as $approuve){
-            $devisApprouveMontant += $approuve->getTotal();
-        }
+    $devisAttenteCount = count($devisAttente);
+    $devisApprouveCount = count($devisApprouve);
+    $devisAttenteMontant = 0;
+    $devisApprouveMontant = 0;
+    foreach ($devisAttente as $attente){
+        $devisAttenteMontant += $attente->getTotal();
+    }
+    foreach ($devisApprouve as $approuve){
+        $devisApprouveMontant += $approuve->getTotal();
+    }
 
-        $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'non payé']);
-        $facturesLate = $factureRepository->findBy(["statutPaiement" => 'en retard']);
-        $facturesAttenteCount = count($facturesAttente);
-        $facturesLateCount = count($facturesLate);
-        $facturesAttenteMontant = 0;
-        $facturesLateMontant = 0;
-        foreach ($facturesAttente as $attente){
-            $facturesAttenteMontant += $attente->getTotal();
-        }
-        foreach ($facturesLate as $late){
-            $facturesLateMontant += $late->getTotal();
-        }
+    $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'non payé']);
+    $facturesLate = $factureRepository->findBy(["statutPaiement" => 'en retard']);
+    $facturesAttenteCount = count($facturesAttente);
+    $facturesLateCount = count($facturesLate);
+    $facturesAttenteMontant = 0;
+    $facturesLateMontant = 0;
+    foreach ($facturesAttente as $attente){
+        $facturesAttenteMontant += $attente->getTotal();
+    }
+    foreach ($facturesLate as $late){
+        $facturesLateMontant += $late->getTotal();
+    }
 
-    // dump($factures);
+    $today = new \DateTime();
+    $yesterday = (new \DateTime())->modify('-1 day');
 
-    // Initialize total paiements sum
+
+    $firstDayOfMonth = new \DateTime('first day of this month');
+
+    $lastDayOfMonth = new \DateTime('last day of this month');
+
+    $firstDayOfLastMonth = (new \DateTime())->modify('first day of last month');
+
+    $lastDayOfLastMonth = (new \DateTime())->modify('last day of last month');
+
+
+    $totalPaiementsToday = 0;
+    $totalPaiementsThisMonth = 0;
+    $totalPaiementsYesterday = 0;
+    $totalPaiementsLastMonth = 0;
     $totalPaiements = 0;
     
 
@@ -89,6 +103,26 @@ class HomeController extends AbstractController
         // Sum the amounts of paiements associated with the current facture
         foreach ($paiements as $paiement) {
             $totalPaiements += $paiement->getMontant();
+            $datePaiement = $paiement->getDatePaiement();
+
+            // Check if the datePaiement is today
+            if ($datePaiement->format('Y-m-d') === $today->format('Y-m-d')) {
+                $totalPaiementsToday += $paiement->getMontant();
+            }
+
+            // Check if the datePaiement is within the current month
+            if ($datePaiement >= $firstDayOfMonth && $datePaiement <= $lastDayOfMonth) {
+                $totalPaiementsThisMonth += $paiement->getMontant();
+         }
+            // Check if the datePaiement is yesterday
+            if ($datePaiement->format('Y-m-d') === $yesterday->format('Y-m-d')) {
+                $totalPaiementsYesterday += $paiement->getMontant();
+            }
+
+            // Check if the datePaiement is within the last month
+            if ($datePaiement >= $firstDayOfLastMonth && $datePaiement <= $lastDayOfLastMonth) {
+                $totalPaiementsLastMonth += $paiement->getMontant();
+            }
         }
     }
 
@@ -105,6 +139,10 @@ class HomeController extends AbstractController
         'facturesLate' => $facturesLateCount,
         'facturesAttenteMontant' => $facturesAttenteMontant,
         'facturesLateMontant' => $facturesLateMontant,
+        'totalPaiementsToday' => $totalPaiementsToday,
+        'totalPaiementsThisMonth' => $totalPaiementsThisMonth,
+        'totalPaiementsYesterday' => $totalPaiementsYesterday,
+        'totalPaiementsLastMonth' => $totalPaiementsLastMonth,
         
     ]);
 }
