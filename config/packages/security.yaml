@@ -44,8 +44,10 @@ security:
     - { path: ^/profile, roles: ROLE_COMPTABLE }
     - { path: ^/admin, roles: ROLE_ADMIN }
 
-  role_hierarchy:
-    ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN]
+         
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN: ROLE_USER
 
 when@test:
   security:

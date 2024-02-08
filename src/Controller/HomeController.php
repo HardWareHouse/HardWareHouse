@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 #[IsGranted('ROLE_USER')]
 class HomeController extends AbstractController
@@ -27,7 +29,7 @@ class HomeController extends AbstractController
     #[Route('/')]
     public function indexNoLocale(): Response
     {
-    return $this->redirectToRoute('app_home', ['_locale' => 'fr']);
+        return $this->redirectToRoute('app_home', ['_locale' => 'fr']);
     }
     
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
