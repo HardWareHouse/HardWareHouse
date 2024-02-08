@@ -150,11 +150,13 @@
             </div>
             <table class="w-11/12 self-center my-2">
                 <tbody class="">
+                {% for produit in produits %}
                     <tr class="border-b">
-                        <td class="w-3/5 text-sm text-left py-2 dark:text-white">Contrôleur De Moteur</td>
-                        <td class="italic text-sm font-extralight w-2/5 text-right py-2 dark:text-white">15h32</td>
+                        <td class="w-3/5 text-sm text-left py-2 dark:text-white">{{produit.nom}}</td>
+                        <td class="italic text-sm font-extralight w-2/5 text-right py-2 dark:text-white">{{ produit.CreatedAt|date('d-m-Y H:i') }}</td>
                     </tr>
-                    <tr class="border-b">
+                    {%  endfor %}
+                    {# <tr class="border-b">
                         <td class="w-3/5 text-sm text-left py-2 dark:text-white">Contrôleur De Moteur</td>
                         <td class="italic text-sm font-extralight w-2/5 text-right py-2 dark:text-white">12/12/23</td>
                     </tr>
@@ -177,7 +179,7 @@
                     <tr class="border-b">
                         <td class="w-3/5 text-sm text-left py-2 dark:text-white">Contrôleur De Moteur</td>
                         <td class="italic text-sm font-extralight w-2/5 text-right py-2 dark:text-white">09/12/23</td>
-                    </tr>
+                    </tr> #}
                 </tbody>
             </table>
         </div>

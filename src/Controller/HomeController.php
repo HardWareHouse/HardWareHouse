@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\DevisRepository;
 use App\Repository\FactureRepository;
 use App\Repository\PaiementRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +36,8 @@ class HomeController extends AbstractController
     Security $security,
     PaiementRepository $paiementRepository,
     FactureRepository $factureRepository,
-    DevisRepository $devisRepository
+    DevisRepository $devisRepository,
+    ProduitRepository $produitRepository
 ): Response {
     $factures = [];
     /** @var \App\Entity\User $user */
@@ -44,11 +46,13 @@ class HomeController extends AbstractController
             $factures = $factureRepository->findAll();
             $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
             $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
+            $produits = $produitRepository->findLatestProducts();
             
         } else {
             $factures = $factureRepository->findBy(["entrepriseId" => $entrepriseId]);
             $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
             $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
+            $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
         }
 
     $devisAttenteCount = count($devisAttente);
@@ -62,8 +66,8 @@ class HomeController extends AbstractController
         $devisApprouveMontant += $approuve->getTotal();
     }
 
-    $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'non payé']);
-    $facturesLate = $factureRepository->findBy(["statutPaiement" => 'en retard']);
+    $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'Non-payé']);
+    $facturesLate = $factureRepository->findBy(["statutPaiement" => 'En retard']);
     $facturesAttenteCount = count($facturesAttente);
     $facturesLateCount = count($facturesLate);
     $facturesAttenteMontant = 0;
@@ -95,38 +99,29 @@ class HomeController extends AbstractController
     $totalPaiements = 0;
     
 
-    // Loop through each facture to find associated paiements and sum their amounts
     foreach ($factures as $facture) {
-        // Retrieve paiements associated with the current facture
         $paiements = $facture->getPaiementId();
 
-        // Sum the amounts of paiements associated with the current facture
         foreach ($paiements as $paiement) {
             $totalPaiements += $paiement->getMontant();
             $datePaiement = $paiement->getDatePaiement();
 
-            // Check if the datePaiement is today
             if ($datePaiement->format('Y-m-d') === $today->format('Y-m-d')) {
                 $totalPaiementsToday += $paiement->getMontant();
             }
 
-            // Check if the datePaiement is within the current month
             if ($datePaiement >= $firstDayOfMonth && $datePaiement <= $lastDayOfMonth) {
                 $totalPaiementsThisMonth += $paiement->getMontant();
          }
-            // Check if the datePaiement is yesterday
             if ($datePaiement->format('Y-m-d') === $yesterday->format('Y-m-d')) {
                 $totalPaiementsYesterday += $paiement->getMontant();
             }
-
-            // Check if the datePaiement is within the last month
             if ($datePaiement >= $firstDayOfLastMonth && $datePaiement <= $lastDayOfLastMonth) {
                 $totalPaiementsLastMonth += $paiement->getMontant();
             }
         }
     }
 
-    // Pass data to Twig template
     return $this->render('home/index.html.twig', [
         'controller_name' => 'HomeController',
         'totalPaiements' => $totalPaiements,
@@ -143,7 +138,7 @@ class HomeController extends AbstractController
         'totalPaiementsThisMonth' => $totalPaiementsThisMonth,
         'totalPaiementsYesterday' => $totalPaiementsYesterday,
         'totalPaiementsLastMonth' => $totalPaiementsLastMonth,
-        
+        'produits' => $produits
     ]);
 }
 }

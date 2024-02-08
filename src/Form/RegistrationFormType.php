@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,11 +20,6 @@ class RegistrationFormType extends AbstractType
             //->add('uuid')
             ->add('mail')
             ->add('username')
-            ->add('entreprise', EntityType::class, [
-                'class' => 'App\Entity\Entreprise',
-                'choice_label' => 'nom',
-                'placeholder' => 'Choisissez votre entreprise', 
-            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
