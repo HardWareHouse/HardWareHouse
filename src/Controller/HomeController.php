@@ -2,16 +2,28 @@
 
 namespace App\Controller;
 
+use App\Repository\DevisRepository;
+use App\Repository\FactureRepository;
+use App\Repository\PaiementRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[IsGranted('ROLE_USER')]
 class HomeController extends AbstractController
 {
+    private $userEntreprise;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/')]
     public function indexNoLocale(): Response
     {
@@ -19,15 +31,46 @@ class HomeController extends AbstractController
     }
     
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
-    public function index(EntityManagerInterface $entityManager,Security $security): Response
-    {   
-        // $this->getUser()->setRoles(['ROLE_ADMIN']);
-        // var_dump($this->getUser()->getRoles());
-        // $isAdmin = $security->isGranted('ROLE_ADMIN');
-        // dd($isAdmin);
+    public function index(
+    Security $security,
+    PaiementRepository $paiementRepository,
+    FactureRepository $factureRepository,
+    DevisRepository $devisRepository
+): Response {
+    $factures = [];
+    /** @var \App\Entity\User $user */
+    if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $factures = $factureRepository->findAll();
+        } else {
+            $this->userEntreprise = $this->getUser()->getEntreprise();
+            $factures = $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]);
+        }
 
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+    // dump($factures);
+
+    // Initialize total paiements sum
+    $totalPaiements = 0;
+
+    // Loop through each facture to find associated paiements and sum their amounts
+    foreach ($factures as $facture) {
+        // Retrieve paiements associated with the current facture
+        $paiements = $facture->getPaiementId();
+
+        // Sum the amounts of paiements associated with the current facture
+        foreach ($paiements as $paiement) {
+            $totalPaiements += $paiement->getMontant();
+        }
     }
+
+    // Retrieve devis for the user's entreprise
+    // $devis = $devisRepository->findByEntrepriseId($entrepriseId);
+
+    // Pass data to Twig template
+    return $this->render('home/index.html.twig', [
+        'controller_name' => 'HomeController',
+        'totalPaiements' => $totalPaiements,
+        'factures' => $factures,
+        // 'devis' => $devis,
+    ]);
+}
 }
