@@ -3,9 +3,9 @@
 {% block title %}{{'categories'|trans}}{% endblock %}
 
 {% block content %}
-<div class="container mx-auto my-8">
+<div class="container mx-auto my-8 p-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700">{{'categories'|trans}}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">{{'categories'|trans}}</h1>
         <a href="{{ path('app_categorie_new') }}"
            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
             <i class="fas fa-plus mr-2"></i> {{'new_category'|trans}}
