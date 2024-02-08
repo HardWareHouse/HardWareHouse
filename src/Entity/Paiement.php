@@ -27,6 +27,10 @@ class Paiement
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private ?Facture $factureId = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paiement')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Entreprise $entreprise = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +80,18 @@ class Paiement
     public function setFactureId(?Facture $factureId): static
     {
         $this->factureId = $factureId;
+
+        return $this;
+    }
+
+    public function getEntreprise(): ?Entreprise
+    {
+        return $this->entreprise;
+    }
+
+    public function setEntreprise(?Entreprise $entreprise): static
+    {
+        $this->entreprise = $entreprise;
 
         return $this;
     }

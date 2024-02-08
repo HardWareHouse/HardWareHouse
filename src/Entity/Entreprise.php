@@ -55,6 +55,9 @@ class Entreprise
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private Collection $factureId;
 
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Paiement::class, orphanRemoval: true)]
+    private Collection $paiement;
+
     public function __construct()
     {
         $this->clientId = new ArrayCollection();
@@ -63,6 +66,7 @@ class Entreprise
         $this->devisId = new ArrayCollection();
         $this->factureId = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->paiement = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,6 +312,36 @@ class Entreprise
             // set the owning side to null (unless already changed)
             if ($factureId->getEntrepriseId() === $this) {
                 $factureId->setEntrepriseId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Paiement>
+     */
+    public function getPaiement(): Collection
+    {
+        return $this->paiement;
+    }
+
+    public function addPaiement(Paiement $paiement): static
+    {
+        if (!$this->paiement->contains($paiement)) {
+            $this->paiement->add($paiement);
+            $paiement->setEntreprise($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaiement(Paiement $paiement): static
+    {
+        if ($this->paiement->removeElement($paiement)) {
+            // set the owning side to null (unless already changed)
+            if ($paiement->getEntreprise() === $this) {
+                $paiement->setEntreprise(null);
             }
         }
 
