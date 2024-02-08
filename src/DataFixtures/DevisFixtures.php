@@ -23,7 +23,7 @@ class DevisFixtures extends Fixture implements OrderedFixtureInterface
             $devis = new Devis();
             $devis->setNumero($faker->numerify('DEVIS####'))
                   ->setDateCreation($faker->dateTimeThisYear())
-                  ->setStatus($faker->randomElement(['en attente', 'approuvé', 'refusé']))
+                  ->setStatus($faker->randomElement(['En attente', 'Approuvé', 'Refusé']))
                   ->setTotal($faker->randomFloat(2, 100, 10000))
                   ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
                   ->setEntrepriseId($this->getReference('entreprise-'.rand(0, 9)));
