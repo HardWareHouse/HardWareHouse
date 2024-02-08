@@ -5,15 +5,25 @@ namespace App\Controller;
 use App\Repository\DevisRepository;
 use App\Repository\FactureRepository;
 use App\Repository\PaiementRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[IsGranted('ROLE_USER')]
 class HomeController extends AbstractController
 {
+    private $userEntreprise;
+
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/')]
     public function indexNoLocale(): Response
     {
@@ -27,12 +37,16 @@ class HomeController extends AbstractController
     FactureRepository $factureRepository,
     DevisRepository $devisRepository
 ): Response {
+    $factures = [];
     /** @var \App\Entity\User $user */
-    $user = $security->getUser();
-    $entrepriseId = $user->getEntreprise()->getId(); // Assuming you have a method to get the user's associated company ID
+    if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $factures = $factureRepository->findAll();
+        } else {
+            $this->userEntreprise = $this->getUser()->getEntreprise();
+            $factures = $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]);
+        }
 
-    // Retrieve factures for the user's entreprise
-    $factures = $factureRepository->findByEntrepriseId($entrepriseId);
+    // dump($factures);
 
     // Initialize total paiements sum
     $totalPaiements = 0;
@@ -40,7 +54,7 @@ class HomeController extends AbstractController
     // Loop through each facture to find associated paiements and sum their amounts
     foreach ($factures as $facture) {
         // Retrieve paiements associated with the current facture
-        $paiements = $facture->getPaiements();
+        $paiements = $facture->getPaiementId();
 
         // Sum the amounts of paiements associated with the current facture
         foreach ($paiements as $paiement) {
@@ -49,14 +63,14 @@ class HomeController extends AbstractController
     }
 
     // Retrieve devis for the user's entreprise
-    $devis = $devisRepository->findByEntrepriseId($entrepriseId);
+    // $devis = $devisRepository->findByEntrepriseId($entrepriseId);
 
     // Pass data to Twig template
     return $this->render('home/index.html.twig', [
         'controller_name' => 'HomeController',
         'totalPaiements' => $totalPaiements,
         'factures' => $factures,
-        'devis' => $devis,
+        // 'devis' => $devis,
     ]);
 }
 }

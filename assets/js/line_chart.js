@@ -91,12 +91,9 @@ var filteredMontantData = filteredXAxisData.map(function (yearMonth) {
   return monthlyData[yearMonth];
 });
 
-// Create the line chart with filtered data
-var revenue = echarts.init(document.getElementById("paiementsAnnee"));
-
 revenue.setOption({
   title: {
-    text: "Totale des paiements par mois",
+    text: "Montant des paiements par mois",
     left: "center", // Center the title
     top: 20, // Adjust top margin
   },
