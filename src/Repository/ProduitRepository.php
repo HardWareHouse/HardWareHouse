@@ -21,6 +21,25 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
+    public function findLatestProductsByEntrepriseId(int $entrepriseId, int $limit = 15): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.entrepriseId = :entrepriseId')
+            ->setParameter('entrepriseId', $entrepriseId)
+            ->orderBy('p.CreatedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLatestProducts(int $limit = 15): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.CreatedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Produit[] Returns an array of Produit objects
 //     */
