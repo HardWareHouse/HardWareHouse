@@ -127,7 +127,7 @@
           <div
                   class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
             <i class="bi bi-building"></i>
-            <span class="text-[15px] ml-4 text-gray-200 font-bold">Entreprise</span>
+            <span class="text-[15px] ml-4 text-gray-200 font-bold">{{'company'|trans}}</span>
           </div>
         </a>
         <a href="{{ path('app_admin_index') }}">
@@ -155,7 +155,7 @@
           <a href="{{ path('app_logout') }}"><span class="text-[15px] ml-4 font-bold">{{'logout'|trans}}</span></a>
         </div>
 
-        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center justify-center rounded-md">
+        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md">
             <ul class="text-white">
               {% if app.request.locale == 'fr' %}
                 <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>

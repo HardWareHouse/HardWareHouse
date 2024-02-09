@@ -71,7 +71,6 @@ payment_method: Méthode de paiement
 item: Objet
 price: Prix
 paid: Payé
-unpaid: Non-payé
 #Emails
 email_header: Welcome %username% dans la famille !
 email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.

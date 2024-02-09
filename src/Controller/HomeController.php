@@ -41,7 +41,6 @@ class HomeController extends AbstractController
 ): Response {
     $factures = [];
     /** @var \App\Entity\User $user */
-    $entrepriseId = $this->getUser()->getEntreprise()->getId();
     if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
             $factures = $factureRepository->findAll();
             $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
@@ -49,6 +48,8 @@ class HomeController extends AbstractController
             $produits = $produitRepository->findLatestProducts();
             
         } else {
+            $entrepriseId = $this->getUser()->getEntreprise()->getId();
+
             $factures = $factureRepository->findBy(["entrepriseId" => $entrepriseId]);
             $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
             $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
