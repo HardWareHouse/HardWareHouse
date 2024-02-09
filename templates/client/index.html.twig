@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">{{'client_list'|trans}}</h1>
         <a href="{{ path('app_client_new') }}"
-           class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
             <i class="fas fa-plus mr-2"></i> {{'add_client'|trans}}
         </a>
     </div>
@@ -26,7 +26,8 @@
                     <th><input type="text" placeholder="Nom du client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Adresse client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Email client..." class="form-control form-control-sm" /></th>
-                    <th><input type="text" placeholder="Téléphone client..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Téléphone client..." class="form-control form-control-sm" />
+                    </th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -62,9 +63,9 @@
         </table>
     </div>
     {% for message in app.session.flashbag.get('danger') %}
-        <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
-            <p class="text-center">{{ message }}</p>
-        </div>
+    <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
+        <p class="text-center">{{ message }}</p>
+    </div>
     {% endfor %}
 </div>
 
@@ -79,27 +80,5 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<style>
-    #clientTable tbody tr:nth-child(odd) {
-        background-color: #ffffff; 
-    }
-    #clientTable tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    #clientTable tbody tr {
-        border-bottom: 1px solid #cccccc;
-    }
-    #clientTable tbody tr:hover {
-        background-color: #eaeaea; 
-    }
-    #clientTable th, #clientTable td {
-        padding: 16px;
-    }
-    #clientTable thead tr th input[type="text"] {
-        height: 38px;
-        margin: 0;
-        padding: 5px 8px;
-    }
-</style>
+<link rel="stylesheet" href="{{ asset('css/client.css', 'local') }}">
 {% endblock %}
-
