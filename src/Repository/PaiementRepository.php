@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Paiement;
-use App\Entity\Entreprise;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+
 
 /**
  * @extends ServiceEntityRepository<Paiement>
@@ -36,27 +36,43 @@ class PaiementRepository extends ServiceEntityRepository
     return $query->getSingleScalarResult();
 }
 
-/**
-     * Get payment method counts per month and year
-     *
-     * @return array
-     */
-    public function getPaymentMethodCountsPerMonthAndYear(): array
-    {
-        $conn = $this->getEntityManager()->getConnection(); 
-        $sql = 
-            'SELECT EXTRACT(MONTH FROM p.date_paiement) as month, 
-                    EXTRACT(YEAR FROM p.date_paiement) as year, 
-                    p.methode_paiement as paymentMethod, 
-                    COUNT(p.id) as count 
-             FROM paiement p 
-             GROUP BY paymentMethod, month, year'
-        ;
+public function findPaymentsByYear($year)
+{
+    $conn = $this->getEntityManager()->getConnection(); 
+    $sql = 
+        'SELECT 
+            p.date_paiement,
+            p.montant,
+            p.methode_paiement
+        FROM paiement p
+        WHERE EXTRACT(YEAR FROM p.date_paiement) = :year';
 
-        $resultSet = $conn->executeQuery($sql);
+    $resultSet = $conn->executeQuery($sql, ['year' => $year]);
 
-        return $resultSet->fetchAllAssociative();
-    }
+    return $resultSet->fetchAllAssociative();
+}
+
+// /**
+//      * Get payment method counts per month and year
+//      *
+//      * @return array
+//      */
+//     public function getPaymentMethodCountsPerMonthAndYear(): array
+//     {
+//         $conn = $this->getEntityManager()->getConnection(); 
+//         $sql = 
+//             'SELECT EXTRACT(MONTH FROM p.date_paiement) as month, 
+//                     EXTRACT(YEAR FROM p.date_paiement) as year, 
+//                     p.methode_paiement as paymentMethod, 
+//                     COUNT(p.id) as count 
+//              FROM paiement p 
+//              GROUP BY paymentMethod, month, year'
+//         ;
+
+//         $resultSet = $conn->executeQuery($sql);
+
+//         return $resultSet->fetchAllAssociative();
+//     }
 
 //    /**
 //     * @return Paiement[] Returns an array of Paiement objects

@@ -34,33 +34,32 @@ class RapportFinancierController extends AbstractController
             'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray)
         ]);
     }
-    #[Route(path: '/csv-methodes', name: 'app_csv_methodes')]
-    public function csvMethodes(PaiementRepository $repository): Response
-    {
-        $paiements = $repository->findBy([], ['datePaiement' => 'DESC']);
+    #[Route(path: '/csv-methodes/{year}', name: 'app_csv_methodes')]
+    public function csvMethodes(PaiementRepository $repository, $year): Response
+{
+    $paiements = $repository->findPaymentsByYear($year);
 
-        // Initialize CSV content with column names
-        $csvContent = "Date Paiement; Montant; Methode Paiement\n";
+    // Initialize CSV content with column names
+    $csvContent = "Date Paiement; Montant; Methode Paiement\n";
 
-        // Add data rows
-        foreach ($paiements as $paiement) {
-            $csvContent .= sprintf(
-                "%s; %s; %s\n",
-                $paiement->getDatePaiement()->format('Y-m-d H:i:s'),
-                $paiement->getMontant(),
-                $paiement->getMethodePaiement()
-            );
-        }
-        $currentDateTime = new \DateTime();
-        $fileName = 'Paiements_' . $currentDateTime->format('Y-m-d_H:i:s') . '.csv';
-
-        // Create the CSV response
-        $response = new Response($csvContent);
-
-        // Set response headers for CSV download
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '"');
-
-        return $response;
+    // Add data rows
+    foreach ($paiements as $paiement) {
+        $csvContent .= sprintf(
+            "%s; %s; %s\n",
+            $paiement['date_paiement'], // Access the date_paiement directly from the array
+            $paiement['montant'],        // Access the montant directly from the array
+            $paiement['methode_paiement'] // Access the methode_paiement directly from the array
+        );
     }
+    // Create the CSV response
+    $response = new Response($csvContent);
+
+    // Set response headers for CSV download
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', 'attachment; filename="Paiements_' . $year . '.csv"');
+
+    return $response;
+}
+
+
 }
