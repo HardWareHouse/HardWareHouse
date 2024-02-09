@@ -26,8 +26,10 @@
     },
     "dependencies": {
         "datatables": "^1.10.18",
+        "datatables.net": "^1.13.8",
         "datatables.net-dt": "^1.13.8",
         "echarts": "^5.4.3",
-        "flag-icons": "^7.1.0"
+        "flag-icons": "^7.1.0",
+        "jquery": "^3.7.1"
     }
 }

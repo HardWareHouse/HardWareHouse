@@ -12,8 +12,8 @@
         </a>
     </div>
 
-    <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+    <div class="overflow-x-auto relative sm:rounded-lg mt-6">
+        <table id="clientTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
@@ -21,6 +21,13 @@
                     <th scope="col" class="py-3 px-6">{{'email'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'telephone'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
+                </tr>
+                <tr>
+                    <th><input type="text" placeholder="Nom du client..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Adresse client..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Email client..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Téléphone client..." class="form-control form-control-sm" /></th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -69,3 +76,30 @@
 <script src="{{ asset('js/clientDatatable.js', 'local') }}"> </script>
 
 {% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    #clientTable tbody tr:nth-child(odd) {
+        background-color: #ffffff; 
+    }
+    #clientTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    #clientTable tbody tr {
+        border-bottom: 1px solid #cccccc;
+    }
+    #clientTable tbody tr:hover {
+        background-color: #eaeaea; 
+    }
+    #clientTable th, #clientTable td {
+        padding: 16px;
+    }
+    #clientTable thead tr th input[type="text"] {
+        height: 38px;
+        margin: 0;
+        padding: 5px 8px;
+    }
+</style>
+{% endblock %}
+
