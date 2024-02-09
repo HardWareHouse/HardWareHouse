@@ -1,110 +1,38 @@
 <?php
 
-namespace App\Controller;
+namespace App\DataFixtures;
 
-use App\Repository\DevisRepository;
-use App\Repository\FactureRepository;
-use App\Repository\PaiementRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use App\Entity\Devis;
+use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 class DevisFixtures extends Fixture implements OrderedFixtureInterface
 {
-    private $userEntreprise;
-
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    public function getOrder(): int
     {
-        $this->authorizationChecker = $authorizationChecker;
-        $this->entityManager = $entityManager;
+        return 4;
     }
 
-    #[Route('/')]
-    public function indexNoLocale(): Response
+    public function load(ObjectManager $manager): void
     {
-        return $this->redirectToRoute('app_home', ['_locale' => 'fr']);
+        $faker = Factory::create('fr_FR');
+
+        for ($i = 0; $i < 20; $i++) {
+            $devis = new Devis();
+            $devis->setNumero($faker->numerify('DEVIS####'))
+                  ->setDateCreation($faker->dateTimeThisYear())
+                  ->setStatus($faker->randomElement(['En attente', 'Approuvé', 'Refusé']))
+                  ->setTotal($faker->randomFloat(2, 100, 10000))
+                  ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
+                  ->setEntrepriseId($this->getReference('entreprise-'.rand(0, 9)));
+                //   ->setClientId($this->getReference('client-'.rand(0, 9)));
+
+
+            $manager->persist($devis);
+        }
+
+        $manager->flush();
     }
-    
-    #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
-    public function index(
-    Security $security,
-    PaiementRepository $paiementRepository,
-    FactureRepository $factureRepository,
-    DevisRepository $devisRepository
-): Response {
-    $factures = [];
-    /** @var \App\Entity\User $user */
-    $entrepriseId = $this->getUser()->getEntreprise()->getId();
-    if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            $factures = $factureRepository->findAll();
-            $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
-            $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
-            
-        } else {
-            $factures = $factureRepository->findBy(["entrepriseId" => $entrepriseId]);
-            $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
-            $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
-        }
-
-        $devisAttenteCount = count($devisAttente);
-        $devisApprouveCount = count($devisApprouve);
-        $devisAttenteMontant = 0;
-        $devisApprouveMontant = 0;
-        foreach ($devisAttente as $attente){
-            $devisAttenteMontant += $attente->getTotal();
-        }
-        foreach ($devisApprouve as $approuve){
-            $devisApprouveMontant += $approuve->getTotal();
-        }
-
-        $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'non payé']);
-        $facturesLate = $factureRepository->findBy(["statutPaiement" => 'en retard']);
-        $facturesAttenteCount = count($facturesAttente);
-        $facturesLateCount = count($facturesLate);
-        $facturesAttenteMontant = 0;
-        $facturesLateMontant = 0;
-        foreach ($facturesAttente as $attente){
-            $facturesAttenteMontant += $attente->getTotal();
-        }
-        foreach ($facturesLate as $late){
-            $facturesLateMontant += $late->getTotal();
-        }
-
-    // dump($factures);
-
-    // Initialize total paiements sum
-    $totalPaiements = 0;
-    
-
-    // Loop through each facture to find associated paiements and sum their amounts
-    foreach ($factures as $facture) {
-        // Retrieve paiements associated with the current facture
-        $paiements = $facture->getPaiementId();
-
-        // Sum the amounts of paiements associated with the current facture
-        foreach ($paiements as $paiement) {
-            $totalPaiements += $paiement->getMontant();
-        }
-    }
-
-    // Pass data to Twig template
-    return $this->render('home/index.html.twig', [
-        'controller_name' => 'HomeController',
-        'totalPaiements' => $totalPaiements,
-        'factures' => $factures,
-        'devisAttente' => $devisAttenteCount,
-        'devisApprouve' => $devisApprouveCount,
-        'devisAttenteMontant' => $devisAttenteMontant,
-        'devisApprouveMontant' => $devisApprouveMontant,
-        'facturesAttente' => $facturesAttenteCount,
-        'facturesLate' => $facturesLateCount,
-        'facturesAttenteMontant' => $facturesAttenteMontant,
-        'facturesLateMontant' => $facturesLateMontant,
-        
-    ]);
-}
 }
