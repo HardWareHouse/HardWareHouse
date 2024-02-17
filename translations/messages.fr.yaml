@@ -125,6 +125,7 @@ contact_text: Pour toute question ou problème, veuillez nous contacter à hardw
 #Inscription
 registration: Inscription
 password: Mot de passe
+confirm password: Confirmer le mot de passe
 signup: S'inscrire
 already_user: Déjà inscrit ?
 login: Connectez-vous

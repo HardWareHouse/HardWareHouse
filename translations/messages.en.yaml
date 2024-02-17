@@ -124,6 +124,7 @@ contact_text: For any question or issue, please contact hardwarehouse@assistance
 #Registration
 registration: Registration
 password: Password
+confirm password: Confirm password
 signup: Signup
 already_user: Already have an account?
 login: Login

@@ -84,10 +84,17 @@
         </div>
 
         <div class="space-y-2">
-            <label for="registrationForm_plainPassword" class="text-blue-600">{{'password'|trans}}</label>
+            <label for="registrationForm_plainPassword" class="text-blue-600">{{ 'password'|trans }}</label>
             {{ form_widget(registrationForm.plainPassword, {'id': 'registrationForm_plainPassword', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(registrationForm.plainPassword) }}
         </div>
+
+        <div class="space-y-2">
+            <label for="registrationForm_confirmPassword" class="text-blue-600">{{ 'confirm password'|trans }}</label>
+            {{ form_widget(registrationForm.confirmPassword, {'id': 'registrationForm_confirmPassword', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(registrationForm.confirmPassword) }}
+        </div>
+
 
         <div class="flex items-center mb-6">
             {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2'}}) }}
