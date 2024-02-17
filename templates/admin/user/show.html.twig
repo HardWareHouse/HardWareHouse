@@ -1,46 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Entreprise{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Uuid</th>
-                <td>{{ user.uuid }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ user.mail }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ user.CreatedAt ? user.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% include 'component/sidebar.html.twig' %}
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <div class="container mx-auto my-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">{{'user_details'|trans}}</h1>
+        </div>
 
-    <a href="{{ path('app_user_edit', {'uuid': user.uuid}) }}">edit</a>
+        <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full text-sm text-left text-gray-500">
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'rules'|trans}}</th>
+                        <td class="px-6 py-4">{{ user.roles[0]|replace({'ROLE_': ''}) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'name'|trans}}</th>
+                        <td class="px-6 py-4">{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'email'|trans}}</th>
+                        <td class="px-6 py-4">{{ user.mail  }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'company_name'|trans}}</th>
+                        <td class="px-6 py-4">{{ user.entreprise  }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    {{ include('user/_delete_form.html.twig') }}
+        <div class="text-center">
+            <a href="{{ path('app_user_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+                <i class="fas fa-arrow-left mr-2"></i> {{'back_to_list'|trans}}
+            </a>
+        </div>
+    </div>
 {% endblock %}
+

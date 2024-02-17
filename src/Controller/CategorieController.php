@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[Route('/{_locale<%app.supported_locales%>}/categorie')]
-#[Security("is_granted('ROLE_USER') and user.entreprise !== null return /{_locale<%app.supported_locales%>}/entreprise/creation ")]
+#[Security("is_granted('ROLE_USER')")]
 class CategorieController extends AbstractController
 {   
     private $userEntreprise;

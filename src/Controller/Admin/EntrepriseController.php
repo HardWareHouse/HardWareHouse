@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[IsGranted('ROLE_ADMIN')]
-#[Route('/admin/entreprise')]
+#[Route('/{_locale<%app.supported_locales%>}/admin/entreprise')]
 class EntrepriseController extends AbstractController
 {
     #[Route('/', name: 'app_entreprise_index', methods: ['GET'])]
