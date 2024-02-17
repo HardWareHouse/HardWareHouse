@@ -24,7 +24,7 @@ class PaiementController extends AbstractController
     }
     private function checkUserAccessToPayment($userEntreprise, $paiement): ?Response
     {
-        $paiementEntreprise = $paiement->getEntreprise();
+        $paiementEntreprise = $paiement->getEntrepriseId();
         if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $paiementEntreprise->getId()) {
             $this->addFlash(
                 'danger',
@@ -44,7 +44,7 @@ class PaiementController extends AbstractController
     } else {
         $this->userEntreprise = $this->getUser()->getEntreprise();
         return $this->render('paiement/index.html.twig', [
-            'paiements' => $paiementRepository->findBy(["entreprise" => $this->userEntreprise->getId()]),
+            'paiements' => $paiementRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
         ]);
     }
 
@@ -60,7 +60,8 @@ class PaiementController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $paiement = $form->getData();
-            $paiement->setEntreprise($this->userEntreprise);
+            $paiement->setEntrepriseId($this->userEntreprise);
+            // dd($paiement);
             $this->entityManager->persist($paiement);
             $this->entityManager->flush();
 
