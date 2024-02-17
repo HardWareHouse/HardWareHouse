@@ -84,10 +84,17 @@
         </div>
 
         <div class="space-y-2">
-            <label for="registrationForm_plainPassword" class="text-blue-600">{{'password'|trans}}</label>
+            <label for="registrationForm_plainPassword" class="text-blue-600">{{ 'password'|trans }}</label>
             {{ form_widget(registrationForm.plainPassword, {'id': 'registrationForm_plainPassword', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(registrationForm.plainPassword) }}
         </div>
+
+        <div class="space-y-2">
+            <label for="registrationForm_confirmPassword" class="text-blue-600">{{ 'confirm password'|trans }}</label>
+            {{ form_widget(registrationForm.confirmPassword, {'id': 'registrationForm_confirmPassword', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(registrationForm.confirmPassword) }}
+        </div>
+
 
         <div class="flex items-center mb-6">
             {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'mr-2'}}) }}
@@ -103,11 +110,22 @@
             {{'signup'|trans}}
         </button>
 
-        <div>
+        <div class="mt-4 text-center">
             {{'already_user'|trans}} <a href="{{ path('app_login') }}" class="text-blue-600 hover:underline">{{'login'|trans}}</a>
         </div>
 
         {{ form_end(registrationForm) }}
+    </div>
+</div>
+<div class="absolute top-4 right-4">
+    <div class="flex text-sm font-medium bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md">
+        <ul class="text-white">
+            {% if app.request.locale == 'fr' %}
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
+            {% else %}
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'fr'}) }}"><span class="fi fi-fr me-1"></span> Français</a></li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 {% endblock %}

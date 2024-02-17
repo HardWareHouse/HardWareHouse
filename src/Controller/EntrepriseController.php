@@ -27,7 +27,10 @@ class EntrepriseController extends AbstractController
 
     #[Route('/creation', name: 'app_my_entreprise_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   
+        // $this->getUser()->setRoles(['ROLE_ADMIN']);
+        // $entityManager->flush();
+        // dd($this->getUser());
         $entreprise = new Entreprise();
         $form = $this->createForm(EntrepriseType::class, $entreprise);
         $form->handleRequest($request);
@@ -47,9 +50,10 @@ class EntrepriseController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'app_my_entreprise_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Entreprise $entreprise, EntityManagerInterface $entityManager): Response
-    {
+    #[Route('/edit', name: 'app_my_entreprise_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
+    {   
+        $entreprise = $this->getUser()->getEntreprise();
         $form = $this->createForm(EntrepriseType::class, $entreprise);
         $form->handleRequest($request);
 

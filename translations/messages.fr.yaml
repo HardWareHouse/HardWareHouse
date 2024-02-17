@@ -17,19 +17,31 @@ expired: Expiré
 my_recent_products: Mes derniers produits
 in_brief: Votre entreprise en bref
 approved: Approuvé
+rules: Rôles
+company_name : Entreprise
+user: utilisateur
 #Nav
 home: Accueil
 billing: Facturation
 estimates: Devis
 products: Produits
 reports: Rapports
+user_edit: Modifier l'utilisateur
+company_list: Liste des entreprise
+user_list: Liste des utilisateurs
+company_new: Ajouter une entreprise    
+user_new: Ajouter un utilisateur
+no_company: Il n'existe aucune entreprise.
+no_user: Il n'existe aucun utilisateur 
 payments: Paiements
 company: Mon Entreprise
+company management: Gestion des entreprises
+user management: Gestion des utilisateurs
 logout: Déconnexion
 #Categories
 delete: Supprimer
 confirm_delete: Vous êtes sûr de vouloir supprimer cet objet ?
-save: Sauvgarder
+save: Sauvegarder
 category_edit: Modifier la categorie
 back_to_list: Retourner à la liste
 category: Categorie
@@ -70,6 +82,7 @@ shipping_info: Envoyé à
 payment_method: Méthode de paiement
 item: Objet
 price: Prix
+paid: Payé
 #Emails
 email_header: Welcome %username% dans la famille !
 email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
@@ -78,7 +91,7 @@ click_here: Cliquez ici !
 company_edit: Modifier Entreprise
 companies: Entreprises
 tax_info: Information fiscale
-company_new: Create new company
+company_details: Détails de l'entreprise
 #Facture
 invoice_modify: Modifier la facture
 invoice_list: Liste des factures
@@ -124,6 +137,7 @@ contact_text: Pour toute question ou problème, veuillez nous contacter à hardw
 #Inscription
 registration: Inscription
 password: Mot de passe
+confirm password: Confirmer le mot de passe
 signup: S'inscrire
 already_user: Déjà inscrit ?
 login: Connectez-vous

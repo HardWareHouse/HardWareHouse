@@ -11,6 +11,7 @@ unpaid: Unpaid
 invoices: Invoices
 amount: Amount
 late: Late
+user_new: New user
 my_estimates: My estimates
 in_progress: In progress
 expired: Expired
@@ -25,6 +26,10 @@ products: Products
 reports: Reports
 payments: Payments
 company: My Company
+company management: Company Management
+company_name : Company
+user : User 
+user management: User Management
 logout: Logout
 #Categories
 delete: Delete
@@ -52,12 +57,22 @@ telephone: Telephone
 no_client: No clients found
 new_client: New client
 client_details: Client details
+rules: Rules
 #Estimates
 created_on: Created on
 status: Status
 estimate_details: Estimate details
 add: Add
 estimate_edit: Modify estimate
+company_edit: Modify company
+user_edit: Modify user
+company_list: Company list
+user_list: User list
+company_new: Create a new company
+company_details: Company details
+user_new: Create a new user
+no_company: No companies found
+no_user: No users found
 estimate_list: Estimates
 estimate_new: Create a new estimate
 estimate: Estimates
@@ -85,6 +100,7 @@ invoice_new: Add a new invoice
 duedate: Due date
 no_invoice: No invoice found
 invoice: Invoice
+paid: Paid
 #Payment
 payment_modify: Modify payment
 payment_new: Add a new payment
@@ -121,8 +137,9 @@ conflicts_text: In the event of a dispute, the parties will endeavor to resolve 
 contact: Contact
 contact_text: For any question or issue, please contact hardwarehouse@assistance.fr.
 #Registration
-registration: Registeration
+registration: Registration
 password: Password
+confirm password: Confirm password
 signup: Signup
 already_user: Already have an account?
 login: Login

@@ -203,3 +203,12 @@ xAxisData.sort(function (a, b) {
     return monthA - monthB;
   }
 });
+// Assuming you have a dropdown menu with id "yearDropdown"
+var dropdown = document.getElementById("yearDropdown");
+
+dropdown.addEventListener("change", function () {
+  var selectedYear = dropdown.value;
+  var downloadButton = document.getElementById("csvYear");
+  // Update the href attribute of the download button with the selected year
+  downloadButton.href = "/csv-methodes/" + selectedYear;
+});

@@ -56,8 +56,9 @@ class Entreprise
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private Collection $factureId;
 
-    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: Paiement::class, orphanRemoval: true)]
-    private Collection $paiement;
+    #[ORM\OneToMany(mappedBy: 'entrepriseId', targetEntity: Paiement::class)]
+    #[ORM\JoinColumn(name: "paiement", referencedColumnName: "id")]
+    private Collection $paiementId;
 
     public function __construct()
     {
@@ -68,7 +69,7 @@ class Entreprise
         $this->factureId = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->CreatedAt = new \DateTimeImmutable();
-        $this->paiement = new ArrayCollection();
+        $this->paiementId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,27 +324,27 @@ class Entreprise
     /**
      * @return Collection<int, Paiement>
      */
-    public function getPaiement(): Collection
+    public function getPaiementId(): Collection
     {
-        return $this->paiement;
+        return $this->paiementId;
     }
 
-    public function addPaiement(Paiement $paiement): static
+    public function addPaiementId(Paiement $paiementId): static
     {
-        if (!$this->paiement->contains($paiement)) {
-            $this->paiement->add($paiement);
-            $paiement->setEntreprise($this);
+        if (!$this->paiementId->contains($paiementId)) {
+            $this->paiementId->add($paiementId);
+            $paiementId->setEntrepriseId($this);
         }
 
         return $this;
     }
 
-    public function removePaiement(Paiement $paiement): static
+    public function removePaiementID(Paiement $paiementId): static
     {
-        if ($this->paiement->removeElement($paiement)) {
+        if ($this->paiementId->removeElement($paiementId)) {
             // set the owning side to null (unless already changed)
-            if ($paiement->getEntreprise() === $this) {
-                $paiement->setEntreprise(null);
+            if ($paiementId->getEntreprise() === $this) {
+                $paiementId->setEntreprise(null);
             }
         }
 

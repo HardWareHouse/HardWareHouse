@@ -14,6 +14,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\FormError;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -33,6 +34,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->get('plainPassword')->getData() !== $form->get('confirmPassword')->getData()) {
+                // Gestion de l'erreur si les mots de passe ne correspondent pas
+                $form->get('confirmPassword')->addError(new FormError('Les deux mots de passe ne correspondent pas !'));
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
 
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
