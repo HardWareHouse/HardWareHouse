@@ -38,11 +38,7 @@ class RapportFinancierController extends AbstractController
                 'id' => $paiement->getId(),
                 'datePaiement' => $paiement->getDatePaiement()->format('Y-m-d H:i:s'),
                 'montant' => $paiement->getMontant(),
-                'methodePaiement' => $paiement->getMethodePaiement(),
-                'entreprise' => [
-                    'id' => $paiement->getEntreprise()->getId(),
-                    'name' => $paiement->getEntreprise()->getNom(),
-                ],            
+                'methodePaiement' => $paiement->getMethodePaiement(),         
             ];
         }
 
