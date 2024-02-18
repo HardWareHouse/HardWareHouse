@@ -114,6 +114,7 @@ product: Producte
 product_details: Product details
 #Reports
 financial_reports: Financial Reports
+details_year: Breakdown By Year
 jan: Jan
 feb: Feb
 mar: Mar

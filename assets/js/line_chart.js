@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Create dropdown options for years
   var dropdownContainer = document.getElementById("dropdownContainer");
-  var dropdownHTML = '<select id="yearDropdown">';
+  var dropdownHTML =
+    '<select id="yearDropdown" class="text-white bg-darkBlue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-800">';
   // Sort the years numerically
   years.sort(function (a, b) {
     return b - a;
