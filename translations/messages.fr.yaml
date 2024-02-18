@@ -27,12 +27,17 @@ estimates: Devis
 products: Produits
 reports: Rapports
 user_edit: Modifier l'utilisateur
+my_user_edit: Modifier mon employé
+my_user: Mes Employés
 company_list: Liste des entreprise
 user_list: Liste des utilisateurs
+my_user_list: Liste de mes employés
 company_new: Ajouter une entreprise    
 user_new: Ajouter un utilisateur
+my_user_new: Ajouter un employé
 no_company: Il n'existe aucune entreprise.
 no_user: Il n'existe aucun utilisateur 
+no_my_user: Il n'existe pas d'employé
 payments: Paiements
 company: Mon Entreprise
 company management: Gestion des entreprises
@@ -64,6 +69,8 @@ telephone: Téléphone
 no_client: Aucun client trouvé
 new_client: Nouveau client
 client_details: Détails du client
+user_details: Détails de l'utilisateur
+my_user_details: Détais de mon employé
 #Devis
 created_on: Créé le
 status: Statut

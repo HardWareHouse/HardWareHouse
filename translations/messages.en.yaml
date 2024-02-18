@@ -56,6 +56,9 @@ telephone: Telephone
 no_client: No clients found
 new_client: New client
 client_details: Client details
+user_details: User details
+my_user_details: My employee details
+my_user: My employee
 rules: Rules
 #Estimates
 created_on: Created on
@@ -64,13 +67,18 @@ estimate_details: Estimate details
 add: Add
 estimate_edit: Modify estimate
 user_edit: Modify user
+my_user_edit: Modify My employee
+my_user_edit: Modify My employee
 company_list: Company list
 user_list: User list
+my_user_list: My employee list
 company_new: Create a new company
 company_details: Company details
 user_new: Create a new user
+my_user_new: Create a new employee
 no_company: No companies found
 no_user: No users found
+no_my_user: No employees found
 estimate_list: Estimates
 estimate_new: Create a new estimate
 estimate: Estimates
