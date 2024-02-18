@@ -169,9 +169,9 @@
         <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md">
             <ul class="text-white">
               {% if app.request.locale == 'fr' %}
-                <li><a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
+                <li><a class="dropdown-item" href="{{ path("app_home", {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
               {% else %}
-                <li><a class="dropdown-item" href="{{ path(app.request.attributes.get('_route'), {_locale: 'fr'}) }}"><span class="fi fi-fr me-1"></span> Français</a></li>
+                <li><a class="dropdown-item" href="{{ path('app_home', {_locale: 'fr'}) }}"><span class="fi fi-fr me-1"></span> Français</a></li>
               {% endif %}
             </ul>
         </div>
