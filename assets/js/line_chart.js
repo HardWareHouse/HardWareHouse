@@ -34,8 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
   dropdownContainer.innerHTML = dropdownHTML;
 
   var selectedYear = new Date().getFullYear();
-  var downloadButton = document.getElementById("csvYear");
-  downloadButton.href = "/csv-methodes/" + selectedYear;
+  var paymentButton = document.getElementById("csvPayment");
+  var factureButton = document.getElementById("csvFacture");
+  paymentButton.href = "/csv-methodes/" + selectedYear;
+  factureButton.href = "/csv-factures/" + selectedYear;
 
   // Event listener for dropdown change
   document
@@ -43,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("change", function (event) {
       selectedYear = parseInt(event.target.value);
       updateCharts(selectedYear);
-      console.log(selectedYear);
       downloadButton.href = "/csv-methodes/" + selectedYear;
+      factureButton.href = "/csv-factures/" + selectedYear;
     });
 
   // Function to update charts based on selected year
@@ -138,6 +140,10 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       series: [
         {
+          label: {
+            show: false,
+            position: "center",
+          },
           type: "pie",
           radius: ["50%", "70%"],
           data: Object.keys(paymentMethods).map(function (method) {
@@ -146,6 +152,8 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       ],
     };
+    methodsChart.resize();
+
     methodsChart.setOption(methodsChartOption);
 
     var statusData = {

@@ -20,7 +20,23 @@ class FactureRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Facture::class);
     }
+public function findFacturesByYear($year)
+{
+    $conn = $this->getEntityManager()->getConnection(); 
+    $sql = 
+        'SELECT 
+            f.date_facturation,
+            f.date_paiement_due,
+            f.total,
+            f.numero,
+            f.statut_paiement
+        FROM facture f
+        WHERE EXTRACT(YEAR FROM f.date_facturation) = :year';
 
+    $resultSet = $conn->executeQuery($sql, ['year' => $year]);
+
+    return $resultSet->fetchAllAssociative();
+}
 //    /**
 //     * @return Facture[] Returns an array of Facture objects
 //     */

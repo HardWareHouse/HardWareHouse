@@ -66,7 +66,6 @@ class RapportFinancierController extends AbstractController
             ];
         }
 
-        // Get translated month names
         $translatedMonths = [
             'jan' => $translator->trans('jan'),
             'feb' => $translator->trans('feb'),
@@ -80,7 +79,6 @@ class RapportFinancierController extends AbstractController
             'oct' => $translator->trans('oct'),
             'nov' => $translator->trans('nov'),
             'dec' => $translator->trans('dec')
-            // Repeat for other months
         ];
         
         return $this->render('rapport_financier/index.html.twig', [
@@ -91,27 +89,58 @@ class RapportFinancierController extends AbstractController
     public function csvMethodes(PaiementRepository $repository, $year): Response
 {
     $paiements = $repository->findPaymentsByYear($year);
-    // Initialize CSV content with column names
+
     $csvContent = "Date Paiement; Montant; Methode Paiement\n";
 
     // Add data rows
     foreach ($paiements as $paiement) {
+
+        $montant = number_format($paiement['montant'], 2, ',', ' '); 
+        $montant .= ' €'; 
+
         $csvContent .= sprintf(
             "%s; %s; %s\n",
-            $paiement['date_paiement'], // Access the date_paiement directly from the array
-            $paiement['montant'],        // Access the montant directly from the array
-            $paiement['methode_paiement'] // Access the methode_paiement directly from the array
+            $paiement['date_paiement'],
+            $paiement['montant'],
+            $montant
         );
     }
-    // Create the CSV response
+
     $response = new Response($csvContent);
 
-    // Set response headers for CSV download
     $response->headers->set('Content-Type', 'text/csv');
     $response->headers->set('Content-Disposition', 'attachment; filename="Paiements_' . $year . '.csv"');
 
     return $response;
 }
 
+#[Route(path: '/csv-factures/{year}', name: 'app_csv_factures')]
+    public function csvFactures(FactureRepository $repository, $year): Response
+{
+    $factures = $repository->findFacturesByYear($year);
 
+    $csvContent = "Numéro; Date de Facturation; Date de Paiement Due; Statut de Paiement; Montant Total\n";
+
+    foreach ($factures as $facture) {
+
+        $montantTotal = number_format($facture['total'], 2, ',', ' '); 
+        $montantTotal .= ' €'; 
+
+        $csvContent .= sprintf(
+            "%s; %s; %s; %s; %s\n",
+            $facture['numero'],
+            $facture['date_facturation'],
+            $facture['date_paiement_due'], 
+            $facture['statut_paiement'],
+            $montantTotal,  
+        );
+    }
+
+    $response = new Response($csvContent);
+
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', 'attachment; filename="Factures_' . $year . '.csv"');
+
+    return $response;
+}
 }
