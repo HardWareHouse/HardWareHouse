@@ -56,6 +56,7 @@ class HomeController extends AbstractController
             $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
         }
 
+        
     $devisAttenteCount = count($devisAttente);
     $devisApprouveCount = count($devisApprouve);
     $devisAttenteMontant = 0;
