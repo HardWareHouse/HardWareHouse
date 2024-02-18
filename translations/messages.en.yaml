@@ -114,6 +114,22 @@ product: Producte
 product_details: Product details
 #Reports
 financial_reports: Financial Reports
+jan: Jan
+feb: Feb
+mar: Mar
+apr: Apr
+may: May
+jun: Jun
+jul: Jul
+aug: Aug
+sep: Sep
+oct: Oct
+nov: Nov
+dec: Dec
+check: Check
+cash: Cash
+card: Credit Card
+transfer: Bank Transfer
 #CGU
 cgu: Terms and Conditions
 intro: Introduction

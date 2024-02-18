@@ -2,7 +2,7 @@
 welcome: Bienvenue
 revenue: Chiffre d'affaires
 global: Global
-this_month: Ce mois
+this_month: Ce mois-ci
 today: Aujourd'hui
 best_products: Mes meilleurs produits
 sold: Vendus
@@ -114,6 +114,22 @@ product: Produit
 product_details: Détails du produit
 #Reports
 financial_reports: Rapports Financières
+jan: Jan
+feb: Fév
+mar: Mar
+apr: Avr
+may: Mai
+jun: Jun
+jul: Jul
+aug: Aoû
+sep: Sep
+oct: Oct
+nov: Nov
+dec: Déc
+check: Chèque
+cash: Espèces
+card: Carte bancaire
+transfer: Virement bancaire
 #CGU
 cgu: Conditions Générales d'Utilisation
 intro: Introduction
