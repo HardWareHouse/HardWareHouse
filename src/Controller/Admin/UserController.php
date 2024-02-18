@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,23 +94,10 @@ class UserController extends AbstractController
     #[Route('/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('plainPassword')->getData() !== $form->get('confirmPassword')->getData()) {
-                // Gestion de l'erreur si les mots de passe ne correspondent pas
-                $form->get('confirmPassword')->addError(new FormError('Les deux mots de passe ne correspondent pas !'));
-                return $this->render('admin/user/new.html.twig', [
-                    'form' => $form->createView(),
-                ]);
-            }
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
 
             $entityManager->flush();
         
