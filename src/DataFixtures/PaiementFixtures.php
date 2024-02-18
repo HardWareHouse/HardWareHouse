@@ -35,7 +35,7 @@ class PaiementFixtures extends Fixture implements OrderedFixtureInterface
                     ->setDatePaiement($faker->dateTimeThisDecade())
                     ->setMethodePaiement($faker->randomElement(['Carte bancaire', 'Chèque', 'Espèces', 'Virement bancaire']))
                     ->setFactureId($facture)
-                    ->setEntreprise($this->getReference('entreprise-'.rand(0, 9)));
+                    ->setEntrepriseId($this->getReference('entreprise-'.rand(0, 9)));
 
                 $manager->persist($paiement);
             }

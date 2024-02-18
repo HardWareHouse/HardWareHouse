@@ -27,8 +27,8 @@ class PaiementRepository extends ServiceEntityRepository
     $qb = $this->createQueryBuilder('p');
 
     $qb->select('SUM(p.montant) as totalPaiements')
-       ->where('p.entrepriseId = :entrepriseId')
-       ->setParameter('entrepriseId', $entrepriseId);
+       ->where('p.entreprise_id = :entreprise_id')
+       ->setParameter('entreprise_id', $entrepriseId);
 
     $query = $qb->getQuery();
 
