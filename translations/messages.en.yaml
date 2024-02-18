@@ -11,7 +11,6 @@ unpaid: Unpaid
 invoices: Invoices
 amount: Amount
 late: Late
-user_new: New user
 my_estimates: My estimates
 in_progress: In progress
 expired: Expired
@@ -64,7 +63,6 @@ status: Status
 estimate_details: Estimate details
 add: Add
 estimate_edit: Modify estimate
-company_edit: Modify company
 user_edit: Modify user
 company_list: Company list
 user_list: User list
