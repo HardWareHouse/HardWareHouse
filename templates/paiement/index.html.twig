@@ -12,7 +12,7 @@
         </a>
     </div>
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+        <table id="paiementTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'payment_date'|trans}}</th>
@@ -20,6 +20,14 @@
                     <th scope="col" class="py-3 px-6">{{'payment_method'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
                 </tr>
+                <tr>
+                    <th><input type="text" placeholder="Date du paiement..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Montant..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Méthode de paiement..." class="form-control form-control-sm" /></th>
+                    </th>
+                    <th>&nbsp;</th>
+                </tr>
+
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 {% for paiement in paiements %}
@@ -57,4 +65,12 @@
 
 {% block javascripts %}
 {{ parent() }}
+
+<script src="{{ asset('js/paiementDatatable.js', 'local') }}"> </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/paiement.css', 'local') }}">
 {% endblock %}
