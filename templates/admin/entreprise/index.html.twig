@@ -12,8 +12,8 @@
         </a>
     </div>
 
-    <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+    <div class="overflow-x-auto relative sm:rounded-lg mt-6">
+        <table id="entrepriseTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">Nom</th>
@@ -21,6 +21,14 @@
                     <th scope="col" class="py-3 px-6">Description</th>
                     <th scope="col" class="py-3 px-6">Information Fiscale</th>
                     <th scope="col" class="py-3 px-6">Actions</th>
+                </tr>
+                <tr>
+                    <th><input type="text" placeholder="Nom entreprise..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Adresse entreprise..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Description..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Information fiscale..." class="form-control form-control-sm" />
+                    </th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -57,7 +65,18 @@
 </div>
 {% endblock %}
 
+
+
+
+
 {% block javascripts %}
 {{ parent() }}
+
 <script src="{{ asset('js/entrepriseDatatable.js', 'local') }}"> </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/entreprise.css', 'local') }}">
 {% endblock %}

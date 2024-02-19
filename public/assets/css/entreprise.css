@@ -1,0 +1,26 @@
+#entrepriseTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#entrepriseTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#entrepriseTable tbody tr {
+    border-bottom: 1px solid #cccccc;
+}
+
+#entrepriseTable tbody tr:hover {
+    background-color: #eaeaea;
+}
+
+#entrepriseTable th,
+#entrepriseTable td {
+    padding: 16px;
+}
+
+#entrepriseTable thead tr th input[type="text"] {
+    height: 38px;
+    margin: 0;
+    padding: 5px 8px;
+}
