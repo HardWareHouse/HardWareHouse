@@ -68,7 +68,6 @@ add: Add
 estimate_edit: Modify estimate
 user_edit: Modify user
 my_user_edit: Modify My employee
-my_user_edit: Modify My employee
 company_list: Company list
 user_list: User list
 my_user_list: My employee list
