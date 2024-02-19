@@ -46,7 +46,7 @@ class HomeController extends AbstractController
             $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
             $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
             $produits = $produitRepository->findLatestProducts();
-            
+            $bestSellers = $produitRepository->findBestSellers();
         } else {
             $entrepriseId = $this->getUser()->getEntreprise()->getId();
 
@@ -54,6 +54,7 @@ class HomeController extends AbstractController
             $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
             $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
             $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
+            $bestSellers = $produitRepository->findBestSellersByEntreprise($entrepriseId);
         }
 
         
@@ -140,7 +141,8 @@ class HomeController extends AbstractController
         'totalPaiementsThisMonth' => $totalPaiementsThisMonth,
         'totalPaiementsYesterday' => $totalPaiementsYesterday,
         'totalPaiementsLastMonth' => $totalPaiementsLastMonth,
-        'produits' => $produits
+        'produits' => $produits,
+        'bestSellers' => $bestSellers,
     ]);
 }
 }

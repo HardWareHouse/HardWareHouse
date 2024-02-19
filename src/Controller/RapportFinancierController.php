@@ -81,6 +81,7 @@ class RapportFinancierController extends AbstractController
             'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray), 'translatedMonths' => json_encode($translatedMonths), 'entreprises' => json_encode($entreprises), 'facturesData' => json_encode($facturesData), 'devisData' => json_encode($devisData),
         ]);
     }
+    
     #[Route(path: '/csv-methodes/{year}', name: 'app_csv_methodes')]
     public function csvMethodes(PaiementRepository $repository, $year): Response
 {
@@ -97,8 +98,8 @@ class RapportFinancierController extends AbstractController
         $csvContent .= sprintf(
             "%s; %s; %s\n",
             $paiement['date_paiement'],
-            $paiement['montant'],
-            $montant
+            $montant,
+            $paiement['methode_paiement'],
         );
     }
 

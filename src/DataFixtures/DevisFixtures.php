@@ -19,10 +19,10 @@ class DevisFixtures extends Fixture implements OrderedFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $devis = new Devis();
             $devis->setNumero($faker->numerify('DEVIS####'))
-                  ->setDateCreation($faker->dateTimeThisYear())
+                  ->setDateCreation($faker->dateTimeThisDecade())
                   ->setStatus($faker->randomElement(['En attente', 'Approuvé', 'Refusé']))
                   ->setTotal($faker->randomFloat(2, 100, 10000))
                   ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
