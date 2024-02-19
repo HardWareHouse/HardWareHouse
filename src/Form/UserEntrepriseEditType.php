@@ -29,7 +29,6 @@ class UserEntrepriseEditType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'label' => 'Rôles de l\'utilisateur',
                 'choices' => [
-                    // 'Admin' => 'ROLE_ADMIN',
                     'User' => 'ROLE_USER',
                     'Comptable' => 'ROLE_COMPTABLE',
                 ],

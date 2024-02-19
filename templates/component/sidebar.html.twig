@@ -158,7 +158,7 @@
           </div>
         </a>
       {% endif %}
-      {% if not is_granted('ROLE_ADMIN') or not is_granted('ROLE_COMPTABLE') %}
+      {% if not is_granted('ROLE_ADMIN') and not is_granted('ROLE_COMPTABLE') %}
         <a href="{{ path('app_my_user_index') }}">
           <div
                   class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
