@@ -1,0 +1,26 @@
+#produitTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#produitTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#produitTable tbody tr {
+    border-bottom: 1px solid #cccccc;
+}
+
+#produitTable tbody tr:hover {
+    background-color: #eaeaea;
+}
+
+#produitTable th,
+#produitTable td {
+    padding: 16px;
+}
+
+#produitTable thead tr th input[type="text"] {
+    height: 38px;
+    margin: 0;
+    padding: 5px 8px;
+}

@@ -12,8 +12,8 @@
         </a>
     </div>
 
-    <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-6">
-        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+    <div class="overflow-x-auto relative sm:rounded-lg mt-6">
+        <table id="produitTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
@@ -22,6 +22,14 @@
                     <th scope="col" class="py-3 px-6">{{'stock'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
+                </tr>
+                <tr>
+                    <th><input type="text" placeholder="Nom du produit..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Description du produit..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Prix..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Stock..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" /></th>
+                    <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -69,4 +77,9 @@
 
 <script src="{{ asset('js/produitDatatable.js', 'local') }}"> </script>
 
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/produit.css', 'local') }}">
 {% endblock %}
