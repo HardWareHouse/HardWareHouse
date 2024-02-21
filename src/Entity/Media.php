@@ -6,6 +6,7 @@ use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 #[Vich\Uploadable]
@@ -17,6 +18,14 @@ class Media implements \Serializable
     private ?int $id = null;
 
     #[Vich\UploadableField(mapping: 'entreprise_logo', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Assert\Image(
+        maxSize: '5M',
+        maxSizeMessage: 'La taille de l\'image ne doit pas dépasser 5M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        mimeTypesMessage: 'Le format de l\'image doit être de type jpeg, png ou webp',
+        minRatio: 1.75,
+        maxRatio: 1.75,
+    )]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
