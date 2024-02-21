@@ -60,6 +60,9 @@ class Entreprise
     #[ORM\JoinColumn(name: "paiement", referencedColumnName: "id")]
     private Collection $paiementId;
 
+    #[ORM\OneToOne(inversedBy: 'entreprise', cascade: ['persist', 'remove'])]
+    private ?Media $logo = null;
+
     public function __construct()
     {
         $this->clientId = new ArrayCollection();
@@ -350,4 +353,17 @@ class Entreprise
 
         return $this;
     }
+
+    public function getLogo(): ?Media
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(?Media $logo): static
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
 }

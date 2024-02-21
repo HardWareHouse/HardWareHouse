@@ -3,29 +3,29 @@
 namespace App\Form;
 
 use App\Entity\Entreprise;
+use App\Entity\Media;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-use App\Form\MediaType as MediaFormType;
 
-class EntrepriseType extends AbstractType
+class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('nom')
-            ->add('adresse')
-            ->add('description')
-            ->add('informationFiscale')
-            ->add('logo', MediaFormType::class)
-        ;
+        $builder->add('imageFile', VichImageType::class, [
+            'required' => false,
+            'allow_delete' => true,
+            'download_uri' => false,
+            'label' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Entreprise::class,
+            'data_class' => Media::class,
         ]);
     }
 }
