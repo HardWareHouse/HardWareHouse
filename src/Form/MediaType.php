@@ -16,7 +16,7 @@ class MediaType extends AbstractType
     {
         $builder->add('imageFile', VichImageType::class, [
             'required' => false,
-            'allow_delete' => true,
+            'allow_delete' => false,
             'download_uri' => false,
             'label' => false,
         ]);
