@@ -40,6 +40,27 @@ class ProduitRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+     public function findBestSellers(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.stock', 'ASC') // Sort by stock level in ascending order
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBestSellersByEntreprise(int $entrepriseId, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.entrepriseId = :entrepriseId')
+            ->setParameter('entrepriseId', $entrepriseId)
+            ->orderBy('p.stock', 'ASC') // Sort by stock level in ascending order
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Produit[] Returns an array of Produit objects
 //     */

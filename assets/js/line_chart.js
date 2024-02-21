@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("change", function (event) {
       selectedYear = parseInt(event.target.value);
       updateCharts(selectedYear);
-      downloadButton.href = "/csv-methodes/" + selectedYear;
+      paymentButton.href = "/csv-methodes/" + selectedYear;
       factureButton.href = "/csv-factures/" + selectedYear;
     });
 

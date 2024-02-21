@@ -29,7 +29,7 @@ class PaiementFixtures extends Fixture implements OrderedFixtureInterface
         $factures = $this->factureRepository->findAll();
 
         foreach ($factures as $facture) {
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 30; $i++) {
                 $paiement = new Paiement();
                 $paiement->setMontant($faker->randomFloat(2, 99, 9999))
                     ->setDatePaiement($faker->dateTimeThisDecade())

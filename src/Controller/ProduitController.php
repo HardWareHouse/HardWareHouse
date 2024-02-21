@@ -125,7 +125,7 @@ class ProduitController extends AbstractController
             return $response;
         }
 
-        if ($this->isCsrfTokenValid('delete'.$produit->getUuid(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($produit);
             $this->entityManager->flush();
         }

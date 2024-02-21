@@ -19,11 +19,11 @@ class FactureFixtures extends Fixture implements OrderedFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $facture = new Facture();
             $facture->setNumero($faker->numerify('FACT####'))
-                    ->setDateFacturation($faker->dateTimeThisYear())
-                    ->setDatePaiementDue($faker->dateTimeThisYear())
+                    ->setDateFacturation($faker->dateTimeThisDecade())
+                    ->setDatePaiementDue($faker->dateTimeThisDecade())
                     ->setStatutPaiement($faker->randomElement(['Payé', 'Non-payé', 'En retard']))
                     ->setTotal($faker->randomFloat(2, 100, 10000))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
