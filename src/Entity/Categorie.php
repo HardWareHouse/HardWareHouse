@@ -36,6 +36,7 @@ class Categorie
     public function __construct()
     {
         $this->produitId = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int

@@ -16,7 +16,6 @@ class ProduitType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('stock')
-            ->add('CreatedAt')
         ;
     }
 

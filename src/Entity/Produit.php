@@ -56,6 +56,7 @@ class Produit
     public function __construct()
     {
         $this->detailDevis = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
     }
 
 
