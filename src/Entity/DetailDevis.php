@@ -29,6 +29,10 @@ class DetailDevis
     #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
     private ?Devis $devisId = null;
 
+    #[ORM\ManyToOne(inversedBy: 'detailDevis')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Produit $produit = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,6 +104,18 @@ class DetailDevis
         }
 
         $this->devisId = $devisId;
+
+        return $this;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }
