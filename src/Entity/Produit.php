@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -47,6 +49,14 @@ class Produit
 
     #[ORM\Column(nullable: true)]
     private ?int $tva = null;
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailDevis::class, orphanRemoval: true)]
+    private Collection $detailDevis;
+
+    public function __construct()
+    {
+        $this->detailDevis = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -170,6 +180,36 @@ class Produit
     public function setTva(?int $tva): static
     {
         $this->tva = $tva;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailDevis>
+     */
+    public function getDetailDevis(): Collection
+    {
+        return $this->detailDevis;
+    }
+
+    public function addDetailDevi(DetailDevis $detailDevi): static
+    {
+        if (!$this->detailDevis->contains($detailDevi)) {
+            $this->detailDevis->add($detailDevi);
+            $detailDevi->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailDevi(DetailDevis $detailDevi): static
+    {
+        if ($this->detailDevis->removeElement($detailDevi)) {
+            // set the owning side to null (unless already changed)
+            if ($detailDevi->getProduit() === $this) {
+                $detailDevi->setProduit(null);
+            }
+        }
 
         return $this;
     }

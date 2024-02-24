@@ -65,7 +65,7 @@ class ClientController extends AbstractController
 
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response
-    {
+    {   dd($client);
         $userEntreprise = $this->getUser()->getEntreprise();
 
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $client->getEntrepriseId()->getId()) {
