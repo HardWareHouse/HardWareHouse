@@ -9,10 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/{_locale<%app.supported_locales%>}/admin')]
 #[IsGranted('ROLE_ADMIN')]
 class MainController extends AbstractController
-{
+{   
     #[Route('/', name: 'app_admin_index', methods: ['GET'])]
     public function index(): Response
-    {
+    {   
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'MainController',
         ]);

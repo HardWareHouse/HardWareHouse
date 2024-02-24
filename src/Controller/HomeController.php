@@ -47,6 +47,7 @@ class HomeController extends AbstractController
             $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
             $produits = $produitRepository->findLatestProducts();
             $bestSellers = $produitRepository->findBestSellers();
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         } else {
             $entrepriseId = $this->getUser()->getEntreprise()->getId();
 

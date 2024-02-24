@@ -38,8 +38,8 @@ class DevisType extends AbstractType
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'Approuvé' => 'Approuvé',
                     'En attente' => 'En attente',
+                    'Approuvé' => 'Approuvé',
                     'Refusé' => 'Refusé',
                 ],
             ])
