@@ -29,7 +29,7 @@ class DevisType extends AbstractType
 
         $builder
             ->add('numero', TextType::class, [
-            'attr' => ['placeholder' => 'DEVIS####']
+            'attr' => ['placeholder' => 'estimate_placeholder']
             ])             
             ->add('dateCreation', DateType::class, [
                 'widget' => 'single_text',
@@ -38,9 +38,9 @@ class DevisType extends AbstractType
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'Approuvé' => 'Approuvé',
-                    'En attente' => 'En attente',
-                    'Refusé' => 'Refusé',
+                    'approved' => 'Approuvé',
+                    'in_progress' => 'En attente',
+                    'refused' => 'Refusé',
                 ],
             ])
             ->add('total')

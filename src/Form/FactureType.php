@@ -32,9 +32,9 @@ class FactureType extends AbstractType
             ])
             ->add('statutPaiement', ChoiceType::class, [
                 'choices' => [
-                    'Payé' => 'Payé',
-                    'Non-payé' => 'Non-payé',
-                    'En retard' => 'En retard',
+                    'paid' => 'Payé',
+                    'unpaid' => 'Non-payé',
+                    'late' => 'En retard',
                 ],
             ])
             ->add('total', NumberType::class, [

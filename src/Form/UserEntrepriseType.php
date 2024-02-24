@@ -21,22 +21,22 @@ class UserEntrepriseType extends AbstractType
     {
         $builder
             ->add('mail', null, [
-                'label' => 'Adresse mail',
+                'label' => 'email',
             ])
             ->add('username', null, [
-                'label' => 'Nom',
+                'label' => 'name',
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Rôles de l\'utilisateur',
+                'label' => 'roles',
                 'choices' => [
-                    'User' => 'ROLE_USER',
-                    'Comptable' => 'ROLE_COMPTABLE',
+                    'user' => 'ROLE_USER',
+                    'accountant' => 'ROLE_COMPTABLE',
                 ],
                 'expanded' => true,
                 'multiple' => true,
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -51,7 +51,7 @@ class UserEntrepriseType extends AbstractType
                 ],
             ])
             ->add('confirmPassword', PasswordType::class, [
-                'label' => 'Confirmer le mot de passe',
+                'label' => 'confirm password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

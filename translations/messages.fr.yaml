@@ -18,7 +18,7 @@ my_recent_products: Mes derniers produits
 in_brief: Votre entreprise en bref
 approved: Approuvé
 rules: Rôles
-company_name : Entreprise
+company_name: Entreprise
 user: utilisateur
 #Nav
 home: Accueil
@@ -32,11 +32,11 @@ my_user: Mes Employés
 company_list: Liste des entreprise
 user_list: Liste des utilisateurs
 my_user_list: Liste de mes employés
-company_new: Ajouter une entreprise    
+company_new: Ajouter une entreprise
 user_new: Ajouter un utilisateur
 my_user_new: Ajouter un employé
 no_company: Il n'existe aucune entreprise.
-no_user: Il n'existe aucun utilisateur 
+no_user: Il n'existe aucun utilisateur
 no_my_user: Il n'existe pas d'employé
 payments: Paiements
 company: Mon Entreprise
@@ -80,8 +80,8 @@ estimate_edit: Modifier le devis
 estimate_list: Liste des devis
 estimate_new: Créer un nouveau devis
 estimate: Devis
-number: Numéro
-total: Total
+number: Numéro de devis
+total: Total (€)
 no_estimate: Aucun devis trouvé
 expires: Échéance
 billing_info: Facturé à
@@ -90,6 +90,8 @@ payment_method: Méthode de paiement
 item: Objet
 price: Prix
 paid: Payé
+refused: Refusé
+estimate_placeholder: DEVIS####
 #Emails
 email_header: Welcome %username% dans la famille !
 email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
@@ -106,6 +108,8 @@ invoice_new: Ajouter une nouvelle facture
 duedate: Date de paiement due
 no_invoice: Aucune facture trouvée
 invoice: Facture
+invoice_number: Numéro de facture
+billing_date: Date de facturation
 #Paiement
 payment_modify: Modifier le paiement
 payment_new: Ajouter un nouveau paiement
@@ -166,6 +170,9 @@ signup: S'inscrire
 already_user: Déjà inscrit ?
 login: Connectez-vous
 i_accept: J'accepte les
+username: Nom d'utilisateur
+roles: Rôles de l'utilisateur
+accountant: Comptable
 #Password Reset
 reset_sent: Email de Réinitialisation du Mot de Passe Envoyé
 reset_sent_text: Si un compte correspondant à votre email existe, un email vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans %token%
@@ -186,4 +193,6 @@ rememberme: Se souvenir de moi
 forgot_password: Mot de passe oublié ?
 no_account: Vous ne possédez pas de compte ?
 logo_company: Logo de votre entreprise
+slug: L'outil incontournable pour gérer efficacement votre entreprise dans le domaine du hardware.
+
 created_at: Créé le
