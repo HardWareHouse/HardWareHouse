@@ -32,11 +32,11 @@ class DevisType extends AbstractType
                 ],
             ])
             ->add('total')
-            ->add('CreatedAt', DateTimeType::class, [
-                'widget' => 'single_text',
-                'data' => new \DateTime('now'),
+            // ->add('CreatedAt', DateTimeType::class, [
+            //     'widget' => 'single_text',
+            //     'data' => new \DateTime('now'),
             
-            ])
+            // ])
             ->add('clientId')
             ->add('detailDevisId')
         ;
