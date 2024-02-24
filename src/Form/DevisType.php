@@ -47,8 +47,7 @@ class DevisType extends AbstractType
             // ->add('CreatedAt', DateTimeType::class, [
             //     'widget' => 'single_text',
             //     'data' => new \DateTime('now'),
-            
-            ])
+            // ])
             ->add('clientId', EntityType::class, [
                 'class' => Client::class, // Entité Client
                 'query_builder' => function (EntityRepository $er) use ($entreprise) {
