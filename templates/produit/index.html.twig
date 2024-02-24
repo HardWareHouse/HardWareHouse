@@ -18,6 +18,9 @@
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'description'|trans}}</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
+                    {% endif %}
                     <th scope="col" class="py-3 px-6">{{'price'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'stock'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
@@ -37,6 +40,9 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="py-4 px-6">{{ produit.nom }}</td>
                     <td class="py-4 px-6">{{ produit.description }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td class="py-4 px-6">{{ produit.entrepriseId.nom }}</td>
+                    {% endif %}
                     <td class="py-4 px-6">{{ produit.prix }}€</td>
                     <td class="py-4 px-6">{{ produit.stock }}</td>
                     <td class="py-4 px-6">{{ produit.CreatedAt ? produit.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>

@@ -22,6 +22,12 @@
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'address'|trans}}</th>
                         <td class="px-6 py-4">{{ client.adresse }}</td>
                     </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'the_company'|trans }}</th>
+                        <td class="px-6 py-4">{{ client.entrepriseId.nom }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'email'|trans}}</th>
                         <td class="px-6 py-4">{{ client.email }}</td>

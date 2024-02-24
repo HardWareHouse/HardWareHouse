@@ -21,6 +21,12 @@
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'description'|trans }}</th>
                         <td class="px-6 py-4">{{ categorie.description }}</td>
                     </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'the_company'|trans }}</th>
+                        <td class="px-6 py-4">{{ categorie.entrepriseId.nom }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'createdat'|trans }}</th>
                         <td class="px-6 py-4">{{ categorie.CreatedAt ? categorie.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>

@@ -50,7 +50,9 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $produit->setEntrepriseId($userEntreprise);
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                $produit->setEntrepriseId($userEntreprise);
+            }
             $this->entityManager->persist($produit);
             $this->entityManager->flush();
 

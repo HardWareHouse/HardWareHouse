@@ -100,6 +100,7 @@ click_here: Click here!
 #Company
 company_edit: Edit Company
 companies: Companies
+the_company: Company
 tax_info: Tax information
 #Invoice
 invoice_modify: Modify invoice

@@ -22,6 +22,12 @@
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'created_on'|trans}}</th>
                 <td class="px-6 py-4">{{ devi.dateCreation ? devi.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            {% if is_granted('ROLE_ADMIN') %}
+                        <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'the_company'|trans }}</th>
+                        <td class="px-6 py-4">{{ devi.entrepriseId.nom }}</td>
+                    </tr>
+                    {% endif %}
             <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'status'|trans}}</th>
                 <td class="px-6 py-4">{{ devi.status }}</td>

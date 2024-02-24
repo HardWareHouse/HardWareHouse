@@ -18,6 +18,9 @@
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'address'|trans}}</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
+                    {% endif %}
                     <th scope="col" class="py-3 px-6">{{'email'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'telephone'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
@@ -36,6 +39,9 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="py-4 px-6">{{ client.nom }}</td>
                     <td class="py-4 px-6">{{ client.adresse }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td class="py-4 px-6">{{ client.entrepriseId.nom }}</td>
+                    {% endif %}
                     <td class="py-4 px-6">{{ client.email }}</td>
                     <td class="py-4 px-6">{{ client.telephone }}</td>
                     <td class="py-4 px-6">

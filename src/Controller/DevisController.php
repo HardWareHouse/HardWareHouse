@@ -54,7 +54,9 @@ class DevisController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $devi = $form->getData();
-            $devi->setEntrepriseId($userEntreprise);
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                $devi->setEntrepriseId($userEntreprise);
+            }
 
             $this->entityManager->persist($devi);
             $this->entityManager->flush();
@@ -105,7 +107,6 @@ class DevisController extends AbstractController
     #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
     public function downloadPdf(Devis $devi, PdfService $pdfService): Response
     {
-        $userEntreprise = $this->getUser()->getEntreprise();
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
@@ -113,7 +114,7 @@ class DevisController extends AbstractController
 
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
-            'entreprise' => $userEntreprise,
+            'entreprise' => $devi->getEntrepriseId(),
         ]);
 
         $pdfService->showPdfFile($html);

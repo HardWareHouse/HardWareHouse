@@ -22,6 +22,12 @@
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'description'|trans}}</th>
                         <td class="px-6 py-4">{{ produit.description }}</td>
                     </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'the_company'|trans }}</th>
+                        <td class="px-6 py-4">{{ produit.entrepriseId.nom }}</td>
+                    </tr>
+                    {% endif %}
                     <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'price'|trans}}</th>
                         <td class="px-6 py-4">{{ produit.prix }}€</td>

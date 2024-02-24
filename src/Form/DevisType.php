@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Devis;
 use App\Entity\Client;
+use App\Entity\Entreprise;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,6 +61,17 @@ class DevisType extends AbstractType
             ])
             ->add('detailDevisId')
         ;
+
+
+        $isAdmin = $this->security->isGranted('ROLE_ADMIN');
+        if ($isAdmin) {
+            $builder->add('entrepriseId', EntityType::class, [
+                'class' => Entreprise::class,
+                'label' => 'Entreprise',
+                'choice_label' => 'nom', 
+                'placeholder' => 'Sélectionnez l\'entreprise auquel la catégorie appartient',
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

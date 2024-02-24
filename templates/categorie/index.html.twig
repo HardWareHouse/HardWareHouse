@@ -18,6 +18,9 @@
                 <tr>
                     <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'description'|trans}}</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
+                    {% endif %}
                     <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
                 </tr>
@@ -27,6 +30,9 @@
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="py-4 px-6">{{ categorie.nom }}</td>
                     <td class="py-4 px-6">{{ categorie.description }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <td class="py-4 px-6">{{ categorie.entrepriseId.nom }}</td>
+                    {% endif %}
                     <td class="py-4 px-6">{{ categorie.CreatedAt ? categorie.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-center">

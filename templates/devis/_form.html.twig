@@ -8,6 +8,13 @@
         {{ form_widget(form.numero, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="mb-4">
+            {{ form_label(form.entrepriseId) }}
+            {{ form_widget(form.entrepriseId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+    {% endif %}
+    
     <div class="mb-4">
         {{ form_label(form.dateCreation, 'created_on'|trans) }}
         {{ form_widget(form.dateCreation, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}

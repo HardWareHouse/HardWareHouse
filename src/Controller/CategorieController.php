@@ -49,7 +49,9 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categorie->setEntrepriseId($userEntreprise);
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                $categorie->setEntrepriseId($userEntreprise);
+            }
             $this->entityManager->persist($categorie);
             $this->entityManager->flush();
 
