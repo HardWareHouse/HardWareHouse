@@ -21,53 +21,40 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[IsGranted('ROLE_USER')]
 class DevisController extends AbstractController
 {
-    private $userEntreprise;
+    private $entityManager;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->authorizationChecker = $authorizationChecker;
         $this->entityManager = $entityManager;
-    }
-
-    private function checkUserAccessToDevis($userEntreprise, $devi): ?Response
-    {
-        $devisEntreprise = $devi->getEntrepriseId();
-        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devisEntreprise->getId()) {
-            $this->addFlash(
-                'danger',
-                'La requête que vous essayez de faire est illégal !'
-            );
-            return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return null;
     }
 
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
     {   
-        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            return $this->render('devis/index.html.twig', [
-                'devis' => $devisRepository->findAll(),
-            ]);
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $devis = $devisRepository->findAll();
         } else {
-            $this->userEntreprise = $this->getUser()->getEntreprise();
-            return $this->render('devis/index.html.twig', [
-                'devis' => $devisRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
-            ]);
+            $devis = $devisRepository->findBy(["entrepriseId" => $userEntreprise->getId()]);
         }
+
+        return $this->render('devis/index.html.twig', [
+            'devis' => $devis,
+        ]);
     }
 
     #[Route('/new', name: 'app_devis_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PdfService $pdfService): Response
+    public function new(Request $request, MailerInterface $mailer, PdfService $pdfService): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $userEntreprise = $this->getUser()->getEntreprise();
         $devi = new Devis();
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $devi = $form->getData();
-            $devi->setEntrepriseId($this->userEntreprise);
+            $devi->setEntrepriseId($userEntreprise);
 
             $this->entityManager->persist($devi);
             $this->entityManager->flush();
@@ -75,7 +62,7 @@ class DevisController extends AbstractController
             // Générer le contenu du PDF
             $html = $this->renderView('devis/pdf.html.twig', [
                 'devis' => $devi,
-                'entreprise' => $this->userEntreprise,
+                'entreprise' => $userEntreprise,
             ]);
             $pdfContent = $pdfService->generatePdfContent($html);
 
@@ -103,10 +90,11 @@ class DevisController extends AbstractController
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
     public function show(Devis $devi): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
         }
 
         return $this->render('devis/show.html.twig', [
@@ -115,17 +103,17 @@ class DevisController extends AbstractController
     }
 
     #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
-    public function downloadPdf(Entreprise $entreprise, Devis $devis, PdfService $pdfService): Response
+    public function downloadPdf(Devis $devi, PdfService $pdfService): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devis);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
         }
 
         $html = $this->renderView('devis/pdf.html.twig', [
-            'devis' => $devis,
-            'entreprise' => $entreprise,
+            'devis' => $devi,
+            'entreprise' => $userEntreprise,
         ]);
 
         $pdfService->showPdfFile($html);
@@ -138,10 +126,10 @@ class DevisController extends AbstractController
     #[Route('/{id}/edit', name: 'app_devis_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Devis $devi): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
         }
 
         $form = $this->createForm(DevisType::class, $devi);
@@ -162,10 +150,11 @@ class DevisController extends AbstractController
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
     public function delete(Request $request, Devis $devi): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToDevis($this->userEntreprise, $devi);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+        
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
         }
         
         if ($this->isCsrfTokenValid('delete'.$devi->getId(), $request->request->get('_token'))) {

@@ -21,46 +21,33 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[IsGranted('ROLE_USER')]
 class FactureController extends AbstractController
 {
-    private $userEntreprise;
+    private $entityManager;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->authorizationChecker = $authorizationChecker;
         $this->entityManager = $entityManager;
-    }
-
-    private function checkUserAccessToFacture($userEntreprise, $facture): ?Response
-    {
-        $factureEntreprise = $facture->getEntrepriseId();
-        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $factureEntreprise->getId()) {
-            $this->addFlash(
-                'danger',
-                'La requête que vous essayez de faire est illégal !'
-            );
-            return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return null;
     }
 
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
     public function index(FactureRepository $factureRepository): Response
     {   
-        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            return $this->render('facture/index.html.twig', [
-                'factures' => $factureRepository->findAll(),
-            ]);
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $factures = $factureRepository->findAll();
         } else {
-            $this->userEntreprise = $this->getUser()->getEntreprise();
-            return $this->render('facture/index.html.twig', [
-                'factures' => $factureRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
-            ]);
+            $factures = $factureRepository->findBy(["entrepriseId" => $userEntreprise->getId()]);
         }
+
+        return $this->render('facture/index.html.twig', [
+            'factures' => $factures,
+        ]);
     }
 
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PdfService $pdfService): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $userEntreprise = $this->getUser()->getEntreprise();
 
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
@@ -68,7 +55,7 @@ class FactureController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $facture = $form->getData();
-            $facture->setEntrepriseId($this->userEntreprise);
+            $facture->setEntrepriseId($userEntreprise);
             //$client = $facture->getClientId();
 
             $this->entityManager->persist($facture);
@@ -79,7 +66,6 @@ class FactureController extends AbstractController
                 'facture' => $facture,
             ]);
             $pdfContent = $pdfService->generatePdfContent($html);
-
 
             // Créer l'email
             $userEmail = $this->getUser()->getMail();
@@ -93,7 +79,6 @@ class FactureController extends AbstractController
             // Envoyer l'email
             $mailer->send($email);
 
-
             return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -106,10 +91,11 @@ class FactureController extends AbstractController
     #[Route('/{id}', name: 'app_facture_show', methods: ['GET'])]
     public function show(Facture $facture): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_facture_index');
         }
 
         return $this->render('facture/show.html.twig', [
@@ -117,17 +103,18 @@ class FactureController extends AbstractController
         ]);
     }
     #[Route('/{id}/pdf', name: 'app_facture_pdf', methods: ['GET'])]
-    public function downloadPdf(Client $client, Facture $facture, PdfService $pdfService): Response
+    public function downloadPdf(Facture $facture, PdfService $pdfService): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_facture_index');
         }
 
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
-            'client' => $client,
+            'client' => $facture->getClientId(),
         ]);
 
         $pdfService->showPdfFile($html);
@@ -140,10 +127,11 @@ class FactureController extends AbstractController
     #[Route('/{id}/edit', name: 'app_facture_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facture $facture): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_facture_index');
         }
 
         $form = $this->createForm(FactureType::class, $facture);
@@ -164,10 +152,11 @@ class FactureController extends AbstractController
     #[Route('/{id}', name: 'app_facture_delete', methods: ['POST'])]
     public function delete(Request $request, Facture $facture): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToFacture($this->userEntreprise, $facture);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_facture_index');
         }
         
         if ($this->isCsrfTokenValid('delete'.$facture->getId(), $request->request->get('_token'))) {

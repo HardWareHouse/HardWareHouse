@@ -17,58 +17,44 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {   
-    private $userEntreprise;
+    private $entityManager;
 
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker,EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->authorizationChecker = $authorizationChecker;
         $this->entityManager = $entityManager;
-    }
-
-    private function checkUserAccessToClient($userEntreprise, $client): ?Response
-    {
-        $clientEntreprise = $client->getEntrepriseId();
-        if (!$this->authorizationChecker->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $clientEntreprise->getId()) {
-            $this->addFlash(
-                'danger',
-                'La requête que vous essayez de faire est illégal !'
-            );
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
-        }
-        return null;
     }
 
     #[Route('/', name: 'app_client_index', methods: ['GET'])]
     public function index(ClientRepository $clientRepository): Response
     { 
-        if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            return $this->render('client/index.html.twig', [
-                'clients' => $clientRepository->findAll(),
-            ]);
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $clients = $clientRepository->findAll();
         } else {
-            $this->userEntreprise = $this->getUser()->getEntreprise();
-            return $this->render('client/index.html.twig', [
-                'clients' => $clientRepository->findBy(["entrepriseId" => $this->userEntreprise->getId()]),
-            ]);
+            $clients = $clientRepository->findBy(["entrepriseId" => $userEntreprise->getId()]);
         }
+
+        return $this->render('client/index.html.twig', [
+            'clients' => $clients,
+        ]);
     }
 
     #[Route('/new', name: 'app_client_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
+        $userEntreprise = $this->getUser()->getEntreprise();
+
         $client = new Client();
         $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $client = $form->getData();
-            $client->setEntrepriseId($this->userEntreprise);
-
+            $client->setEntrepriseId($userEntreprise);
             $this->entityManager->persist($client);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_client_index');
         }
 
         return $this->render('client/new.html.twig', [
@@ -80,10 +66,11 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_show', methods: ['GET'])]
     public function show(Client $client): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $client->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_client_index');
         }
 
         return $this->render('client/show.html.twig', [
@@ -94,10 +81,11 @@ class ClientController extends AbstractController
     #[Route('/{id}/edit', name: 'app_client_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Client $client): Response
     {
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $client->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_client_index');
         }
 
         $form = $this->createForm(ClientType::class, $client);
@@ -105,8 +93,7 @@ class ClientController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_client_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_client_index');
         }
 
         return $this->render('client/edit.html.twig', [
@@ -118,12 +105,13 @@ class ClientController extends AbstractController
     #[Route('/{id}', name: 'app_client_delete', methods: ['POST'])]
     public function delete(Request $request, Client $client): Response
     {   
-        $this->userEntreprise = $this->getUser()->getEntreprise();
-        $response = $this->checkUserAccessToClient($this->userEntreprise, $client);
-        if ($response !== null) {
-            return $response;
+        $userEntreprise = $this->getUser()->getEntreprise();
+
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $client->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_client_index');
         }
-        
+
         if ($this->isCsrfTokenValid('delete'.$client->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($client);
             $this->entityManager->flush();
