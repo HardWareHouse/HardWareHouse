@@ -33,6 +33,10 @@
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'total'|trans}}</th>
                 <td class="px-6 py-4">{{ facture.total }}€</td>
             </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'created_at'|trans }}</th>
+                <td class="px-6 py-4">{{ facture.CreatedAt ? facture.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>            
             </tbody>
         </table>
     </div>
@@ -44,5 +48,4 @@
         </a>
     </div>
 
-    {{ include('facture/_delete_form.html.twig') }}
 {% endblock %}

@@ -58,6 +58,7 @@ class Facture
     {
         $this->produitId = new ArrayCollection();
         $this->paiementId = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int

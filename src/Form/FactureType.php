@@ -40,11 +40,11 @@ class FactureType extends AbstractType
             ->add('total', NumberType::class, [
                 'attr' => ['placeholder' => '€']
             ])
-            ->add('CreatedAt', DateTimeType::class, [
-                'widget' => 'single_text',
-                'data' => new \DateTime('now'),
+            // ->add('CreatedAt', DateTimeType::class, [
+            //     'widget' => 'single_text',
+            //     'data' => new \DateTime('now'),
             
-            ])
+            // ])
             ->add('clientId')
             ->add('detailFactureId')
         ;
