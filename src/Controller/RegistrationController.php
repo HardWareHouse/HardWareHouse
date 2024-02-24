@@ -50,16 +50,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // $roles = $user->getRoles();
+            $roles = $user->getRoles();
 
-            // // For example, adding a new role
+            // For example, adding a new role
             // $roles[] = 'ROLE_ADMIN';
 
             // // Set the modified roles array back to the user
             // $user->setRoles($roles);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // $entityManager->persist($user);
+            // $entityManager->flush();
 
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())

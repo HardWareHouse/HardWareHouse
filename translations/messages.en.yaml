@@ -26,8 +26,8 @@ reports: Reports
 payments: Payments
 company: My Company
 company management: Company Management
-company_name : Company
-user : User 
+company_name: Company
+user: User
 user management: User Management
 logout: Logout
 #Categories
@@ -39,7 +39,7 @@ back_to_list: Back to list
 category: Category
 categories: Categories
 name: Name
-description: Descriptions
+description: Description
 createdat: Created at
 actions: Actions
 show: Show
@@ -58,7 +58,7 @@ new_client: New client
 client_details: Client details
 user_details: User details
 my_user_details: My employee details
-my_user: My employee
+my_user: My employees
 rules: Rules
 #Estimates
 created_on: Created on
@@ -81,8 +81,8 @@ no_my_user: No employees found
 estimate_list: Estimates
 estimate_new: Create a new estimate
 estimate: Estimates
-number: Number
-total: Total
+number: Estimate number
+total: Total (€)
 no_estimate: No estimates found
 expires: Expires on
 billing_info: Billing information
@@ -90,6 +90,9 @@ shipping_info: Shipping information
 payment_method: Payment method
 item: Item
 price: Price
+refused: Refused
+estimate_placeholder: EST####
+
 #Email
 email_header: Welcome to the family %username%!
 email_body: Thank you for signing up on our website. Please click on the link below to activate your account.
@@ -106,10 +109,13 @@ duedate: Due date
 no_invoice: No invoice found
 invoice: Invoice
 paid: Paid
+invoice_number: Invoice number
+billing_date: Billing date
+total_amount: Total amount
 #Payment
 payment_modify: Modify payment
 payment_new: Add a new payment
-payment_date: Date and time of payment
+payment_date: Date of payment
 no_payment: No payments found.
 payment_details: Payment details
 #Product
@@ -166,6 +172,9 @@ signup: Signup
 already_user: Already have an account?
 login: Login
 i_accept: I accept the
+username: Username
+roles: User roles
+accountant: Accountant
 #Password Reset
 reset_sent: Password reset email sent
 reset_sent_text: If an account matching your email exists, an email has just been sent containing a link you can use to reset your password. This link will expire in %token%.
@@ -186,4 +195,19 @@ rememberme: Remember me
 forgot_password: Forgot your password?
 no_account: Don't have an account?
 logo_company: Company logo
+slug: The essential tool for efficiently managing your hardware business.
+
 created_at: Created at
+month: Month
+January: January
+February: February
+March: March
+April: April
+May: May
+June: June
+July: July
+August: August
+September: September
+October: October
+November: November
+December: December

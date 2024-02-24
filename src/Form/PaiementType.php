@@ -19,10 +19,10 @@ class PaiementType extends AbstractType
             ->add('montant')
             ->add('methodePaiement', ChoiceType::class, [
                 'choices' => [
-                    'Carte bancaire' => 'Carte bancaire',
-                    'Chèque' => 'Chèque',
-                    'Espèces' => 'Espèces',
-                    'Virement bancaire' => 'Virement bancaire',
+                    'card' => 'Carte bancaire',
+                    'check' => 'Chèque',
+                    'cash' => 'Espèces',
+                    'transfer' => 'Virement bancaire',
                 ],
             ])
             ->add('factureId', EntityType::class, [

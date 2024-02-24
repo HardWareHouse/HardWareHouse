@@ -33,17 +33,17 @@ class UserType extends AbstractType
                 'placeholder' => 'Sélectionnez l\'entreprise de l\'utilisateur',
             ])
             ->add('roles', ChoiceType::class, [
-                'label' => 'Rôles de l\'utilisateur',
+                'label' => 'roles',
                 'choices' => [
                     // 'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
-                    'Comptable' => 'ROLE_COMPTABLE',
+                    'user' => 'ROLE_USER',
+                    'accountant' => 'ROLE_COMPTABLE',
                 ],
                 'expanded' => true,
                 'multiple' => true,
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => 'Mot de passe',
+                'label' => 'password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -58,7 +58,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('confirmPassword', PasswordType::class, [
-                'label' => 'Confirmer le mot de passe',
+                'label' => 'confirm password',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

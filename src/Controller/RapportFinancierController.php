@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Repository\DevisRepository;
-use App\Repository\EntrepriseRepository;
+use Symfony\Component\Intl\Locales;
 use App\Repository\FactureRepository;
+use Symfony\Component\Intl\Languages;
 use App\Repository\PaiementRepository;
+use App\Repository\EntrepriseRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -76,59 +79,109 @@ class RapportFinancierController extends AbstractController
             'nov' => $translator->trans('nov'),
             'dec' => $translator->trans('dec')
         ];
+
+        $translatedMethods = [
+            'Carte bancaire' => $translator->trans('card'),
+            'Espèces' => $translator->trans('cash'),
+            'Chèque' => $translator->trans('check'),
+            'Virement bancaire' => $translator->trans('transfer'),
+        ];
+
+        $translatedStatusDevis = [
+            'Approuvé' => $translator->trans('approved'),
+            'En attente' => $translator->trans('in_progress'),
+            'Refusé' => $translator->trans('refused'),
+        ];
+
+        $translatedStatusFacture =[
+            'Payé' => $translator->trans('paid'),
+            'Non-payé' => $translator->trans('unpaid'),
+            'En retard' => $translator->trans('late'),
+        ];
         
         return $this->render('rapport_financier/index.html.twig', [
-            'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray), 'translatedMonths' => json_encode($translatedMonths), 'entreprises' => json_encode($entreprises), 'facturesData' => json_encode($facturesData), 'devisData' => json_encode($devisData),
+            'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray), 'translatedMonths' => json_encode($translatedMonths), 'entreprises' => json_encode($entreprises), 'facturesData' => json_encode($facturesData), 'devisData' => json_encode($devisData), 'translatedMethods' => json_encode($translatedMethods), 'translatedStatusFacture' => json_encode($translatedStatusFacture), 'translatedStatusDevis' => json_encode($translatedStatusDevis)
         ]);
     }
     
-    #[Route(path: '/csv-methodes/{year}', name: 'app_csv_methodes')]
-    public function csvMethodes(PaiementRepository $repository, $year): Response
+    #[Route(path: '/{_locale<%app.supported_locales%>}/csv-methodes/{year}', name: 'app_csv_methodes')]
+    public function csvMethodes(PaiementRepository $repository, TranslatorInterface $translator, $year): Response
 {
     $paiements = $repository->findPaymentsByYear($year);
 
-    $csvContent = "Date Paiement; Montant; Methode Paiement\n";
+    $csvContent = $translator->trans('payment_date') . '; ' . 
+                      $translator->trans('amount') . '; ' . 
+                      $translator->trans('payment_method') . "\n";
 
     // Add data rows
     foreach ($paiements as $paiement) {
+        $translatedMethod = [];
 
-        $montant = number_format($paiement['montant'], 2, ',', ' '); 
-        $montant .= ' €'; 
+        if ($paiement['methode_paiement'] == 'Carte bancaire')
+            $translatedMethod = $translator->trans('card');
+        ;
+        if ($paiement['methode_paiement'] == 'Espèces')
+            $translatedMethod = $translator->trans('cash');
+        ;
+        if ($paiement['methode_paiement'] == 'Chèque')
+            $translatedMethod = $translator->trans('check');
+        ;
+        if ($paiement['methode_paiement'] == 'Virement bancaire')
+            $translatedMethod = $translator->trans('transfer');
+        ;
+
+        $montant = $this->formatTotalAmount($paiement['montant'], $translator);
 
         $csvContent .= sprintf(
             "%s; %s; %s\n",
             $paiement['date_paiement'],
             $montant,
-            $paiement['methode_paiement'],
+            $translatedMethod,
         );
     }
 
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
-    $response->headers->set('Content-Disposition', 'attachment; filename="Paiements_' . $year . '.csv"');
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('payment_method') . '_' . $year . '.csv"');
+
 
     return $response;
 }
 
-#[Route(path: '/csv-factures/{year}', name: 'app_csv_factures')]
-    public function csvFactures(FactureRepository $repository, $year): Response
+#[Route(path: '/{_locale<%app.supported_locales%>}/csv-factures/{year}', name: 'app_csv_factures')]
+    public function csvFactures(FactureRepository $repository, TranslatorInterface $translator, $year): Response
 {
     $factures = $repository->findFacturesByYear($year);
 
-    $csvContent = "Numéro; Date de Facturation; Date de Paiement Due; Statut de Paiement; Montant Total\n";
+    $csvContent = $translator->trans('invoice_number') . '; ' . 
+                      $translator->trans('billing_date') . '; ' . 
+                      $translator->trans('duedate') . '; ' . 
+                      $translator->trans('status') . '; ' . 
+                      $translator->trans('total_amount') . "\n";
 
     foreach ($factures as $facture) {
 
-        $montantTotal = number_format($facture['total'], 2, ',', ' '); 
-        $montantTotal .= ' €'; 
+        $montantTotal = $this->formatTotalAmount($facture['total'], $translator);
+
+        $translatedStatus = [];
+
+        if ($facture['statut_paiement'] == 'Payé')
+            $translatedStatus = $translator->trans('paid');
+        ;
+        if ($facture['statut_paiement'] == 'Non-payé')
+            $translatedStatus = $translator->trans('unpaid');
+        ;
+        if ($facture['statut_paiement'] == 'En retard')
+            $translatedStatus = $translator->trans('late');
+        ;
 
         $csvContent .= sprintf(
             "%s; %s; %s; %s; %s\n",
             $facture['numero'],
             $facture['date_facturation'],
             $facture['date_paiement_due'], 
-            $facture['statut_paiement'],
+            $translatedStatus,
             $montantTotal,  
         );
     }
@@ -136,8 +189,119 @@ class RapportFinancierController extends AbstractController
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
-    $response->headers->set('Content-Disposition', 'attachment; filename="Factures_' . $year . '.csv"');
+    $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('invoices') . '_' . $year . '.csv"');
 
     return $response;
 }
+
+#[Route(path: '/{_locale<%app.supported_locales%>}/csv-devis/{year}', name: 'app_csv_devis')]
+    public function csvDevis(DevisRepository $repository, TranslatorInterface $translator, $year): Response
+{
+    $devis = $repository->findByYear($year);
+
+    $csvContent = $translator->trans('number') . '; ' . 
+                      $translator->trans('created_on') . '; ' . 
+                      $translator->trans('status') . '; ' . 
+                      $translator->trans('total_amount') . "\n";
+
+    foreach ($devis as $devis) {
+
+        $montantTotal = $this->formatTotalAmount($devis['total'], $translator);
+
+        $translatedStatus = [];
+
+        if ($devis['status'] == 'Approuvé')
+            $translatedStatus = $translator->trans('approved');
+        ;
+        if ($devis['status'] == 'Refusé')
+            $translatedStatus = $translator->trans('refused');
+        ;
+        if ($devis['status'] == 'En attente')
+            $translatedStatus = $translator->trans('in_progress');
+        ;
+
+        $csvContent .= sprintf(
+            "%s; %s; %s; %s\n",
+            $devis['numero'],
+            $devis['date_creation'],
+            $translatedStatus,
+            $montantTotal,  
+        );
+    }
+
+    $response = new Response($csvContent);
+
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('estimates') . '_' . $year . '.csv"');
+
+    return $response;
+}
+
+#[Route(path: '/{_locale<%app.supported_locales%>}/csv-revenue/{year}', name: 'app_csv_devis')]
+    public function csvRevenue(PaiementRepository $repository, TranslatorInterface $translator, $year): Response
+{
+    $payments = $repository->findPaymentsByYear($year);
+
+    $csvContent = $translator->trans('month') . '; ' . 
+                      $translator->trans('total_amount') . "\n";
+
+    // Initialize an array to store monthly totals
+    $monthlyTotals = array_fill(1, 12, 0);
+
+    // Calculate monthly totals
+    foreach ($payments as $payment) {
+        // Extract the month from the payment date
+        $paymentMonth = (int) date('n', strtotime($payment['date_paiement']));
+
+        // Add the payment amount to the corresponding month's total
+        $monthlyTotals[$paymentMonth] += $payment['montant'];
+    }
+
+    // Format and add monthly totals to CSV content
+    for ($month = 1; $month <= 12; $month++) {
+        // Get the translated month name
+        $monthName = $this->getTranslatedMonthName($month, $translator);
+
+        $montantTotal = $this->formatTotalAmount($monthlyTotals[$month], $translator);
+
+        $csvContent .= sprintf(
+            "%s; %s\n",
+            $monthName,
+            $montantTotal
+        );
+    }
+
+    $response = new Response($csvContent);
+
+    $response->headers->set('Content-Type', 'text/csv');
+    $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('revenue') . '_' . $year . '.csv"');
+
+    return $response;
+}
+
+private function formatTotalAmount($amount, TranslatorInterface $translator): string
+{
+    $locale = $translator->getLocale();
+    
+    // Check if the locale is French
+    if ($locale === 'fr') {
+        // Format amount in French style
+        return number_format($amount, 2, ',', ' ') . ' €';
+    } else {
+        // Format amount in English style
+        return number_format($amount, 2, '.', ',') . ' €';
+    }
+}
+
+private function getTranslatedMonthName(int $month, TranslatorInterface $translator): string
+{
+    // Create a DateTime object with the given month and year
+    $dateTime = new DateTime("2022-$month-01"); // Choose any year, as we only need the month
+
+    // Get the translated month name using the translator service
+    $monthName = $translator->trans($dateTime->format('F')); // 'F' returns the full month name
+
+    return $monthName;
+}
+
 }

@@ -4,7 +4,7 @@
     {{ form_errors(form) }}
 
     <div class="mb-4">
-        {{ form_label(form.numero, 'Numéro du devis') }}
+        {{ form_label(form.numero, 'number'|trans) }}
         {{ form_widget(form.numero, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
@@ -19,7 +19,7 @@
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.total, 'Total (€)') }}
+        {{ form_label(form.total, 'total'|trans) }}
         {{ form_widget(form.total, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 

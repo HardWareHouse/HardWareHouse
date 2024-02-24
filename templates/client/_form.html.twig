@@ -3,25 +3,25 @@
 <div class="w-full max-w-md mx-auto"> {{ form_errors(form) }}
 
     <div class="mb-4">
-        {{ form_label(form.nom) }}
+        {{ form_label(form.nom, 'name'|trans) }}
         {{ form_widget(form.nom, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.adresse) }}
+        {{ form_label(form.adresse, 'address'|trans) }}
         {{ form_widget(form.adresse, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.email) }}
+        {{ form_label(form.email, 'email'|trans) }}
         {{ form_widget(form.email, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
-        {{ form_label(form.telephone) }}
+        {{ form_label(form.telephone, 'telephone'|trans) }}
         {{ form_widget(form.telephone, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>

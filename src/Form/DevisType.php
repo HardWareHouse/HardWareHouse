@@ -29,7 +29,7 @@ class DevisType extends AbstractType
 
         $builder
             ->add('numero', TextType::class, [
-            'attr' => ['placeholder' => 'DEVIS####']
+            'attr' => ['placeholder' => 'estimate_placeholder']
             ])             
             ->add('dateCreation', DateType::class, [
                 'widget' => 'single_text',
