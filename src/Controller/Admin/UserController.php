@@ -14,8 +14,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Form\FormError;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Security\EmailVerifier;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
@@ -23,23 +23,29 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 #[Route('/{_locale<%app.supported_locales%>}/admin/user')]
 class UserController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+    private UserPasswordHasherInterface $userPasswordHasher;
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, EmailVerifier $emailVerifier)
     {
+        $this->entityManager = $entityManager;
+        $this->userPasswordHasher = $userPasswordHasher;
         $this->emailVerifier = $emailVerifier;
     }
 
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {   
+        $users = $userRepository->findAll();
+
         return $this->render('admin/user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
         ]);
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function new(Request $request): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -47,32 +53,23 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('plainPassword')->getData() !== $form->get('confirmPassword')->getData()) {
-                // Gestion de l'erreur si les mots de passe ne correspondent pas
                 $form->get('confirmPassword')->addError(new FormError('Les deux mots de passe ne correspondent pas !'));
                 return $this->render('admin/user/new.html.twig', [
                     'form' => $form->createView(),
                 ]);
             }
+
             $user->setPassword(
-                $userPasswordHasher->hashPassword(
+                $this->userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
         
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('ariaaman@outlook.fr', 'HardWareHouse'))
-                    ->to($user->getMail())
-                    ->subject('Veuillez confirmer votre adresse mail')
-                    ->htmlTemplate('emails/registration.html.twig')
-                    ->context([
-                        'username' => $user->getUsername()
-                    ])
-            );
+            $this->sendEmailConfirmation($user);
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -92,14 +89,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user): Response
     {
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $entityManager->flush();
+            $this->entityManager->flush();
         
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -111,13 +107,27 @@ class UserController extends AbstractController
     }
 
     #[Route('/{uuid}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getUuid(), $request->request->get('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function sendEmailConfirmation(User $user): void
+    {
+        $email = (new TemplatedEmail())
+            ->from(new Address('ariaaman@outlook.fr', 'HardWareHouse'))
+            ->to($user->getMail())
+            ->subject('Veuillez confirmer votre adresse mail')
+            ->htmlTemplate('emails/registration.html.twig')
+            ->context([
+                'username' => $user->getUsername()
+            ]);
+
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user, $email);
     }
 }
