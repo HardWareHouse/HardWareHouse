@@ -11,7 +11,7 @@
         <div class="border border-gray-300 h-72 w-full my-4 items-center ">
             <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center dark:">
                 <h3 class="text-darkBlue font-bold dark:text-white">{{'revenue'|trans}}</h3>
-                <a class="text-darkBlue ml-5" id="csvPayment" href="/csv-methodes/<?php echo date('Y'); ?>"><i class="fa-solid fa-download mr-2"></i></a>
+                <a class="text-darkBlue ml-5" id="csvPayment"><i class="fa-solid fa-download mr-2"></i></a>
             </div>
             <div id="paiementsAnnee" class="w-full h-full"></div>
         </div>
@@ -21,7 +21,7 @@
         <div class="border border-gray-300 w-full gap-8 h-72 my-4 md:gap-8 ">
             <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
                 <h3 class="text-darkBlue font-bold dark:text-white">{{'my_invoices'|trans}}</h3>
-                <a class="text-darkBlue ml-5" id="csvFacture" href="/csv-factures/<?php echo date('Y'); ?>"><i class="fa-solid fa-download mr-2"></i></a>
+                <a class="text-darkBlue ml-5" id="csvFacture"><i class="fa-solid fa-download mr-2"></i></a>
             </div>
             <div id="facturesChart" class="w-full h-full"></div>
         </div>
@@ -48,6 +48,9 @@
     var entreprises = {{ entreprises | raw }}
     var facturesData = {{ facturesData | raw }}
     var devisData = {{ devisData | raw }}
-    
+    var translatedMethods = {{ translatedMethods | raw }}
+    var translatedStatusFacture = {{ translatedStatusFacture | raw }}
+    var translatedStatusDevis = {{ translatedStatusDevis | raw }}
+
 </script>
 {% endblock %}

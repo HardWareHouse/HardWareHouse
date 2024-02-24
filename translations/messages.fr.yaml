@@ -110,6 +110,7 @@ no_invoice: Aucune facture trouvée
 invoice: Facture
 invoice_number: Numéro de facture
 billing_date: Date de facturation
+total_amount: Montant total
 #Paiement
 payment_modify: Modifier le paiement
 payment_new: Ajouter un nouveau paiement
@@ -194,5 +195,4 @@ forgot_password: Mot de passe oublié ?
 no_account: Vous ne possédez pas de compte ?
 logo_company: Logo de votre entreprise
 slug: L'outil incontournable pour gérer efficacement votre entreprise dans le domaine du hardware.
-
 created_at: Créé le

@@ -128,6 +128,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
+    // Translate legend labels
+    var translatedLegend = [];
+    Object.keys(paymentMethods).forEach(function (method) {
+      translatedLegend.push(translatedMethods[method]);
+    });
+
     // Update donut chart data
     var methodsChartOption = {
       tooltip: {
@@ -136,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
       legend: {
         orient: "vertical",
         right: 10,
-        data: Object.keys(paymentMethods),
+        data: translatedLegend, // Use translated legend labels
       },
       series: [
         {
@@ -147,7 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
           type: "pie",
           radius: ["50%", "70%"],
           data: Object.keys(paymentMethods).map(function (method) {
-            return { value: paymentMethods[method], name: method };
+            return {
+              value: paymentMethods[method],
+              name: translatedMethods[method],
+            }; // Use translated labels for pie chart
           }),
         },
       ],
@@ -199,7 +208,11 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
       legend: {
-        data: ["Payé", "Non-payé", "En retard"],
+        data: [
+          translatedStatusFacture["Payé"],
+          translatedStatusFacture["Non-payé"],
+          translatedStatusFacture["En retard"],
+        ],
       },
       xAxis: {
         type: "category",
@@ -210,19 +223,19 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       series: [
         {
-          name: "Payé",
+          name: translatedStatusFacture["Payé"],
           type: "bar",
           stack: "status",
           data: statusData["Payé"],
         },
         {
-          name: "Non-payé",
+          name: translatedStatusFacture["Non-payé"],
           type: "bar",
           stack: "status",
           data: statusData["Non-payé"],
         },
         {
-          name: "En retard",
+          name: translatedStatusFacture["En retard"],
           type: "bar",
           stack: "status",
           data: statusData["En retard"],
@@ -275,7 +288,11 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       },
       legend: {
-        data: ["En attente", "Approuvé", "Refusé"],
+        data: [
+          translatedStatusDevis["En attente"],
+          translatedStatusDevis["Approuvé"],
+          translatedStatusDevis["Refusé"],
+        ],
       },
       xAxis: {
         type: "category",
@@ -286,19 +303,19 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       series: [
         {
-          name: "En attente",
+          name: translatedStatusDevis["En attente"],
           type: "bar",
           stack: "status",
           data: devisStatusData["En attente"],
         },
         {
-          name: "Approuvé",
+          name: translatedStatusDevis["Approuvé"],
           type: "bar",
           stack: "status",
           data: devisStatusData["Approuvé"],
         },
         {
-          name: "Refusé",
+          name: translatedStatusDevis["Refusé"],
           type: "bar",
           stack: "status",
           data: devisStatusData["Refusé"],
@@ -343,4 +360,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial update of charts with the current year
   var currentYear = new Date().getFullYear();
   updateCharts(currentYear);
+
+  // Get the current locale from the HTML tag
+  var currentLocale = document.documentElement.lang;
+
+  // Use the current locale to construct the CSV download link URLs
+  var csvPaymentLink = "/" + currentLocale + "/csv-methodes/" + selectedYear;
+  var csvFactureLink = "/" + currentLocale + "/csv-factures/" + selectedYear;
+
+  // Update the href attribute of the CSV download links
+  document.getElementById("csvPayment").href = csvPaymentLink;
+  document.getElementById("csvFacture").href = csvFactureLink;
+  console.log(
+    (document.getElementById("csvPayment").href = csvPaymentLink),
+    (document.getElementById("csvFacture").href = csvFactureLink)
+  );
 });
