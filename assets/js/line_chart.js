@@ -34,10 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
   dropdownContainer.innerHTML = dropdownHTML;
 
   var selectedYear = new Date().getFullYear();
-  var paymentButton = document.getElementById("csvPayment");
-  var factureButton = document.getElementById("csvFacture");
-  paymentButton.href = "/csv-methodes/" + selectedYear;
-  factureButton.href = "/csv-factures/" + selectedYear;
 
   // Event listener for dropdown change
   document
@@ -45,12 +41,25 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("change", function (event) {
       selectedYear = parseInt(event.target.value);
       updateCharts(selectedYear);
-      paymentButton.href = "/csv-methodes/" + selectedYear;
-      factureButton.href = "/csv-factures/" + selectedYear;
     });
 
   // Function to update charts based on selected year
   function updateCharts(selectedYear) {
+    // Get the current locale from the HTML tag
+    var currentLocale = document.documentElement.lang;
+
+    // Use the current locale to construct the CSV download link URLs
+    var csvMethodsLink = "/" + currentLocale + "/csv-methodes/" + selectedYear;
+    var csvFactureLink = "/" + currentLocale + "/csv-factures/" + selectedYear;
+    var csvDevisLink = "/" + currentLocale + "/csv-devis/" + selectedYear;
+    var csvRevenueLink = "/" + currentLocale + "/csv-revenue/" + selectedYear;
+
+    // Update the href attribute of the CSV download links
+    document.getElementById("csvMethods").href = csvMethodsLink;
+    document.getElementById("csvFacture").href = csvFactureLink;
+    document.getElementById("csvRevenue").href = csvRevenueLink;
+    document.getElementById("csvDevis").href = csvDevisLink;
+
     var paymentsPerMonth = new Array(12).fill(0); // Initialize array to hold payments per month
 
     paiementsData.forEach(function (paiement) {
@@ -360,19 +369,4 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial update of charts with the current year
   var currentYear = new Date().getFullYear();
   updateCharts(currentYear);
-
-  // Get the current locale from the HTML tag
-  var currentLocale = document.documentElement.lang;
-
-  // Use the current locale to construct the CSV download link URLs
-  var csvPaymentLink = "/" + currentLocale + "/csv-methodes/" + selectedYear;
-  var csvFactureLink = "/" + currentLocale + "/csv-factures/" + selectedYear;
-
-  // Update the href attribute of the CSV download links
-  document.getElementById("csvPayment").href = csvPaymentLink;
-  document.getElementById("csvFacture").href = csvFactureLink;
-  console.log(
-    (document.getElementById("csvPayment").href = csvPaymentLink),
-    (document.getElementById("csvFacture").href = csvFactureLink)
-  );
 });
