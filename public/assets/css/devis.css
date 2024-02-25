@@ -1,0 +1,26 @@
+#devisTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#devisTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#devisTable tbody tr {
+    border-bottom: 1px solid #cccccc;
+}
+
+#devisTable tbody tr:hover {
+    background-color: #eaeaea;
+}
+
+#devisTable th,
+#devisTable td {
+    padding: 16px;
+}
+
+#devisTable thead tr th input[type="text"] {
+    height: 38px;
+    margin: 0;
+    padding: 5px 8px;
+}

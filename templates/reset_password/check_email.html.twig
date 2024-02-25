@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'reset_sent'|trans}}{% endblock %}
+
+{% block body %}
+    <div class="min-h-screen bg-blue-50 flex items-center justify-center">
+        <div class="bg-white max-w-md mx-auto p-8 border border-gray-200 rounded-lg shadow">
+            <p class="text-gray-700 mb-4">
+                {{ 'reset_sent'|trans({'%token%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}) }}
+            </p>
+            <p class="text-gray-700">
+                {{'reset_error'|trans}} 
+                <a href="{{ path('app_forgot_password_request') }}" class="text-blue-600 hover:text-blue-800 underline">{{'retry'|trans}}</a>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

@@ -21,6 +21,23 @@ class DevisRepository extends ServiceEntityRepository
         parent::__construct($registry, Devis::class);
     }
 
+    public function findByYear($year)
+{
+    $conn = $this->getEntityManager()->getConnection(); 
+    $sql = 
+        'SELECT 
+            d.date_creation,
+            d.total,
+            d.numero,
+            d.status
+        FROM devis d
+        WHERE EXTRACT(YEAR FROM d.date_creation) = :year';
+
+    $resultSet = $conn->executeQuery($sql, ['year' => $year]);
+
+    return $resultSet->fetchAllAssociative();
+}
+
 //    /**
 //     * @return Devis[] Returns an array of Devis objects
 //     */

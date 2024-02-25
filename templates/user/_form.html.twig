@@ -1,0 +1,45 @@
+{{ form_start(form, {'attr': {'class': 'flex flex-col items-center justify-start pt-20 min-h-screen'}}) }}
+
+<div class="w-full max-w-md mx-auto">
+    {{ form_errors(form) }}
+
+    <div class="mb-4">
+        {{ form_label(form.mail, 'email'|trans) }}
+        {{ form_widget(form.mail, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.username, 'username'|trans) }}
+        {{ form_widget(form.username, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.plainPassword, 'password'|trans) }}
+        {{ form_widget(form.plainPassword, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.confirmPassword, 'confirm password'|trans) }}
+        {{ form_widget(form.confirmPassword, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+    {{ form_label(form.roles, 'roles'|trans) }}
+    {{ form_widget(form.roles, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    {# <div class="mb-4">
+    {{ form_label(form.isVerified) }}
+    {{ form_widget(form.isVerified, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div> #}
+
+    <div class="flex items-center justify-center">
+        <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit">
+            {{ button_label|default('Save') }}
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}

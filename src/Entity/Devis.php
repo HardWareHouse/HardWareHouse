@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DevisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,28 @@ class Devis
 
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'devisId')]
+    #[ORM\JoinColumn(name: "entreprise", referencedColumnName: "id")]
+    private ?Entreprise $entrepriseId = null;
+
+    #[ORM\ManyToOne(inversedBy: 'devisId')]
+    #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
+    private ?Client $clientId = null;
+
+    #[ORM\OneToOne(inversedBy: 'devisId', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: "detaildevis", referencedColumnName: "id")]
+    private ?DetailDevis $detailDevisId = null;
+
+    #[ORM\OneToMany(mappedBy: 'devisId', targetEntity: Produit::class)]
+    #[ORM\JoinColumn(name: "produit", referencedColumnName: "id")]
+    private Collection $produitId;
+
+    public function __construct()
+    {
+        $this->produitId = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +114,72 @@ class Devis
     public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getEntrepriseId(): ?Entreprise
+    {
+        return $this->entrepriseId;
+    }
+
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    {
+        $this->entrepriseId = $entrepriseId;
+
+        return $this;
+    }
+
+    public function getClientId(): ?Client
+    {
+        return $this->clientId;
+    }
+
+    public function setClientId(?Client $clientId): static
+    {
+        $this->clientId = $clientId;
+
+        return $this;
+    }
+
+    public function getDetailDevisId(): ?DetailDevis
+    {
+        return $this->detailDevisId;
+    }
+
+    public function setDetailDevisId(?DetailDevis $detailDevisId): static
+    {
+        $this->detailDevisId = $detailDevisId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduitId(): Collection
+    {
+        return $this->produitId;
+    }
+
+    public function addProduitId(Produit $produitId): static
+    {
+        if (!$this->produitId->contains($produitId)) {
+            $this->produitId->add($produitId);
+            $produitId->setDevisId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitId(Produit $produitId): static
+    {
+        if ($this->produitId->removeElement($produitId)) {
+            // set the owning side to null (unless already changed)
+            if ($produitId->getDevisId() === $this) {
+                $produitId->setDevisId(null);
+            }
+        }
 
         return $this;
     }

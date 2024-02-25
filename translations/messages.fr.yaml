@@ -1,0 +1,212 @@
+#Accueil
+welcome: Bienvenue
+revenue: Chiffre d'affaires
+global: Global
+this_month: Ce mois-ci
+today: Aujourd'hui
+best_products: Mes meilleurs produits
+sold: Vendus
+my_invoices: Mes factures
+unpaid: A régler
+invoices: Factures
+amount: Montant
+late: En retard
+my_estimates: Mes devis
+in_progress: En attente
+expired: Expiré
+my_recent_products: Mes derniers produits
+in_brief: Votre entreprise en bref
+approved: Approuvé
+rules: Rôles
+company_name: Entreprise
+user: utilisateur
+#Nav
+home: Accueil
+billing: Facturation
+estimates: Devis
+products: Produits
+reports: Rapports
+the_company: Entreprise
+user_edit: Modifier l'utilisateur
+my_user_edit: Modifier mon employé
+my_user: Mes Employés
+company_list: Liste des entreprise
+user_list: Liste des utilisateurs
+my_user_list: Liste de mes employés
+company_new: Ajouter une entreprise
+user_new: Ajouter un utilisateur
+my_user_new: Ajouter un employé
+no_company: Il n'existe aucune entreprise.
+no_user: Il n'existe aucun utilisateur
+no_my_user: Il n'existe pas d'employé
+payments: Paiements
+company: Mon Entreprise
+company management: Gestion des entreprises
+user management: Gestion des utilisateurs
+logout: Déconnexion
+#Categories
+delete: Supprimer
+confirm_delete: Vous êtes sûr de vouloir supprimer cet objet ?
+save: Sauvegarder
+category_edit: Modifier la categorie
+back_to_list: Retourner à la liste
+category: Categorie
+categories: Categories
+name: Nom
+description: Description
+createdat: Créé à
+actions: Actions
+show: Afficher
+edit: Modifier
+no_records: Aucun résultat
+new_category: Nouvelle Categorie
+#Client
+client_modification: Modification du client
+client_list: Liste des clients
+add_client: Ajouter un nouveau client
+address: Adresse
+email: Email
+telephone: Téléphone
+no_client: Aucun client trouvé
+new_client: Nouveau client
+client_details: Détails du client
+user_details: Détails de l'utilisateur
+my_user_details: Détais de mon employé
+#Devis
+created_on: Créé le
+status: Statut
+estimate_details: Détails du devis
+add: Ajouter
+estimate_edit: Modifier le devis
+estimate_list: Liste des devis
+estimate_new: Créer un nouveau devis
+estimate: Devis
+number: Numéro de devis
+total: Total (€)
+no_estimate: Aucun devis trouvé
+expires: Échéance
+billing_info: Facturé à
+shipping_info: Envoyé à
+payment_method: Méthode de paiement
+item: Objet
+price: Prix
+paid: Payé
+refused: Refusé
+estimate_placeholder: DEVIS####
+#Emails
+email_header: Welcome %username% dans la famille !
+email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
+click_here: Cliquez ici !
+#Entreprise
+company_edit: Modifier Entreprise
+companies: Entreprises
+tax_info: Information fiscale
+company_details: Détails de l'entreprise
+#Facture
+invoice_modify: Modifier la facture
+invoice_list: Liste des factures
+invoice_new: Ajouter une nouvelle facture
+duedate: Date de paiement due
+no_invoice: Aucune facture trouvée
+invoice: Facture
+invoice_number: Numéro de facture
+billing_date: Date de facturation
+total_amount: Montant total
+#Paiement
+payment_modify: Modifier le paiement
+payment_new: Ajouter un nouveau paiement
+payment_date: Date et heure de paiement
+no_payment: Il n'existe aucun paiement.
+payment_details: Détails du paiement
+#Product
+product_modify: Modifier le produit
+product_new: Ajouter un nouveau produit
+stock: Stock
+no_product: Aucun produit trouvé
+product: Produit
+product_details: Détails du produit
+#Reports
+financial_reports: Rapports Financières
+details_year: Analyse Par An
+jan: Jan
+feb: Fév
+mar: Mar
+apr: Avr
+may: Mai
+jun: Jun
+jul: Jul
+aug: Aoû
+sep: Sep
+oct: Oct
+nov: Nov
+dec: Déc
+check: Chèque
+cash: Espèces
+card: Carte bancaire
+transfer: Virement bancaire
+#CGU
+cgu: Conditions Générales d'Utilisation
+intro: Introduction
+intro_text: Bienvenue sur HardwareHouse, votre plateforme dédiée à la vente de composants informatiques. En utilisant notre service, vous acceptez les termes et conditions énoncés dans ce document.
+usage: Utilisation du Service
+usage_text: L'utilisation de HardwareHouse est soumise à certaines conditions. Il est interdit de revendre nos services ou de les utiliser à des fins illégales.
+accounts: Comptes et Inscription
+accounts_text: Pour accéder à certains services, vous devez créer un compte. Vous êtes responsable de la sécurité de votre compte et de la confidentialité de vos informations.
+privacy: Politique de Confidentialité
+privacy_text: Nous prenons la confidentialité au sérieux. Veuillez consulter notre politique de confidentialité pour comprendre comment nous collectons et utilisons vos informations.
+intprop: Propriété Intellectuelle
+intprop_text: Le contenu de HardwareHouse, y compris les marques, logos et tout matériel protégé par le droit d'auteur, appartient à HardwareHouse ou à ses licenciés.
+responsibility: Limitation de Responsabilité
+responsibility_text: HardwareHouse ne peut être tenu responsable des dommages indirects résultant de l'utilisation du service. Aucune garantie n'est fournie quant à la performance du service.
+cgu_modifications: Modifications du Service et des CGU
+cgu_modifications_text: Nous nous réservons le droit de modifier le service et ces CGU à tout moment. Les utilisateurs seront informés des changements majeurs.
+conflicts: Résolution des Conflits
+conflicts_text: En cas de litige, les parties s'efforceront de résoudre le conflit à l'amiable. Les CGU sont régies par les lois du pays où est basée HardwareHouse.
+contact: Contact
+contact_text: Pour toute question ou problème, veuillez nous contacter à hardwarehouse@assistance.fr.
+#Inscription
+registration: Inscription
+password: Mot de passe
+confirm password: Confirmer le mot de passe
+signup: S'inscrire
+already_user: Déjà inscrit ?
+login: Connectez-vous
+i_accept: J'accepte les
+username: Nom d'utilisateur
+roles: Rôles de l'utilisateur
+accountant: Comptable
+#Password Reset
+reset_sent: Email de Réinitialisation du Mot de Passe Envoyé
+reset_sent_text: Si un compte correspondant à votre email existe, un email vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans %token%
+reset_error: Si vous ne recevez pas d'email, veuillez vérifier votre dossier spam ou
+retry: réessayer
+hello: Bonjour !
+reset_message: Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant
+link_expiration: Ce lien expirera dans %token%
+sincerely: Cordialement !
+reset_password: Réinitialiser votre mot de passe
+reset_password_email: Saisissez votre adresse mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+send_email: Envoyer un email
+new_password: Nouveau mot de passe
+repeat_password: Répéter le mote de passe
+#Login
+user_connected: Vous êtes connectées en tant que %user%
+rememberme: Se souvenir de moi
+forgot_password: Mot de passe oublié ?
+no_account: Vous ne possédez pas de compte ?
+logo_company: Logo de votre entreprise
+slug: L'outil incontournable pour gérer efficacement votre entreprise dans le domaine du hardware.
+created_at: Créé le
+month: Mois
+January: Janvier
+February: Février
+March: Mars
+April: Avril
+May: Mai
+June: Juin
+July: Juillet
+August: Août
+September: Septembre
+October: Octobre
+November: Novembre
+December: Décembre

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'reset_password'|trans}}{% endblock %}
+
+{% block content %}
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white max-w-md mx-auto p-8 border border-gray-200 rounded-lg shadow">
+            <h1 class="text-4xl font-bold mb-8 text-center text-blue-600">{{'reset_password'|trans}}</h1>
+
+            {{ form_start(resetForm, {'attr': {'class': 'space-y-6'}}) }}
+                <div>
+                    {{ form_label(resetForm.plainPassword.first, 'new_password'|trans, {'label_attr': {'class': 'block text-gray-700'}}) }}
+                    {{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+                    {{ form_errors(resetForm.plainPassword.first) }}
+
+                    {{ form_label(resetForm.plainPassword.second, 'repeat_password'|trans, {'label_attr': {'class': 'block text-gray-700'}}) }}
+                    {{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+                    {{ form_errors(resetForm.plainPassword.second) }}
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none">
+                    {{'reset_password'|trans}}
+                </button>
+            {{ form_end(resetForm) }}
+        </div>
+    </div>
+{% endblock %}

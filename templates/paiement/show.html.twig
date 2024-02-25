@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Client{% endblock %}
+
+{% block body %}
+
+{% include 'component/sidebar.html.twig' %}
+
+    <div class="container mx-auto my-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">{{'payment_details'|trans}}</h1>
+        </div>
+
+        <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <table class="w-full text-sm text-left text-gray-500">
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'payment_date'|trans}}</th>
+                        <td class="px-6 py-4">{{ paiement.datePaiement ? paiement.datePaiement|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'amount'|trans}}</th>
+                        <td class="px-6 py-4">{{ paiement.montant }}€</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'payment_method'|trans}}</th>
+                        <td class="px-6 py-4">{{ paiement.methodePaiement }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center">
+            <a href="{{ path('app_paiement_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+                <i class="fas fa-arrow-left mr-2"></i> {{'back_to_list'|trans}}
+            </a>
+        </div>
+    </div>
+{% endblock %}

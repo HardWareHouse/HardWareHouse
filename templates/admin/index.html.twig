@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center text-center justify-around h-screen ml-8 overflow-scroll">
+    <div>
+        <h1 class="text-4xl font-semibold my-2 text-blue-500">Interface Administrateur</h1>
+        <h2>Votre Dashboard Admin</h2>
+    </div>
+
+    <div class="flex w-full">
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Validation des utilisateurs</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la validation des utilisateurs.</p>
+            <a href="/lien-vers-details" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Validation des utilisateurs</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la validation des utilisateurs.</p>
+            <a href="/lien-vers-details" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Validation des utilisateurs</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la validation des utilisateurs.</p>
+            <a href="/lien-vers-details" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Validation des utilisateurs</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la validation des utilisateurs.</p>
+            <a href="/lien-vers-details" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+
+    </div>
+
+    <div class="flex w-full">
+
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Gestion des utilisateurs</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la gestion des utilisateurs.</p>
+            <a href="{{ path('app_user_index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+
+        <div class="border border-gray-300 h-72 w-3/4 m-4">
+            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
+                <h3 class="text-darkBlue font-bold">Gestion des entreprises</h3>
+            </div>
+
+            <p class="py-4">Texte aléatoire pour la gestion des entreprises.</p>
+            <a href="{{ path('app_entreprise_index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Voir détails</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

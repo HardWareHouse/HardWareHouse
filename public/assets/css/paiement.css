@@ -1,0 +1,26 @@
+#paiementTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#paiementTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#paiementTable tbody tr {
+    border-bottom: 1px solid #cccccc;
+}
+
+#paiementTable tbody tr:hover {
+    background-color: #eaeaea;
+}
+
+#paiementTable th,
+#paiementTable td {
+    padding: 16px;
+}
+
+#paiementTable thead tr th input[type="text"] {
+    height: 38px;
+    margin: 0;
+    padding: 5px 8px;
+}

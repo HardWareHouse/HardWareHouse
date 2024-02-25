@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entreprise{% endblock %}
+
+{% block body %}
+
+{% include 'component/sidebar.html.twig' %}
+
+<div class="container mx-auto my-8">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">{{'company_details'|trans}}</h1>
+    </div>
+
+    <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <table class="w-full text-sm text-left text-gray-500">
+            <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                    {% if entreprise.logo %}
+                    <div class="text-center mb-4">
+                        <img src="{{ vich_uploader_asset(entreprise.logo, 'imageFile') }}" alt="Logo de l'entreprise"
+                            class="mx-auto" style="max-width: 200px; height: auto;">
+                    </div>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'name'|trans}}</th>
+                    <td class="px-6 py-4">{{ entreprise.nom }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'address'|trans}}</th>
+                    <td class="px-6 py-4">{{ entreprise.adresse }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'description'|trans}}</th>
+                    <td class="px-6 py-4">{{ entreprise.description }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'tax_info'|trans}}</th>
+                    <td class="px-6 py-4">{{ entreprise.informationFiscale }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center">
+        <a href="{{ path('app_entreprise_index') }}"
+            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+            <i class="fas fa-arrow-left mr-2"></i> {{'back_to_list'|trans}}
+        </a>
+    </div>
+</div>
+{% endblock %}

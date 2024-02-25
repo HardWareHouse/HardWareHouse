@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+
+{% block body %}
+
+{% include 'component/sidebar.html.twig' %}
+
+<div class="container mx-auto my-8">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Détails de la Facture</h1>
+    </div>
+    <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <table class="w-full text-sm text-left text-gray-500">
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'number'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.numero }}</td>
+            </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'created_on'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.dateFacturation ? facture.dateFacturation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'duedate'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.datePaiementDue ? facture.datePaiementDue|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'status'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.statutPaiement }}</td>
+            </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'total'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.total }}€</td>
+            </tr>
+            <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'created_at'|trans }}</th>
+                <td class="px-6 py-4">{{ facture.CreatedAt ? facture.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>            
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="text-center">
+        <a href="{{ path('app_facture_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+            <i class="fas fa-arrow-left mr-2"></i> {{'back_to_list'|trans}}
+        </a>
+    </div>
+
+{% endblock %}

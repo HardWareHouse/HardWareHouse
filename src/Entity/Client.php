@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,13 +28,36 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $CreatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'clientId')]
+    #[ORM\JoinColumn(name: "entreprise", referencedColumnName: "id", nullable: false)]
+    private ?Entreprise $entrepriseId = null;
+
+    #[ORM\OneToMany(mappedBy: 'clientId', targetEntity: Devis::class)]
+    #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
+    private Collection $devisId;
+
+    #[ORM\OneToMany(mappedBy: 'clientId', targetEntity: Facture::class)]
+    #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
+    private Collection $factureId;
+
+    public function __construct()
+    {
+        $this->devisId = new ArrayCollection();
+        $this->factureId = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return $this->nom;
+    } 
 
     public function getNom(): ?string
     {
@@ -90,6 +115,78 @@ class Client
     public function setCreatedAt(\DateTimeImmutable $CreatedAt): static
     {
         $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getEntrepriseId(): ?Entreprise
+    {
+        return $this->entrepriseId;
+    }
+
+    public function setEntrepriseId(?Entreprise $entrepriseId): static
+    {
+        $this->entrepriseId = $entrepriseId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Devis>
+     */
+    public function getDevisId(): Collection
+    {
+        return $this->devisId;
+    }
+
+    public function addDevisId(Devis $devisId): static
+    {
+        if (!$this->devisId->contains($devisId)) {
+            $this->devisId->add($devisId);
+            $devisId->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevisId(Devis $devisId): static
+    {
+        if ($this->devisId->removeElement($devisId)) {
+            // set the owning side to null (unless already changed)
+            if ($devisId->getClientId() === $this) {
+                $devisId->setClientId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Facture>
+     */
+    public function getFactureId(): Collection
+    {
+        return $this->factureId;
+    }
+
+    public function addFactureId(Facture $factureId): static
+    {
+        if (!$this->factureId->contains($factureId)) {
+            $this->factureId->add($factureId);
+            $factureId->setClientId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactureId(Facture $factureId): static
+    {
+        if ($this->factureId->removeElement($factureId)) {
+            // set the owning side to null (unless already changed)
+            if ($factureId->getClientId() === $this) {
+                $factureId->setClientId(null);
+            }
+        }
 
         return $this;
     }
