@@ -40,10 +40,6 @@ class Produit
     private ?Categorie $categorieId = null;
 
     #[ORM\ManyToOne(inversedBy: 'produitId')]
-    #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
-    private ?Devis $devisId = null;
-
-    #[ORM\ManyToOne(inversedBy: 'produitId')]
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private ?Facture $factureId = null;
 
@@ -145,18 +141,6 @@ class Produit
     public function setCategorieId(?Categorie $categorieId): static
     {
         $this->categorieId = $categorieId;
-
-        return $this;
-    }
-
-    public function getDevisId(): ?Devis
-    {
-        return $this->devisId;
-    }
-
-    public function setDevisId(?Devis $devisId): static
-    {
-        $this->devisId = $devisId;
 
         return $this;
     }

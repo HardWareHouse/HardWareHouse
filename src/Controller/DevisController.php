@@ -53,6 +53,12 @@ class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($devi->getDetailDevis() as $detaildevis) {
+                $detaildevis->setPrix(
+                    $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
+                );
+                $detaildevis->setRemise(0);
+            }
             $devi = $form->getData();
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);

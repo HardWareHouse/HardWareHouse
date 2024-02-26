@@ -25,13 +25,17 @@ class DetailDevis
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'detailDevisId', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
-    private ?Devis $devisId = null;
-
     #[ORM\ManyToOne(inversedBy: 'detailDevis')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'detailDevis')]
+    private ?Devis $devis = null;
+
+    public function __construct()
+    {
+        $this->CreatedAt = new \DateTimeImmutable('now');
+    }
 
     public function getId(): ?int
     {
@@ -86,28 +90,6 @@ class DetailDevis
         return $this;
     }
 
-    public function getDevisId(): ?Devis
-    {
-        return $this->devisId;
-    }
-
-    public function setDevisId(?Devis $devisId): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($devisId === null && $this->devisId !== null) {
-            $this->devisId->setDetailDevisId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($devisId !== null && $devisId->getDetailDevisId() !== $this) {
-            $devisId->setDetailDevisId($this);
-        }
-
-        $this->devisId = $devisId;
-
-        return $this;
-    }
-
     public function getProduit(): ?Produit
     {
         return $this->produit;
@@ -116,6 +98,18 @@ class DetailDevis
     public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getDevis(): ?Devis
+    {
+        return $this->devis;
+    }
+
+    public function setDevis(?Devis $devis): static
+    {
+        $this->devis = $devis;
 
         return $this;
     }

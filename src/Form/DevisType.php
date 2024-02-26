@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Devis;
+use App\Entity\DetailDevis;
 use App\Entity\Client;
 use App\Entity\Entreprise;
+use App\Form\DetailDevisType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -59,7 +62,15 @@ class DevisType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisissez un client',
             ])
-            ->add('detailDevisId')
+            ->add('detailDevis', CollectionType::class, [
+                'required' => true,
+                'entry_type' => DetailDevisType::class,
+                'label' => 'detailDevis',
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false, 
+             ]);
         ;
 
 
