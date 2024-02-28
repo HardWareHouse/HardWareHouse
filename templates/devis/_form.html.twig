@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let deleteButton = document.createElement("button");
         deleteButton.type = "button";
         deleteButton.className = "supp-quoteLine btn red secondary";
-        deleteButton.innerText = "Supprimer un Service";
+        deleteButton.innerText = "Supprimer un produit";
         deleteButton.addEventListener("click", function() {
             removeDetailForm(newForm);
         });
@@ -63,22 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {{ form_label(form.dateCreation, 'created_on'|trans) }}
         {{ form_widget(form.dateCreation, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
-
-    <div class="mb-4">
-        {{ form_label(form.status, 'status'|trans) }}
-        {{ form_widget(form.status, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div>
-
-    <div class="mb-4">
-        {{ form_label(form.total, 'total'|trans) }}
-        {{ form_widget(form.total, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div>
-
-    {# <div class="mb-4">
-        {{ form_label(form.CreatedAt) }}
-        {{ form_widget(form.CreatedAt, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div> #}
-
+    
     <div class="mb-4">
         {{ form_label(form.clientId, 'Client') }}
         {{ form_widget(form.clientId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
@@ -86,12 +71,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <div class="mb-4" id="quoteItem" data-prototype="{{ form_widget(form.detailDevis.vars.prototype)|e('html_attr') }}">
     <span></span>
-    <button type="button" class="add-quoteLine btn secondary">Ajouter un produit</button>
+    <button type="button" class="add-quoteLine btn secondary">{{'estimate_details_add'|trans}}</button>
     {% for detailForm in form.detailDevis %}
-        <div class="detail-form">
-            {{ form_label(detailForm, 'estimate_details'|trans) }}
+        <div class="detail-form ">
             {{ form_widget(detailForm, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-            <button type="button" class="supp-quoteLine btn red secondary">Supprimer un produit</button>
+            <button type="button mt-4" class="supp-quoteLine btn red secondary">Supprimer un produit</button>
         </div>
     {% endfor %}
 

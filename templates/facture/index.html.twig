@@ -4,13 +4,14 @@
 
 {% block content %}
 <div class="container mx-auto my-14 p-6">
+    {# Une facture ne doit être créer après la validation d'un devis 
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">{{'invoice_list'|trans}}</h1>
         <a href="{{ path('app_facture_new') }}"
             class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
             <i class="fas fa-plus mr-2"></i> {{'invoice_new'|trans}}
         </a>
-    </div>
+    </div> #}
 
     <div class="overflow-x-auto relative sm:rounded-lg mt-6">
         <table id="factureTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
@@ -44,18 +45,18 @@
                     <td class="py-4 px-6">{{ facture.total }}€</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-around">
-                            <a href="{{ path('app_facture_pdf', {'id': facture.id}) }}"
+                            {# <a href="{{ path('app_facture_pdf', {'id': facture.id}) }}"
                                class="font-medium text-red-600 dark:text-red-500 hover:underline mr-4">
                                 <i class="bi bi-file-earmark-arrow-down-fill"></i>
-                            </a>
+                            </a> #}
                             <a href="{{ path('app_facture_show', {'id': facture.id}) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ path('app_facture_edit', {'id': facture.id}) }}"
+                            {# <a href="{{ path('app_facture_edit', {'id': facture.id}) }}"
                                 class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
                                 <i class="fas fa-pencil-alt"></i>
-                            </a>
+                            </a> #}
                             <div class="ml-4">
                                 {{ include('facture/_delete_form.html.twig', {'facture': facture}) }}
                             </div>
@@ -71,6 +72,11 @@
         </table>
     </div>
     {% for message in app.session.flashbag.get('danger') %}
+        <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
+    {% for message in app.session.flashbag.get('succes') %}
         <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
             <p class="text-center">{{ message }}</p>
         </div>

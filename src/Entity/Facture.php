@@ -42,10 +42,6 @@ class Facture
     #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
     private ?Client $clientId = null;
 
-    #[ORM\OneToMany(mappedBy: 'factureId', targetEntity: Produit::class)]
-    #[ORM\JoinColumn(name: "produit", referencedColumnName: "id")]
-    private Collection $produitId;
-
     #[ORM\OneToMany(mappedBy: 'factureId', targetEntity: Paiement::class)]
     #[ORM\JoinColumn(name: "paiement", referencedColumnName: "id")]
     private Collection $paiementId;
@@ -53,12 +49,18 @@ class Facture
     #[ORM\OneToMany(mappedBy: 'facture', targetEntity: DetailFacture::class, orphanRemoval: true, cascade: ['persist','remove'])]
     private Collection $detailFacture;
 
+    #[ORM\ManyToOne(inversedBy: 'factures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Devis $devi = null;
+
     public function __construct()
     {
-        $this->produitId = new ArrayCollection();
         $this->paiementId = new ArrayCollection();
-        $this->CreatedAt = new \DateTimeImmutable('now');
         $this->detailFacture = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
+        $this->dateFacturation = new \DateTime('now');
+        $this->datePaiementDue = new \DateTime('now');
+        $this->statutPaiement = "En attente";
     }
 
     public function getId(): ?int
@@ -163,36 +165,6 @@ class Facture
     }
 
     /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduitId(): Collection
-    {
-        return $this->produitId;
-    }
-
-    public function addProduitId(Produit $produitId): static
-    {
-        if (!$this->produitId->contains($produitId)) {
-            $this->produitId->add($produitId);
-            $produitId->setFactureId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitId(Produit $produitId): static
-    {
-        if ($this->produitId->removeElement($produitId)) {
-            // set the owning side to null (unless already changed)
-            if ($produitId->getFactureId() === $this) {
-                $produitId->setFactureId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Paiement>
      */
     public function getPaiementId(): Collection
@@ -248,6 +220,18 @@ class Facture
                 $detailFacture->setFacture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDevi(): ?Devis
+    {
+        return $this->devi;
+    }
+
+    public function setDevi(?Devis $devi): static
+    {
+        $this->devi = $devi;
 
         return $this;
     }

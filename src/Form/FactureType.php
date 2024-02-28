@@ -46,7 +46,7 @@ class FactureType extends AbstractType
             
             // ])
             ->add('clientId')
-            ->add('detailFactureId')
+            ->add('detailFacture')
         ;
     }
 

@@ -27,7 +27,6 @@ class DetailDevisType extends AbstractType
         $entreprise = $user->getEntreprise();
 
         $builder
-            ->add('quantite', IntegerType::class)
             ->add('produit', EntityType::class, [
                 'class' => Produit::class,
                 'query_builder' => function (EntityRepository $er) use ($entreprise) {
@@ -38,6 +37,7 @@ class DetailDevisType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisissez un produit',
             ])
+            ->add('quantite', IntegerType::class)
         ;
     }
 

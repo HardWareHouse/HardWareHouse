@@ -16,6 +16,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 #[Route('/{_locale<%app.supported_locales%>}/devis')]
 #[IsGranted('ROLE_USER')]
@@ -52,13 +53,17 @@ class DevisController extends AbstractController
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
 
+        $totalDevis = 0;
         if ($form->isSubmitted() && $form->isValid()) {
+            $devi = $form->getData();
             foreach ($devi->getDetailDevis() as $detaildevis) {
                 $detaildevis->setPrix(
                     $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
                 );
+                $totalDevis += $detaildevis->getPrix();
             }
-            $devi = $form->getData();
+            $devi->setTotal($totalDevis);
+
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);
             }
@@ -153,9 +158,37 @@ class DevisController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}', name: 'app_devis_confirm', methods: ['GET','POST'])]
+    public function confirm(Request $request, Devis $devi): Response
+    {
+        $userEntreprise = $this->getUser()->getEntreprise();
+        
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
+        }
+        
+        if ($this->isCsrfTokenValid('confirm'.$devi->getId(), $request->request->get('_token'))) {
+
+            $deviConfirmed = $devi->getStatus() === "Approuvé";
+            if (!$deviConfirmed) {
+                $devi->setStatus('Approuvé');
+                $this->entityManager->flush();
+                return new RedirectResponse($this->generateUrl('app_facture_new', ['deviId' => $devi->getId()]));
+            } else {
+                $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+                return $this->redirectToRoute('app_devis_index');
+            }
+            
+        }
+
+        return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
     public function delete(Request $request, Devis $devi): Response
-    {
+    {   
+        dd($devi);
         $userEntreprise = $this->getUser()->getEntreprise();
         
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {

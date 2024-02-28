@@ -40,18 +40,6 @@ class DevisType extends AbstractType
                 'data' => new \DateTime('now'),
 
             ])
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'En attente' => 'En attente',
-                    'Approuvé' => 'Approuvé',
-                    'Refusé' => 'Refusé',
-                ],
-            ])
-            ->add('total')
-            // ->add('CreatedAt', DateTimeType::class, [
-            //     'widget' => 'single_text',
-            //     'data' => new \DateTime('now'),
-            // ])
             ->add('clientId', EntityType::class, [
                 'class' => Client::class, // Entité Client
                 'query_builder' => function (EntityRepository $er) use ($entreprise) {
@@ -65,7 +53,7 @@ class DevisType extends AbstractType
             ->add('detailDevis', CollectionType::class, [
                 'required' => true,
                 'entry_type' => DetailDevisType::class,
-                'label' => 'detailDevis',
+                'label' => false,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,

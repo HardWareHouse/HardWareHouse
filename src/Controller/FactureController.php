@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Facture;
+use App\Entity\DetailFacture;
+use App\Entity\Devis;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
 use App\Service\PdfService;
@@ -44,48 +46,70 @@ class FactureController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
+    #[Route('/new/{deviId}', name: 'app_facture_new', methods: ['GET','POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PdfService $pdfService): Response
-    {
-        $userEntreprise = $this->getUser()->getEntreprise();
-
-        $facture = new Facture();
-        $form = $this->createForm(FactureType::class, $facture);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $facture = $form->getData();
-            $facture->setEntrepriseId($userEntreprise);
-            //$client = $facture->getClientId();
-
-            $this->entityManager->persist($facture);
-            $this->entityManager->flush();
-
-            // Générer le contenu du PDF
-            $html = $this->renderView('facture/pdf.html.twig', [
-                'facture' => $facture,
-            ]);
-            $pdfContent = $pdfService->generatePdfContent($html);
-
-            // Créer l'email
-            $userEmail = $this->getUser()->getMail();
-            $email = (new Email())
-                ->from('facture@hardwarehouse.com')
-                ->to($userEmail)
-                ->subject('Votre facture')
-                ->html('Voici votre facture en pièce jointe.')
-                ->attach($pdfContent, 'facture.pdf', 'application/pdf');
-
-            // Envoyer l'email
-            $mailer->send($email);
-
-            return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
+    {   
+        $deviId = $request->get('deviId');
+        $devi = $entityManager->getRepository(Devis::class)->find($deviId);
+        if (!$deviId || !$devi) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
         }
 
-        return $this->render('facture/new.html.twig', [
+        $userEntreprise = $this->getUser()->getEntreprise();
+        
+        $facture = new Facture();
+        $facture->setDevi($devi);
+        $facture->setEntrepriseId($userEntreprise);
+
+        // Génération du numéro de facture
+        $numero = preg_replace('/DEVIS/i', '', $devi->getNumero());
+        $facture->setNumero('FACTURE'.$numero);
+        $facture->setClientId($devi->getClientId());
+        $facture->setTotal($devi->getTotal());
+
+        // Ajout des détails de la facture
+        foreach ($devi->getDetailDevis() as $detaildevis) {
+            $detailFacture = new DetailFacture();
+            $detailFacture->setPrix($detaildevis->getPrix());
+            $detailFacture->setQuantite($detaildevis->getQuantite());
+            $detailFacture->setProduit($detaildevis->getProduit());
+            $detailFacture->setFacture($facture);
+
+            $facture->addDetailFacture($detailFacture);
+
+            $entityManager->persist($detailFacture);
+        }
+
+        // Ajout de la facture au devis
+        $devi->addFacture($facture);
+
+        // Persist et flush des entités
+        $entityManager->persist($devi);
+        $entityManager->persist($facture);
+        $entityManager->flush();
+
+        // Génération du contenu PDF
+        $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
-            'form' => $form,
         ]);
+        $pdfContent = $pdfService->generatePdfContent($html);
+
+        // Création de l'email
+        $userEmail = $this->getUser()->getMail();
+        $email = (new Email())
+            ->from('facture@hardwarehouse.com')
+            ->to($userEmail)
+            ->subject('Votre facture')
+            ->html('Voici votre facture en pièce jointe.')
+            ->attach($pdfContent, 'facture.pdf', 'application/pdf');
+
+        // Envoi de l'email
+        $mailer->send($email);
+
+        // Redirection vers la liste des factures
+        $this->addFlash('succes', 'Votre devis a bien été confirmé !');
+        return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_facture_show', methods: ['GET'])]
@@ -121,31 +145,6 @@ class FactureController extends AbstractController
 
         return new Response('', 200, [
             'Content-Type' => 'application/pdf',
-        ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_facture_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Facture $facture): Response
-    {   
-        $userEntreprise = $this->getUser()->getEntreprise();
-
-        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
-            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
-            return $this->redirectToRoute('app_facture_index');
-        }
-
-        $form = $this->createForm(FactureType::class, $facture);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('facture/edit.html.twig', [
-            'facture' => $facture,
-            'form' => $form,
         ]);
     }
 

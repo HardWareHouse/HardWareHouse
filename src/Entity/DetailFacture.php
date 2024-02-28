@@ -25,6 +25,9 @@ class DetailFacture
     #[ORM\JoinColumn(nullable: false)]
     private ?Facture $facture = null;
 
+    #[ORM\ManyToOne(inversedBy: 'detailFactures')]
+    private ?Produit $produit = null;
+
     public function __construct()
     {
         $this->CreatedAt = new \DateTimeImmutable('now');
@@ -79,6 +82,18 @@ class DetailFacture
     public function setFacture(?Facture $facture): static
     {
         $this->facture = $facture;
+
+        return $this;
+    }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }
