@@ -30,6 +30,10 @@
                 <td class="px-6 py-4">{{ facture.statutPaiement }}</td>
             </tr>
             <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'custumer'|trans}}</th>
+                <td class="px-6 py-4">{{ facture.clientId.nom }}</td>
+            </tr>
+            <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'total'|trans}}</th>
                 <td class="px-6 py-4">{{ facture.total }}€</td>
             </tr>       
