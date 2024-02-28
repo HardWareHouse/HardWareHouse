@@ -147,22 +147,4 @@ class FactureController extends AbstractController
             'Content-Type' => 'application/pdf',
         ]);
     }
-
-    #[Route('/{id}', name: 'app_facture_delete', methods: ['POST'])]
-    public function delete(Request $request, Facture $facture): Response
-    {   
-        $userEntreprise = $this->getUser()->getEntreprise();
-
-        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $facture->getEntrepriseId()->getId()) {
-            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
-            return $this->redirectToRoute('app_facture_index');
-        }
-        
-        if ($this->isCsrfTokenValid('delete'.$facture->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($facture);
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
-    }
 }
