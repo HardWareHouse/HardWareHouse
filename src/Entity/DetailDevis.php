@@ -20,9 +20,6 @@ class DetailDevis
     private ?float $prix = null;
 
     #[ORM\Column]
-    private ?int $remise = null;
-
-    #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'detailDevis')]
@@ -62,18 +59,6 @@ class DetailDevis
     public function setPrix(float $prix): static
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getRemise(): ?int
-    {
-        return $this->remise;
-    }
-
-    public function setRemise(int $remise): static
-    {
-        $this->remise = $remise;
 
         return $this;
     }

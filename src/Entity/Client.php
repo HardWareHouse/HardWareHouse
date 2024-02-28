@@ -47,6 +47,7 @@ class Client
     {
         $this->devisId = new ArrayCollection();
         $this->factureId = new ArrayCollection();
+        $this->CreatedAt = new \DateTimeImmutable('now');
     }
 
     public function getId(): ?int

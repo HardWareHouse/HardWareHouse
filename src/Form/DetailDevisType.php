@@ -28,8 +28,6 @@ class DetailDevisType extends AbstractType
 
         $builder
             ->add('quantite', IntegerType::class)
-            //->add('prix', TextType::class)
-            //->add('remise', IntegerType::class)
             ->add('produit', EntityType::class, [
                 'class' => Produit::class,
                 'query_builder' => function (EntityRepository $er) use ($entreprise) {

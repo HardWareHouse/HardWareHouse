@@ -39,7 +39,7 @@ class Devis
     #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
     private ?Client $clientId = null;
 
-    #[ORM\OneToMany(mappedBy: 'devis', targetEntity: DetailDevis::class , cascade: ['persist','remove'])]
+    #[ORM\OneToMany(mappedBy: 'devis', targetEntity: DetailDevis::class, orphanRemoval: true, cascade: ['persist','remove'])]
     private Collection $detailDevis;
 
     public function __construct()

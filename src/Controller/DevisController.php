@@ -57,7 +57,6 @@ class DevisController extends AbstractController
                 $detaildevis->setPrix(
                     $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
                 );
-                $detaildevis->setRemise(0);
             }
             $devi = $form->getData();
             if (!$this->isGranted('ROLE_ADMIN')) {
