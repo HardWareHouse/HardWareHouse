@@ -58,8 +58,8 @@ class RegistrationController extends AbstractController
             // // Set the modified roles array back to the user
             // $user->setRoles($roles);
 
-            // $entityManager->persist($user);
-            // $entityManager->flush();
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())

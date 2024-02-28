@@ -22,6 +22,7 @@
                     {% if is_granted('ROLE_ADMIN') %}
                     <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
                     {% endif %}
+                    <th scope="col" class="py-3 px-6">{{'custumer'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'status'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'total'|trans}}</th>
                     <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
@@ -29,7 +30,10 @@
                 <tr>
                     <th><input type="text" placeholder="Numéro du devis..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" /></th>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <th><input type="text" placeholder="Entreprise..." class="form-control form-control-sm" /></th>
+                    {% endif %}
+                    <th><input type="text" placeholder="Client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Statut..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Total..." class="form-control form-control-sm" /></th>
                     <th>&nbsp;</th>
@@ -43,6 +47,7 @@
                     {% if is_granted('ROLE_ADMIN') %}
                     <td class="py-4 px-6">{{ devi.entrepriseId.nom }}</td>
                     {% endif %}
+                    <td class="py-4 px-6">{{ devi.clientId.nom }}</td>
                     <td class="py-4 px-6">{{ devi.status }}</td>
                     <td class="py-4 px-6">{{ devi.total }}€</td>
                     <td>
@@ -58,7 +63,7 @@
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <div class="ml-4">
-                                {{ include('devis/_delete_form.html.twig', {'devis': devis}) }}
+                                {{ include('devis/_delete_form.html.twig', {'devi': devi}) }}
                             </div>
                         </div>
                     </td>

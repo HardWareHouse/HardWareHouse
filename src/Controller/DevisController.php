@@ -16,6 +16,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 #[Route('/{_locale<%app.supported_locales%>}/devis')]
 #[IsGranted('ROLE_USER')]
@@ -52,8 +53,17 @@ class DevisController extends AbstractController
         $form = $this->createForm(DevisType::class, $devi);
         $form->handleRequest($request);
 
+        $totalDevis = 0;
         if ($form->isSubmitted() && $form->isValid()) {
             $devi = $form->getData();
+            foreach ($devi->getDetailDevis() as $detaildevis) {
+                $detaildevis->setPrix(
+                    $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
+                );
+                $totalDevis += $detaildevis->getPrix();
+            }
+            $devi->setTotal($totalDevis);
+
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);
             }
@@ -106,15 +116,22 @@ class DevisController extends AbstractController
 
     #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
     public function downloadPdf(Devis $devi, PdfService $pdfService): Response
-    {
+    {   
+        $userEntreprise = $this->getUser()->getEntreprise();
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
         }
 
+        $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
             'entreprise' => $devi->getEntrepriseId(),
+            'logoHwh' => $logoHwh,
         ]);
 
         $pdfService->showPdfFile($html);
@@ -137,6 +154,14 @@ class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $totalDevis = 0;
+            foreach ($devi->getDetailDevis() as $detaildevis) {
+                $detaildevis->setPrix(
+                    $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
+                );
+                $totalDevis += $detaildevis->getPrix();
+            }
+            $devi->setTotal($totalDevis);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -148,13 +173,44 @@ class DevisController extends AbstractController
         ]);
     }
 
+    #[Route('/confirm/{id}', name: 'app_devis_confirm', methods: ['GET','POST'])]
+    public function confirm(Request $request, Devis $devi): Response
+    {
+        $userEntreprise = $this->getUser()->getEntreprise();
+        if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
+        }
+        
+        if ($this->isCsrfTokenValid('confirm'.$devi->getId(), $request->request->get('_token'))) {
+
+            $deviConfirmed = $devi->getStatus() === "Approuvé";
+            if (!$deviConfirmed) {
+                $devi->setStatus('Approuvé');
+                $this->entityManager->flush();
+                return new RedirectResponse($this->generateUrl('app_facture_new', ['deviId' => $devi->getId()]));
+            } else {
+                $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+                return $this->redirectToRoute('app_devis_index');
+            }
+            
+        }
+
+        return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
     public function delete(Request $request, Devis $devi): Response
-    {
+    {   
         $userEntreprise = $this->getUser()->getEntreprise();
         
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
+        } 
+        
+        elseif (!$this->isGranted('ROLE_ADMIN') || $devi->getStatus() === "Approuvé"){
+            $this->addFlash('danger', 'Un devis ayant été confirmé ne peut être supprimé !');
             return $this->redirectToRoute('app_devis_index');
         }
         

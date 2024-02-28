@@ -39,24 +39,20 @@ class Produit
     #[ORM\JoinColumn(name: "categorie", referencedColumnName: "id")]
     private ?Categorie $categorieId = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produitId')]
-    #[ORM\JoinColumn(name: "devis", referencedColumnName: "id")]
-    private ?Devis $devisId = null;
-
-    #[ORM\ManyToOne(inversedBy: 'produitId')]
-    #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
-    private ?Facture $factureId = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $tva = null;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailDevis::class, orphanRemoval: true)]
     private Collection $detailDevis;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: DetailFacture::class)]
+    private Collection $detailFactures;
+
     public function __construct()
     {
         $this->detailDevis = new ArrayCollection();
         $this->CreatedAt = new \DateTimeImmutable('now');
+        $this->detailFactures = new ArrayCollection();
     }
 
 
@@ -149,30 +145,6 @@ class Produit
         return $this;
     }
 
-    public function getDevisId(): ?Devis
-    {
-        return $this->devisId;
-    }
-
-    public function setDevisId(?Devis $devisId): static
-    {
-        $this->devisId = $devisId;
-
-        return $this;
-    }
-
-    public function getFactureId(): ?Facture
-    {
-        return $this->factureId;
-    }
-
-    public function setFactureId(?Facture $factureId): static
-    {
-        $this->factureId = $factureId;
-
-        return $this;
-    }
-
     public function getTva(): ?int
     {
         return $this->tva;
@@ -209,6 +181,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($detailDevi->getProduit() === $this) {
                 $detailDevi->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DetailFacture>
+     */
+    public function getDetailFactures(): Collection
+    {
+        return $this->detailFactures;
+    }
+
+    public function addDetailFacture(DetailFacture $detailFacture): static
+    {
+        if (!$this->detailFactures->contains($detailFacture)) {
+            $this->detailFactures->add($detailFacture);
+            $detailFacture->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetailFacture(DetailFacture $detailFacture): static
+    {
+        if ($this->detailFactures->removeElement($detailFacture)) {
+            // set the owning side to null (unless already changed)
+            if ($detailFacture->getProduit() === $this) {
+                $detailFacture->setProduit(null);
             }
         }
 

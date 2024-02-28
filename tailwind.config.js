@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 module.exports = {
   darkMode: 'class',
   content: ["./assets/**/*.js", "./templates/**/*.html.twig"],
@@ -15,6 +16,13 @@ module.exports = {
       },
     },
   },
-  plugins: [
-  ],
-};
+    plugins: [
+      plugin(function({ addVariant, e }) {
+        addVariant('forest', ({ modifySelectors, separator }) => {
+          modifySelectors(({ className }) => {
+            return `.forest .${e(`forest${separator}${className}`)}`;
+          });
+        });
+      }),
+    ],
+  };

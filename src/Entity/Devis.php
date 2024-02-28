@@ -39,18 +39,18 @@ class Devis
     #[ORM\JoinColumn(name: "client", referencedColumnName: "id")]
     private ?Client $clientId = null;
 
-    #[ORM\OneToOne(inversedBy: 'devisId', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "detaildevis", referencedColumnName: "id")]
-    private ?DetailDevis $detailDevisId = null;
+    #[ORM\OneToMany(mappedBy: 'devis', targetEntity: DetailDevis::class, orphanRemoval: true, cascade: ['persist','remove'])]
+    private Collection $detailDevis;
 
-    #[ORM\OneToMany(mappedBy: 'devisId', targetEntity: Produit::class)]
-    #[ORM\JoinColumn(name: "produit", referencedColumnName: "id")]
-    private Collection $produitId;
+    #[ORM\OneToMany(mappedBy: 'devi', targetEntity: Facture::class, orphanRemoval: true)]
+    private Collection $factures;
 
     public function __construct()
     {
-        $this->produitId = new ArrayCollection();
         $this->CreatedAt = new \DateTimeImmutable('now');
+        $this->detailDevis = new ArrayCollection();
+        $this->factures = new ArrayCollection();
+        $this->statutPaiement = "En attente";
     }
 
     public function getId(): ?int
@@ -142,45 +142,65 @@ class Devis
         return $this;
     }
 
-    public function getDetailDevisId(): ?DetailDevis
-    {
-        return $this->detailDevisId;
-    }
-
-    public function setDetailDevisId(?DetailDevis $detailDevisId): static
-    {
-        $this->detailDevisId = $detailDevisId;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Produit>
+     * @return Collection<int, DetailDevis>
      */
-    public function getProduitId(): Collection
+    public function getDetailDevis(): Collection
     {
-        return $this->produitId;
+        return $this->detailDevis;
     }
 
-    public function addProduitId(Produit $produitId): static
+    public function addDetailDevi(DetailDevis $detailDevi): static
     {
-        if (!$this->produitId->contains($produitId)) {
-            $this->produitId->add($produitId);
-            $produitId->setDevisId($this);
+        if (!$this->detailDevis->contains($detailDevi)) {
+            $this->detailDevis->add($detailDevi);
+            $detailDevi->setDevis($this);
         }
 
         return $this;
     }
 
-    public function removeProduitId(Produit $produitId): static
+    public function removeDetailDevi(DetailDevis $detailDevi): static
     {
-        if ($this->produitId->removeElement($produitId)) {
+        if ($this->detailDevis->removeElement($detailDevi)) {
             // set the owning side to null (unless already changed)
-            if ($produitId->getDevisId() === $this) {
-                $produitId->setDevisId(null);
+            if ($detailDevi->getDevis() === $this) {
+                $detailDevi->setDevis(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Facture>
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFacture(Facture $facture): static
+    {
+        if (!$this->factures->contains($facture)) {
+            $this->factures->add($facture);
+            $facture->setDevi($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture): static
+    {
+        if ($this->factures->removeElement($facture)) {
+            // set the owning side to null (unless already changed)
+            if ($facture->getDevi() === $this) {
+                $facture->setDevi(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
