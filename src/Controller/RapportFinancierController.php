@@ -19,13 +19,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class RapportFinancierController extends AbstractController
 {
     #[Route('/{_locale<%app.supported_locales%>}/rapport', name: 'app_rapport_financier')]
-    // #[Security('is_granted("ROLE_ADMIN") or is_granted("ROLE_COMPTABLE")')]
-    public function index(AuthorizationCheckerInterface $authChecker, PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
-    {
-        if (!$authChecker->isGranted('ROLE_ADMIN') && !$authChecker->isGranted('ROLE_COMPTABLE')) {
-            throw new AccessDeniedException('Access Denied.');
-        }
-        $paiements = $paiementRepository->findAll();
+    public function adminRapport(AuthorizationCheckerInterface $authChecker, PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
+    {$paiements = $paiementRepository->findAll();
         $factures = $factureRepository->findAll();
         $devis = $devisRepository->findAll();
 
@@ -101,8 +96,16 @@ class RapportFinancierController extends AbstractController
         
         return $this->render('rapport_financier/index.html.twig', [
             'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray), 'translatedMonths' => json_encode($translatedMonths), 'entreprises' => json_encode($entreprises), 'facturesData' => json_encode($facturesData), 'devisData' => json_encode($devisData), 'translatedMethods' => json_encode($translatedMethods), 'translatedStatusFacture' => json_encode($translatedStatusFacture), 'translatedStatusDevis' => json_encode($translatedStatusDevis)
-        ]);
-    }
+        ]);}
+
+    // #[Route('/{_locale<%app.supported_locales%>}/rapport', name: 'app_rapport_financier')]
+    // public function comptableRapport(AuthorizationCheckerInterface $authChecker, PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
+    // {
+    //     if (!$authChecker->isGranted('ROLE_ADMIN') && !$authChecker->isGranted('ROLE_COMPTABLE')) {
+    //         throw new AccessDeniedException('Access Denied.');
+    //     }
+        
+    // }
     
     #[Route(path: '/{_locale<%app.supported_locales%>}/csv-methodes/{year}', name: 'app_csv_methodes')]
     public function csvMethodes(PaiementRepository $repository, TranslatorInterface $translator, $year): Response

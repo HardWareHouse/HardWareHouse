@@ -34,10 +34,10 @@ export function processData(
 
   function updateCsvDownloadLinks(selectedYear) {
     var currentLocale = document.documentElement.lang;
-    var csvMethodsLink = `/${currentLocale}/csv-methodes/${selectedYear}`;
-    var csvFactureLink = `/${currentLocale}/csv-factures/${selectedYear}`;
-    var csvDevisLink = `/${currentLocale}/csv-devis/${selectedYear}`;
-    var csvRevenueLink = `/${currentLocale}/csv-revenue/${selectedYear}`;
+    var csvMethodsLink = `/${currentLocale}/admin/csv-methodes/${selectedYear}`;
+    var csvFactureLink = `/${currentLocale}/admin/csv-factures/${selectedYear}`;
+    var csvDevisLink = `/${currentLocale}/admin/csv-devis/${selectedYear}`;
+    var csvRevenueLink = `/${currentLocale}/admin/csv-revenue/${selectedYear}`;
 
     document.getElementById("csvMethods").href = csvMethodsLink;
     document.getElementById("csvFacture").href = csvFactureLink;
