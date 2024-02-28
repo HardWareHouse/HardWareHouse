@@ -60,7 +60,7 @@ class Facture
         $this->CreatedAt = new \DateTimeImmutable('now');
         $this->dateFacturation = new \DateTime('now');
         $this->datePaiementDue = new \DateTime('now');
-        $this->statutPaiement = "En attente";
+        $this->status = "Impayée";
     }
 
     public function getId(): ?int

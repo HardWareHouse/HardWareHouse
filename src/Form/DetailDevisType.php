@@ -37,7 +37,13 @@ class DetailDevisType extends AbstractType
                 'choice_label' => 'nom',
                 'placeholder' => 'Choisissez un produit',
             ])
-            ->add('quantite', IntegerType::class)
+            ->add('quantite', IntegerType::class, [
+                'label' => 'Quantité',
+                'attr' => [
+                    'min' => 1,
+                    'max' => 25,
+                ],
+            ])
         ;
     }
 

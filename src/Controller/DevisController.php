@@ -116,7 +116,8 @@ class DevisController extends AbstractController
 
     #[Route('/{id}/pdf', name: 'app_devis_pdf', methods: ['GET'])]
     public function downloadPdf(Devis $devi, PdfService $pdfService): Response
-    {
+    {   
+        $userEntreprise = $this->getUser()->getEntreprise();
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
@@ -153,6 +154,14 @@ class DevisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $totalDevis = 0;
+            foreach ($devi->getDetailDevis() as $detaildevis) {
+                $detaildevis->setPrix(
+                    $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
+                );
+                $totalDevis += $detaildevis->getPrix();
+            }
+            $devi->setTotal($totalDevis);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -164,11 +173,10 @@ class DevisController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_devis_confirm', methods: ['GET','POST'])]
+    #[Route('/confirm/{id}', name: 'app_devis_confirm', methods: ['GET','POST'])]
     public function confirm(Request $request, Devis $devi): Response
     {
         $userEntreprise = $this->getUser()->getEntreprise();
-        
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
@@ -194,11 +202,15 @@ class DevisController extends AbstractController
     #[Route('/{id}', name: 'app_devis_delete', methods: ['POST'])]
     public function delete(Request $request, Devis $devi): Response
     {   
-        dd($devi);
         $userEntreprise = $this->getUser()->getEntreprise();
         
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_devis_index');
+        } 
+        
+        elseif (!$this->isGranted('ROLE_ADMIN') || $devi->getStatus() === "Approuvé"){
+            $this->addFlash('danger', 'Un devis ayant été confirmé ne peut être supprimé !');
             return $this->redirectToRoute('app_devis_index');
         }
         

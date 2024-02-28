@@ -87,6 +87,7 @@ number: Estimate number
 total: Total (€)
 no_estimate: No estimates found
 expires: Expires on
+custumer: Customer
 billing_info: Billing information
 shipping_info: Shipping information
 payment_method: Payment method
