@@ -18,17 +18,21 @@ class DetailFacture
 
     #[ORM\Column]
     private ?float $prix = null;
-
-    #[ORM\Column]
-    private ?int $remise = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
-    #[ORM\OneToOne(mappedBy: 'detailFactureId', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
-    private ?Facture $factureId = null;
+    #[ORM\ManyToOne(inversedBy: 'detailFacture')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Facture $facture = null;
 
+    #[ORM\ManyToOne(inversedBy: 'detailFactures')]
+    private ?Produit $produit = null;
+
+    public function __construct()
+    {
+        $this->CreatedAt = new \DateTimeImmutable('now');
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -58,18 +62,6 @@ class DetailFacture
         return $this;
     }
 
-    public function getRemise(): ?int
-    {
-        return $this->remise;
-    }
-
-    public function setRemise(int $remise): static
-    {
-        $this->remise = $remise;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->CreatedAt;
@@ -82,25 +74,28 @@ class DetailFacture
         return $this;
     }
 
-    public function getFactureId(): ?Facture
+    public function getFacture(): ?Facture
     {
-        return $this->factureId;
+        return $this->facture;
     }
 
-    public function setFactureId(?Facture $factureId): static
+    public function setFacture(?Facture $facture): static
     {
-        // unset the owning side of the relation if necessary
-        if ($factureId === null && $this->factureId !== null) {
-            $this->factureId->setDetailFactureId(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($factureId !== null && $factureId->getDetailFactureId() !== $this) {
-            $factureId->setDetailFactureId($this);
-        }
-
-        $this->factureId = $factureId;
+        $this->facture = $facture;
 
         return $this;
     }
+
+    public function getProduit(): ?Produit
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): static
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
 }

@@ -1,3 +1,47 @@
+{% block javascripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let collection = document.querySelector("#quoteItem");
+    let span = collection.querySelector("span");
+    let addButton = collection.querySelector(".add-quoteLine");
+
+    addButton.addEventListener("click", function() {
+        addDetailForm(collection);
+    });
+
+    collection.querySelectorAll(".detail-form .supp-quoteLine").forEach(function(button) {
+        button.addEventListener("click", function() {
+            removeDetailForm(this.closest(".detail-form"));
+        });
+    });
+
+    function addDetailForm(collection) {
+        let prototype = collection.dataset.prototype;
+        let index = collection.querySelectorAll(".detail-form").length;
+        let newForm = document.createElement("div");
+        newForm.className = "detail-form";
+        newForm.innerHTML = prototype.replace(/__name__/g, index);
+
+        let deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "supp-quoteLine btn red secondary";
+        deleteButton.innerText = "Supprimer un produit";
+        deleteButton.addEventListener("click", function() {
+            removeDetailForm(newForm);
+        });
+
+        newForm.appendChild(deleteButton);
+        collection.insertBefore(newForm, addButton);
+    }
+
+    function removeDetailForm(form) {
+        form.remove();
+    }
+});
+</script>
+{% endblock %}
+
+
 {{ form_start(form, {'attr': {'class': 'flex flex-col items-center justify-start min-h-screen'}}) }}
 
 <div class="w-full max-w-md mx-auto">
@@ -19,31 +63,21 @@
         {{ form_label(form.dateCreation, 'created_on'|trans) }}
         {{ form_widget(form.dateCreation, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
-
-    <div class="mb-4">
-        {{ form_label(form.status, 'status'|trans) }}
-        {{ form_widget(form.status, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div>
-
-    <div class="mb-4">
-        {{ form_label(form.total, 'total'|trans) }}
-        {{ form_widget(form.total, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div>
-
-    {# <div class="mb-4">
-        {{ form_label(form.CreatedAt) }}
-        {{ form_widget(form.CreatedAt, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div> #}
-
+    
     <div class="mb-4">
         {{ form_label(form.clientId, 'Client') }}
         {{ form_widget(form.clientId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
-    <div class="mb-4">
-        {{ form_label(form.detailDevisId, 'estimate_details'|trans) }}
-        {{ form_widget(form.detailDevisId, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div>
+    <div class="mb-4" id="quoteItem" data-prototype="{{ form_widget(form.detailDevis.vars.prototype)|e('html_attr') }}">
+    <span></span>
+    <button type="button" class="add-quoteLine btn secondary">{{'estimate_details_add'|trans}}</button>
+    {% for detailForm in form.detailDevis %}
+        <div class="detail-form ">
+            {{ form_widget(detailForm, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+            <button type="button mt-4" class="supp-quoteLine btn red secondary">Supprimer un produit</button>
+        </div>
+    {% endfor %}
 
     <div class="flex items-center justify-center">
         <button
