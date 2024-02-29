@@ -15,6 +15,6 @@ jobs:
         script: |
           cd /home/HardWareHouse
           git pull
-          docker compose exec php npm run install
+          docker compose exec php npm install
           docker compose exec php npm run build
           docker compose exec php bin/console d:m:m -n
