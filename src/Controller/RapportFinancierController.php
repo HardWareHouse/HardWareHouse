@@ -18,8 +18,8 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class RapportFinancierController extends AbstractController
 {
-    #[Route('/{_locale<%app.supported_locales%>}/rapport', name: 'app_rapport_financier')]
-    public function adminRapport(AuthorizationCheckerInterface $authChecker, PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
+    #[Route('/{_locale<%app.supported_locales%>}/admin/rapport', name: 'app_rapport_financier')]
+    public function adminRapport(PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
     {$paiements = $paiementRepository->findAll();
         $factures = $factureRepository->findAll();
         $devis = $devisRepository->findAll();
