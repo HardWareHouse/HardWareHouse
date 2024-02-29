@@ -3,6 +3,7 @@ import {
   methodsChart,
   facturesChart,
   devisChart,
+  mostRecentYear,
 } from "./chartModules.js";
 
 export function processData(
@@ -394,7 +395,5 @@ export function processData(
         return "";
     }
   }
-  // Initial update of charts with the current year
-  var currentYear = new Date().getFullYear();
-  updateCharts(currentYear);
+  updateCharts(mostRecentYear);
 }

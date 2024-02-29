@@ -27,8 +27,8 @@ class PaiementRepository extends ServiceEntityRepository
     $qb = $this->createQueryBuilder('p');
 
     $qb->select('SUM(p.montant) as totalPaiements')
-       ->where('p.entreprise_id = :entreprise_id')
-       ->setParameter('entreprise_id', $entrepriseId);
+       ->where('p.entrepriseId = :entrepriseId')
+       ->setParameter('entrepriseId', $entrepriseId);
 
     $query = $qb->getQuery();
 
@@ -52,7 +52,16 @@ public function findPaymentsByYear($year)
     return $resultSet->fetchAllAssociative();
 }
 
-// /**
+  public function findByEntreprise($value): array
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.entrepriseId = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 //      * Get payment method counts per month and year
 //      *
 //      * @return array

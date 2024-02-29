@@ -37,6 +37,16 @@ public function findFacturesByYear($year)
 
     return $resultSet->fetchAllAssociative();
 }
+
+  public function findByEntreprise($value): array
+   {
+       return $this->createQueryBuilder('f')
+           ->andWhere('f.entrepriseId = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 //    /**
 //     * @return Facture[] Returns an array of Facture objects
 //     */
