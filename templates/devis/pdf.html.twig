@@ -150,27 +150,41 @@
                 <th>Description</th>
                 <th>QTE</th>
                 <th>Prix HT</th>
+                <th>Montant TVA (20%)</th>
             </tr>
         </thead>
         <tbody>
+            {% set tauxTVA = 0.20 %}
+            {% set sousTotalHT = 0 %}
+            {% set totalTVA = 0 %}
             {% for detail in devis.getDetailDevis %}
-            <tr>
-                <td>{{ detail.getProduit().getNom() }}</td>
-                <td>{{ detail.getQuantite() }}</td>
-                <td>{{ detail.getPrix() }}€</td>
-            </tr>
+                {% set prixHT = detail.getPrix() %}
+                {% set montantTVA = prixHT * tauxTVA %}
+                <tr>
+                    <td>{{ detail.getProduit().getNom() }}</td>
+                    <td>{{ detail.getQuantite() }}</td>
+                    <td>{{ prixHT }}€</td>
+                    <td>{{ montantTVA }}€</td>
+                </tr>
+                {% set sousTotalHT = sousTotalHT + prixHT %}
+                {% set totalTVA = totalTVA + montantTVA %}
             {% endfor %}
+            {% set totalTTC = sousTotalHT + totalTVA %}
         </tbody>
     </table>
-    {% set sousTotalHT = 0 %}
-    {% for detail in devis.getDetailDevis %}
-        {% set sousTotalHT = sousTotalHT + detail.getPrix() %}
-    {% endfor %}
     
     <table class="totals-table">
         <tr>
             <td class="label">Sous-total HT</td>
             <td class="value">{{ sousTotalHT }}€</td>
+        </tr>
+        <tr>
+            <td class="label">Total TVA (20%)</td>
+            <td class="value">{{ totalTVA }}€</td>
+        </tr>
+        <tr>
+            <td class="label">Total TTC</td>
+            <td class="value">{{ totalTTC }}€</td>
         </tr>
     </table>
     
