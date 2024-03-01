@@ -79,21 +79,27 @@
         </div>
 
         <div class="space-y-2">
-            <label for="companyCreationForm_codePostal" class="text-blue-600">Code postal</label>
+            <label for="companyCreationForm_codePostal" class="text-blue-600">{{'postcode'|trans}}</label>
             {{ form_widget(companyCreationForm.codePostal, {'id': 'companyCreationForm_codePostal', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.codePostal) }}
         </div>
 
         <div class="space-y-2">
-            <label for="companyCreationForm_ville" class="text-blue-600">Ville</label>
+            <label for="companyCreationForm_ville" class="text-blue-600">{{'city'|trans}}</label>
             {{ form_widget(companyCreationForm.ville, {'id': 'companyCreationForm_ville', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.ville) }}
         </div>
 
         <div class="space-y-2">
-            <label for="companyCreationForm_email" class="text-blue-600">Adresse e-mail</label>
+            <label for="companyCreationForm_email" class="text-blue-600">{{'email'|trans}}</label>
             {{ form_widget(companyCreationForm.email, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.email) }}
+        </div>
+
+        <div class="space-y-2">
+            <label for="companyCreationForm_telephone" class="text-blue-600">{{'phone'|trans}}</label>
+            {{ form_widget(companyCreationForm.telephone, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_errors(companyCreationForm.telephone) }}
         </div>
 
         <div class="space-y-2">

@@ -31,13 +31,16 @@ class EntrepriseType extends AbstractType
                 'attr' => ['placeholder' => 'Description de l\'entreprise']
             ])
             ->add('siren', TextType::class, [
-                'attr' => ['placeholder' => 'SIREN']
+                'attr' => ['placeholder' => 'SIREN / SIRET']
             ])
             ->add('informationFiscale', TextType::class, [
                 'attr' => ['placeholder' => 'Information fiscale']
             ])
             ->add('email', TextType::class, [
                 'attr' => ['placeholder' => 'Email de l\'entreprise']
+            ])
+            ->add('telephone', TextType::class, [
+                'attr' => ['placeholder' => 'Téléphone de l\'entreprise']
             ])
             ->add('logo', MediaFormType::class)
         ;
