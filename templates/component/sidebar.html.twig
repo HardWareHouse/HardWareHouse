@@ -170,12 +170,12 @@
 
         <div class="my-4 bg-gray-600 h-[1px]"></div>
         <div
-          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white forest:bg-red-100">
+          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
           <i class="bi bi-box-arrow-in-right"></i>
           <a href="{{ path('app_logout') }}"><span class="text-[15px] ml-4 font-bold">{{'logout'|trans}}</span></a>
         </div>
 
-        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md dark:bg-blue-700 forest:bg-red-700" >
+        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md dark:bg-blue-700" >
             <ul class="text-white">
               {% if app.request.locale == 'fr' %}
                 <li><a class="dropdown-item" href="{{ path("app_home", {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
@@ -193,23 +193,42 @@
         <i id="theme-toggle-forest-icon" class="bi bi-tree-fill"></i>
         <svg id="theme-toggle-light-icon1" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
       </button>
-{#      <div onclick="toggleForestMode()" class=" mt-10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">#}
-{#        #}
-{#      </div>#}
+
+      <button id="theme-toggle2" type="button" class=" mt-10 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+        <i id="theme-toggle-love-icon" class="bi bi-arrow-through-heart-fill"></i>
+        <svg id="theme-toggle-light-icon2" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+        </svg>
+      </button>
 
     </div>
   </div>
-  <style>
-    .bi-chevron-down::before {
-      content: "\f282";
-    }
-  </style>
 
   <script type="text/javascript">
     function openSidebar() {
       document.querySelector("#sidebar").classList.toggle("hidden");
       document.querySelector("#MainContent").classList.toggle("pl-0");
       document.querySelector("#MainContent").classList.toggle("pl-72");
+    }
+    document.addEventListener('DOMContentLoaded', (event) => {
+      applyThemePreference();
+    });
+
+    function applyThemePreference() {
+      const currentTheme = localStorage.getItem('color-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        themeToggleDarkIcon.classList.add('hidden');
+        themeToggleLightIcon.classList.remove('hidden');
+      } else if (currentTheme === 'forest') {
+        document.documentElement.classList.add('forest');
+        themeToggleForestIcon.classList.add('hidden');
+        themeToggleLightIcon1.classList.remove('hidden');
+      } else if (currentTheme === 'sepia'){
+        document.documentElement.classList.add('love');
+        themeToggleLoveIcon.classList.add('hidden');
+        themeToggleLightIcon2.classList.remove('hidden');
+      }
     }
 
     let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -218,6 +237,9 @@
     let themeToggleForestIcon = document.getElementById('theme-toggle-forest-icon');
     let themeToggleLightIcon1 = document.getElementById('theme-toggle-light-icon1');
 
+    let themeToggleLoveIcon = document.getElementById('theme-toggle-love-icon');
+    let themeToggleLightIcon2 = document.getElementById('theme-toggle-light-icon2');
+
     // Change the icons inside the button based on previous settings
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       themeToggleLightIcon.classList.remove('hidden');
@@ -225,14 +247,21 @@
       themeToggleDarkIcon.classList.remove('hidden');
     }
 
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (localStorage.getItem('color-theme') === 'forest' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: forest)').matches)) {
       themeToggleLightIcon1.classList.remove('hidden');
     } else {
       themeToggleForestIcon.classList.remove('hidden');
     }
 
-    var themeToggleBtn = document.getElementById('theme-toggle');
-    var themeToggleBtn1 = document.getElementById('theme-toggle1');
+    if (localStorage.getItem('color-theme') === 'love' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: love)').matches)) {
+      themeToggleLightIcon2.classList.remove('hidden');
+    } else {
+      themeToggleLoveIcon.classList.remove('hidden');
+    }
+
+    let themeToggleBtn = document.getElementById('theme-toggle');
+    let themeToggleBtn1 = document.getElementById('theme-toggle1');
+    let themeToggleBtn2 = document.getElementById('theme-toggle2');
 
     themeToggleBtn.addEventListener('click', function() {
 
@@ -291,29 +320,40 @@
       }
     });
 
+    themeToggleBtn2.addEventListener('click', function() {
 
+      // toggle icons inside button
+      themeToggleLoveIcon.classList.toggle('hidden');
+      themeToggleLightIcon2.classList.toggle('hidden');
 
-    // if (localStorage.getItem('color-theme') === 'forest' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: forest)').matches)) {
-    //   document.documentElement.classList.add('forest');
-    //   document.documentElement.classList.remove('dark');
-    //   document.documentElement.classList.remove('light');
-    // } else {
-    //   document.documentElement.classList.remove('forest');
-    //   document.documentElement.classList.remove('dark');
-    //   document.documentElement.classList.add('light');
-    // }
-    // function toggleForestMode() {
-    //   document.documentElement.classList.toggle('forest');
-    //   document.documentElement.classList.add('forest');
-    //   document.documentElement.classList.remove('dark');
-    //   document.documentElement.classList.remove('light');
-    //   localStorage.setItem('color-theme', 'forest');
-    // }
+      // if set via local storage previously
+      if (localStorage.getItem('color-theme')) {
+        if (localStorage.getItem('color-theme') === 'light') {
+          document.documentElement.classList.add('love');
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('color-theme', 'love');
+        } else {
+          document.documentElement.classList.remove('love');
+          localStorage.setItem('color-theme', 'light');
+        }
+
+        // if NOT set via local storage previously
+      } else {
+        if (document.documentElement.classList.contains('love')) {
+          document.documentElement.classList.remove('love');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('love');
+          localStorage.setItem('color-theme', 'love');
+        }
+      }
+    });
   </script>
 
-
-
-
-
+  <style>
+    .bi-chevron-down::before {
+      content: "\f282";
+    }
+  </style>
 </div>
 {% endblock %}

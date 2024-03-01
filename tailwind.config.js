@@ -24,5 +24,12 @@ module.exports = {
           });
         });
       }),
+      plugin(function({ addVariant, e }) {
+        addVariant('love', ({ modifySelectors, separator }) => {
+          modifySelectors(({ className }) => {
+            return `.love .${e(`love${separator}${className}`)}`;
+          });
+        });
+      }),
     ],
   };
