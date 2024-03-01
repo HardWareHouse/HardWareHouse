@@ -63,6 +63,21 @@ class Entreprise
     #[ORM\OneToOne(inversedBy: 'entreprise', cascade: ['persist', 'remove'])]
     private ?Media $logo = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $codePostal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $siren = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $siteWeb = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = null;
+
     public function __construct()
     {
         $this->clientId = new ArrayCollection();
@@ -362,6 +377,66 @@ class Entreprise
     public function setLogo(?Media $logo): static
     {
         $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?int $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getSiren(): ?string
+    {
+        return $this->siren;
+    }
+
+    public function setSiren(?string $siren): static
+    {
+        $this->siren = $siren;
+
+        return $this;
+    }
+
+    public function getSiteWeb(): ?string
+    {
+        return $this->siteWeb;
+    }
+
+    public function setSiteWeb(?string $siteWeb): static
+    {
+        $this->siteWeb = $siteWeb;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

@@ -14,8 +14,28 @@
     </div>
 
     <div class="mb-4">
+        {{ form_label(form.codePostal, 'postcode'|trans) }}
+        {{ form_widget(form.codePostal, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.ville, 'city'|trans) }}
+        {{ form_widget(form.ville, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.email, 'email'|trans) }}
+        {{ form_widget(form.email, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
         {{ form_label(form.description, 'description'|trans) }}
         {{ form_widget(form.description, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+    </div>
+
+    <div class="mb-4">
+        {{ form_label(form.siren, 'siren'|trans) }}
+        {{ form_widget(form.siren, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
     <div class="mb-4">
@@ -28,10 +48,6 @@
         {{ form_widget(form.informationFiscale, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
     </div>
 
-    {# <div class="mb-4">
-        {{ form_label(form.user) }}
-        {{ form_widget(form.user, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
-    </div> #}
 
     <div class="flex items-center justify-center">
         <button

@@ -22,6 +22,14 @@
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'address'|trans}}</th>
                         <td class="px-6 py-4">{{ client.adresse }}</td>
                     </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'postcode'|trans}}</th>
+                        <td class="px-6 py-4">{{ client.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'city'|trans}}</th>
+                        <td class="px-6 py-4">{{ client.ville }}</td>
+                    </tr>
                     {% if is_granted('ROLE_ADMIN') %}
                         <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'the_company'|trans }}</th>

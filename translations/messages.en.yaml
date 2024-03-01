@@ -201,7 +201,6 @@ forgot_password: Forgot your password?
 no_account: Don't have an account?
 logo_company: Company logo
 slug: The essential tool for efficiently managing your hardware business.
-
 created_at: Created at
 month: Month
 January: January
@@ -216,3 +215,6 @@ September: September
 October: October
 November: November
 December: December
+city: City
+siren: Siren
+postcode: Postcode
