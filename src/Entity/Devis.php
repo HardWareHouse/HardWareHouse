@@ -50,7 +50,7 @@ class Devis
         $this->CreatedAt = new \DateTimeImmutable('now');
         $this->detailDevis = new ArrayCollection();
         $this->factures = new ArrayCollection();
-        $this->statutPaiement = "En attente";
+        $this->status = "En attente";
     }
 
     public function getId(): ?int
