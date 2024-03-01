@@ -4,11 +4,10 @@ namespace App\Controller;
 
 use DateTime;
 use App\Repository\DevisRepository;
-use Symfony\Component\Intl\Locales;
 use App\Repository\FactureRepository;
-use Symfony\Component\Intl\Languages;
 use App\Repository\PaiementRepository;
 use App\Repository\EntrepriseRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -19,8 +18,18 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class RapportFinancierController extends AbstractController
 {
     #[Route('/{_locale<%app.supported_locales%>}/admin/rapport', name: 'app_rapport_financier_admin')]
-    public function adminRapport(PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository): Response    
-    {$paiements = $paiementRepository->findAll();
+    public function adminRapport(PaiementRepository $paiementRepository, EntrepriseRepository $entrepriseRepository,TranslatorInterface $translator, FactureRepository $factureRepository, DevisRepository $devisRepository, Request $request): Response    
+    {
+        $companyId = $request->query->get('companyId', null);
+    
+        if ($companyId !== null) {
+
+            $paiements = $paiementRepository->findByCompany($companyId);
+            $factures = $factureRepository->findByCompany($companyId);
+            $devis = $devisRepository->findByCompany($companyId);
+            }
+
+        $paiements = $paiementRepository->findAll();
         $factures = $factureRepository->findAll();
         $devis = $devisRepository->findAll();
 
@@ -36,7 +45,8 @@ class RapportFinancierController extends AbstractController
                 'id' => $paiement->getId(),
                 'datePaiement' => $paiement->getDatePaiement()->format('Y-m-d H:i:s'),
                 'montant' => $paiement->getMontant(),
-                'methodePaiement' => $paiement->getMethodePaiement(),         
+                'methodePaiement' => $paiement->getMethodePaiement(),    
+                'entrepriseId' => $paiement->getEntrepriseId()->getId()     
             ];
         }
 
@@ -46,7 +56,9 @@ class RapportFinancierController extends AbstractController
             $facturesData[] = [
                 'id' => $facture->getId(),
                 'dateFacturation' => $facture->getDateFacturation()->format('Y-m-d H:i:s'),
-                'status' => $facture->getStatutPaiement(),           
+                'status' => $facture->getStatutPaiement(),
+                'entrepriseId' => $facture->getEntrepriseId()->getId()     
+
             ];
         }
 
@@ -56,7 +68,9 @@ class RapportFinancierController extends AbstractController
             $devisData[] = [
                 'id' => $devis->getId(),
                 'dateFacturation' => $devis->getDateCreation()->format('Y-m-d H:i:s'),
-                'status' => $devis->getStatus(),           
+                'status' => $devis->getStatus(), 
+                'entrepriseId' => $devis->getEntrepriseId()->getId()     
+    
             ];
         }
 
