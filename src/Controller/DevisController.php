@@ -128,10 +128,15 @@ class DevisController extends AbstractController
         $data = file_get_contents($path);
         $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
+        $client = $devi->getClientId();
+        $entreprise = $devi->getEntrepriseId();
+
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
             'entreprise' => $devi->getEntrepriseId(),
             'logoHwh' => $logoHwh,
+            'client' => $client,
+            'entreprise' => $entreprise,
         ]);
 
         $pdfService->showPdfFile($html);

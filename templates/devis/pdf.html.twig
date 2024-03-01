@@ -1,32 +1,182 @@
 {% block body %}
-<div
-    style="max-width: 640px; margin: auto; padding: 40px; background: white; box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.1);">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
-        <h1 style="font-size: 24px; font-weight: bold;">{{'estimate'|trans}} {{ devis.numero }}</h1>
-        <img src="{{ logoHwh }}" height="100" />
-    </div>
-    <div style="margin-bottom: 32px;">
-        <div style="font-size: 14px;">
-            {{'created_on'|trans}}: {{ devis.dateCreation ? devis.dateCreation|date('d/m/Y') : '' }}<br>
-            {{'expires'|trans}}: {{ devis.CreatedAt ? devis.CreatedAt|date('d/m/Y') : '' }}
-        </div>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #e5e7eb;">
-        <span style="font-weight: bold;">{{'payment_method'|trans}}</span>
-        <span>{{ devis.status }}</span>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #f3f4f6;">
-        <span style="font-weight: bold;">{{'amount'|trans}}</span>
-        <span>{{ devis.total }}€</span>
-    </div>
-    <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 2px solid #e5e7eb;">
-        <span style="color: #4b5563;">{{'item'|trans}}</span>
-        <span style="color: #4b5563;">{{'price'|trans}}</span>
 
-        <div
-            style="display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 2px solid #e5e7eb;">
-            <span style="font-size: 18px; font-weight: bold;">{{'total'|trans}}</span>
-            <span style="font-size: 18px; font-weight: bold;">{{ devis.total }}€</span>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Devis</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .header,
+        .info-section,
+        .totals-table {
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .info-block {
+            width: calc(50% - 10px);
+        }
+
+        .info-block h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .info-block p {
+            margin: 2px 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+
+        .totals-table {
+            margin-top: 24px;
+        }
+
+        .totals-table td {
+            padding: 8px;
+            text-align: right;
+        }
+
+        .totals-table .label {
+            font-weight: bold;
+        }
+
+        .totals-table .value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+
+        .header-content {
+            text-align: right;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div>
+            {% if logoHwh is defined %}
+            <img src="{{ logoHwh }}" />
+            {% else %}
+            <img src="#" />
+            {% endif %}
+        </div>
+
+        <div class="header-content">
+            <h2>N°Devis : {{ devis.numero }}</h2>
+            <h2>Date de création : {{ devis.dateCreation|date('d/m/Y') }}</h2>
         </div>
     </div>
-    {% endblock %}
+
+
+    <div class="info-section">
+        <div class="info-block">
+            <h3>Entreprise : {{ entreprise.nom }}</h3>
+            <p>Adresse : {{ entreprise.adresse }}</p>
+            <p>Téléphone : </p> {# A rajouter #}
+        </div>
+        <div class="info-block">
+            {% if client is defined %}
+            <h3>Client : {{ client.nom }}</h3>
+            <p>Adresse : {{ client.adresse }}</p>
+            <p>Téléphone : {{ client.telephone }}</p>
+            <p>Mail : {{ client.email }}</p>
+            {% else %}
+            <p>test</p>
+            {% endif %}
+                
+        </div>
+    </div>
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>QTE</th>
+                <th>Prix HT</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detail in devis.getDetailDevis %}
+            <tr>
+                <td>{{ detail.getProduit().getNom() }}</td>
+                <td>{{ detail.getQuantite() }}</td>
+                <td>{{ detail.getPrix() }}€</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% set sousTotalHT = 0 %}
+    {% for detail in devis.getDetailDevis %}
+        {% set sousTotalHT = sousTotalHT + detail.getPrix() %}
+    {% endfor %}
+    
+    <table class="totals-table">
+        <tr>
+            <td class="label">Sous-total HT</td>
+            <td class="value">{{ sousTotalHT }}€</td>
+        </tr>
+    </table>
+    
+
+</body>
+
+</html>
+
+{% endblock %}
