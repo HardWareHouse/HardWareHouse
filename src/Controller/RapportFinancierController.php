@@ -56,7 +56,9 @@ class RapportFinancierController extends AbstractController
             $facturesData[] = [
                 'id' => $facture->getId(),
                 'dateFacturation' => $facture->getDateFacturation()->format('Y-m-d H:i:s'),
-                'status' => $facture->getStatutPaiement(),           
+                'status' => $facture->getStatutPaiement(),
+                'entrepriseId' => $facture->getEntrepriseId()->getId()     
+
             ];
         }
 
@@ -66,7 +68,9 @@ class RapportFinancierController extends AbstractController
             $devisData[] = [
                 'id' => $devis->getId(),
                 'dateFacturation' => $devis->getDateCreation()->format('Y-m-d H:i:s'),
-                'status' => $devis->getStatus(),           
+                'status' => $devis->getStatus(), 
+                'entrepriseId' => $devis->getEntrepriseId()->getId()     
+    
             ];
         }
 
