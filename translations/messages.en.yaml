@@ -85,6 +85,7 @@ estimate_new: Create a new estimate
 estimate: Estimates
 number: Estimate number
 total: Total (€)
+total_ttc: Total Tax Included (€)
 no_estimate: No estimates found
 expires: Expires on
 custumer: Customer

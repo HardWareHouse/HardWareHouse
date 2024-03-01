@@ -64,6 +64,11 @@ class DevisController extends AbstractController
             }
             $devi->setTotal($totalDevis);
 
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+
+
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);
             }
@@ -166,7 +171,13 @@ class DevisController extends AbstractController
                 );
                 $totalDevis += $detaildevis->getPrix();
             }
+            
             $devi->setTotal($totalDevis);
+
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
