@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: 'nom', message: 'Une entreprise avec ce nom existe déjà.')]
 #[UniqueEntity(fields: 'email', message: 'Un email d\'entreprise avec cette adresse existe déjà.')]
 #[UniqueEntity(fields: 'telephone', message: 'Un numéro de téléphone d\'entreprise avec ce numéro existe déjà.')]
+#[UniqueEntity(fields: 'siren', message: 'Ce numéro SIREN/SIRET est déjà utilisé.')]
 class Entreprise
 {
     #[ORM\Id]
@@ -33,9 +34,6 @@ class Entreprise
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\Length(max: 250)]
     private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $informationFiscale = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
@@ -73,7 +71,7 @@ class Entreprise
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(max: 50)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z\s]+$/', message: 'La ville ne doit contenir que des lettres.')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$/', message: 'La ville ne doit contenir que des lettres et peut inclure des tirets.')]
     private ?string $ville = null;
 
     #[ORM\Column(nullable: true, length: 5)]
@@ -86,6 +84,11 @@ class Entreprise
     private ?string $siren = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'L\'URL du site web n\'est pas valide. Veuillez renseigner une URL valide de la forme http://www.example.com')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'L\'URL du site web ne doit pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $siteWeb = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -154,17 +157,6 @@ class Entreprise
         return $this;
     }
 
-    public function getInformationFiscale(): ?string
-    {
-        return $this->informationFiscale;
-    }
-
-    public function setInformationFiscale(string $informationFiscale): static
-    {
-        $this->informationFiscale = $informationFiscale;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

@@ -13,7 +13,6 @@
                 <th>{{'name'|trans}}</th>
                 <th>{{'address'|trans}}</th>
                 <th>{{'description'|trans}}</th>
-                <th>{{'tax_info'|trans}}</th>
                 <th>{{'createdon'|trans}}</th>
                 <th>{{'actions'|trans}}</th>
             </tr>
@@ -25,7 +24,6 @@
                 <td>{{ entreprise.nom }}</td>
                 <td>{{ entreprise.adresse }}</td>
                 <td>{{ entreprise.description }}</td>
-                <td>{{ entreprise.informationFiscale }}</td>
                 <td>{{ entreprise.CreatedAt ? entreprise.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_entreprise_show', {'id': entreprise.id}) }}">{{'show'|trans}}</a>

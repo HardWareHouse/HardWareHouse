@@ -34,8 +34,8 @@ class EntrepriseType extends AbstractType
             ->add('siren', TextType::class, [
                 'attr' => ['placeholder' => 'SIREN / SIRET']
             ])
-            ->add('informationFiscale', TextType::class, [
-                'attr' => ['placeholder' => 'Information fiscale']
+            ->add('siteWeb', TextType::class, [
+                'attr' => ['placeholder' => 'Site web de l\'entreprise']
             ])
             ->add('email', TextType::class, [
                 'attr' => ['placeholder' => 'Email de l\'entreprise']
