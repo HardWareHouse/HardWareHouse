@@ -9,11 +9,21 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Security\Core\Security;
 
 class PaiementType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+{   
+    public function __construct(Security $security)
     {
+        $this->security = $security;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {   
+        $user = $this->security->getUser();
+        $entreprise = $user->getEntreprise();
+
         $builder
             ->add('datePaiement')
             ->add('montant')
@@ -27,7 +37,13 @@ class PaiementType extends AbstractType
             ])
             ->add('factureId', EntityType::class, [
                 'class' => Facture::class,
+                'query_builder' => function (EntityRepository $er) use ($entreprise) {
+                    return $er->createQueryBuilder('f')
+                        ->andWhere('f.entrepriseId = :entreprise')
+                        ->setParameter('entreprise', $entreprise);
+                },
                 'choice_label' => 'numero',
+                'placeholder' => 'Choisissez une Facture',
             ])
         ;
     }
