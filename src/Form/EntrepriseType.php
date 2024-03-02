@@ -42,6 +42,9 @@ class EntrepriseType extends AbstractType
             ->add('telephone', TextType::class, [
                 'attr' => ['placeholder' => 'Téléphone de l\'entreprise']
             ])
+            ->add('siteWeb', TextType::class, [
+                'attr' => ['placeholder' => 'Site web de l\'entreprise']
+            ])
             ->add('logo', MediaFormType::class)
         ;
     }
