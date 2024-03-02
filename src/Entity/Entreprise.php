@@ -34,9 +34,6 @@ class Entreprise
     #[Assert\Length(max: 250)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $informationFiscale = null;
-
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
 
@@ -86,6 +83,11 @@ class Entreprise
     private ?string $siren = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'L\'URL du site web n\'est pas valide. Veuillez renseigner une URL valide de la forme http://www.example.com')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'L\'URL du site web ne doit pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $siteWeb = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -154,17 +156,6 @@ class Entreprise
         return $this;
     }
 
-    public function getInformationFiscale(): ?string
-    {
-        return $this->informationFiscale;
-    }
-
-    public function setInformationFiscale(string $informationFiscale): static
-    {
-        $this->informationFiscale = $informationFiscale;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
