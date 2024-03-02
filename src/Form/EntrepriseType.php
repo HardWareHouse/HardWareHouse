@@ -8,7 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use App\Form\MediaType as MediaFormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType; 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EntrepriseType extends AbstractType
 {
@@ -21,7 +22,7 @@ class EntrepriseType extends AbstractType
             ->add('adresse', TextType::class, [
                 'attr' => ['placeholder' => 'Adresse de l\'entreprise']
             ])
-            ->add('codePostal', TextType::class, [
+            ->add('codePostal', IntegerType::class, [
                 'attr' => ['placeholder' => 'Code postal']
             ])
             ->add('ville', TextType::class, [

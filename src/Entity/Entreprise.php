@@ -8,8 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
+#[UniqueEntity(fields: 'nom', message: 'Une entreprise avec ce nom existe déjà.')]
+#[UniqueEntity(fields: 'email', message: 'Un email d\'entreprise avec cette adresse existe déjà.')]
+#[UniqueEntity(fields: 'telephone', message: 'Un numéro de téléphone d\'entreprise avec ce numéro existe déjà.')]
 class Entreprise
 {
     #[ORM\Id]
@@ -18,12 +23,15 @@ class Entreprise
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 50)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(max: 250)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -64,21 +72,28 @@ class Entreprise
     private ?Media $logo = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 50)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z\s]+$/', message: 'La ville ne doit contenir que des lettres.')]
     private ?string $ville = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, length: 5)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^\d{5}$/', message: 'Le code postal doit être composé de 5 chiffres.')]
     private ?int $codePostal = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 14, nullable: true)]
+    #[Assert\Regex(pattern: '/^(?:[1-2]\d{8}|[1-2]\d{13})$/', message: 'Le SIREN doit contenir 9 chiffres et le SIRET doit contenir 14 chiffres, tous deux commençant par 1 ou 2.')]
     private ?string $siren = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $siteWeb = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Email(message: 'L\'email n\'est pas valide.')]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 10, nullable: true)]
+    #[Assert\Regex(pattern: '/^(01|02|03|04|05|09)\d{8}$/', message: 'Le téléphone doit commencer par 01, 02, 03, 04, 05 ou 09 et contenir 10 chiffres.')]
     private ?string $telephone = null;
 
     public function __construct()
