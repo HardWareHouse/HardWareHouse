@@ -14,10 +14,7 @@ export function initializeCharts(
   translatedMonths,
   translatedMethods,
   translatedStatusFacture,
-  translatedStatusDevis,
-  filteredPaiementsData,
-  filteredFacturesData,
-  filteredDevisData
+  translatedStatusDevis
 ) {
   //Initialize charts
   paymentsChart = echarts.init(document.getElementById("paiementsAnnee"));

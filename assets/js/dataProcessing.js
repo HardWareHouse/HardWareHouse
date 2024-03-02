@@ -13,13 +13,9 @@ export function processData(
   translatedMonths,
   translatedMethods,
   translatedStatusFacture,
-  translatedStatusDevis,
-  filteredDevisData,
-  filteredFacturesData,
-  filteredPaiementsData
+  translatedStatusDevis
 ) {
   var selectedYear = new Date().getFullYear();
-  // updateMethodsChart(selectedYear);
 
   var selectedCompanyId;
   var filteredPaiementsData;
@@ -39,17 +35,11 @@ export function processData(
       .getElementById("companyDropdown")
       .addEventListener("change", function (event) {
         selectedCompanyId = event.target.value;
-        updateCharts(selectedYear, selectedCompanyId);
         paymentMethods = {};
+        updateCharts(selectedYear, selectedCompanyId);
       });
   }
   function updateCharts(selectedYear, selectedCompanyId) {
-    updateCsvDownloadLinks(selectedYear, selectedCompanyId);
-    updatePaymentsChart(selectedYear, selectedCompanyId);
-    updateMethodsChart(selectedYear, selectedCompanyId);
-    updateFacturesChart(selectedYear, selectedCompanyId);
-    updateDevisChart(selectedYear, selectedCompanyId);
-
     filteredPaiementsData = paiementsData.filter(function (paiement) {
       return paiement.entrepriseId == selectedCompanyId;
     });
@@ -61,19 +51,29 @@ export function processData(
     filteredDevisData = devisData.filter(function (devis) {
       return devis.entrepriseId == selectedCompanyId;
     });
+    updateCsvDownloadLinks(selectedYear, selectedCompanyId);
+    updatePaymentsChart(selectedYear, selectedCompanyId);
+    updateMethodsChart(selectedYear, selectedCompanyId);
+    updateFacturesChart(selectedYear, selectedCompanyId);
+    updateDevisChart(selectedYear, selectedCompanyId);
   }
-
   function updateCsvDownloadLinks(selectedYear, selectedCompanyId) {
     var currentLocale = document.documentElement.lang;
+
     var csvMethodsLink = `/${currentLocale}/admin/csv-methodes/${selectedCompanyId}/${selectedYear}`;
+
     var csvFactureLink = `/${currentLocale}/admin/csv-factures/${selectedCompanyId}/${selectedYear}`;
+
     var csvDevisLink = `/${currentLocale}/admin/csv-devis/${selectedCompanyId}/${selectedYear}`;
+
     var csvRevenueLink = `/${currentLocale}/admin/csv-revenue/${selectedCompanyId}/${selectedYear}`;
 
-    document.getElementById("csvMethods").href = csvMethodsLink;
-    document.getElementById("csvFacture").href = csvFactureLink;
-    document.getElementById("csvRevenue").href = csvRevenueLink;
-    document.getElementById("csvDevis").href = csvDevisLink;
+    if (document.getElementById("csvMethods")) {
+      document.getElementById("csvMethods").href = csvMethodsLink;
+      document.getElementById("csvFacture").href = csvFactureLink;
+      document.getElementById("csvRevenue").href = csvRevenueLink;
+      document.getElementById("csvDevis").href = csvDevisLink;
+    }
   }
   var paymentsPerMonth;
 
@@ -101,20 +101,17 @@ export function processData(
     var methodsChartOption = generateMethodsChartOption(paymentMethods);
     methodsChart.resize();
   }
-
   function updateFacturesChart(selectedYear, selectedCompanyId) {
     var factureStatus;
+
     if (selectedCompanyId && selectedCompanyId != "all") {
       factureStatus = processCompanyFacturesData(
         filteredFacturesData,
         selectedYear
       );
-      console.log("filtered data");
     } else {
       factureStatus = processFacturesData(facturesData, selectedYear);
-      console.log("unfiltered data");
     }
-
     var facturesChartOption = generateFacturesChartOption(factureStatus);
   }
 

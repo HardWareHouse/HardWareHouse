@@ -29,9 +29,12 @@ public function findFacturesByYear($year)
             f.date_paiement_due,
             f.total,
             f.numero,
-            f.statut_paiement
+            f.statut_paiement,
+            e.nom as entreprise_nom
         FROM facture f
-        WHERE EXTRACT(YEAR FROM f.date_facturation) = :year';
+        INNER JOIN entreprise e ON f.entreprise = e.id
+        WHERE EXTRACT(YEAR FROM f.date_facturation) = :year
+        ';
 
     $resultSet = $conn->executeQuery($sql, ['year' => $year]);
 
@@ -48,18 +51,27 @@ public function findFacturesByYear($year)
        ;
    }
 
-   public function findByYearAndCompany($total, $entrepriseId)
+     public function findByYearAndCompany($year, $companyId)
 {
-    $qb = $this->createQueryBuilder('f');
+    $conn = $this->getEntityManager()->getConnection(); 
+    $sql = 
+        'SELECT 
+            f.date_facturation,
+            f.numero,
+            f.total,
+            f.statut_paiement,
+            e.nom as entreprise_nom,
+            f.date_paiement_due
+        FROM facture f
+        JOIN entreprise e ON f.entreprise = e.id
+        WHERE EXTRACT(YEAR FROM f.date_facturation) = :year
+        AND e.id = :companyId';
 
-    $qb->select('f')
-       ->andWhere($qb->expr()->eq('f.entrepriseId', ':entrepriseId'))
-       ->andWhere($qb->expr()->eq('f.total', ':total'))
-       ->setParameter('entrepriseId', $entrepriseId)
-       ->setParameter('total', $total);
+    $resultSet = $conn->executeQuery($sql, ['year' => $year, 'companyId' => $companyId]);
 
-    return $qb->getQuery()->getResult();
+    return $resultSet->fetchAllAssociative();
 }
+
    
 //    /**
 //     * @return Facture[] Returns an array of Facture objects

@@ -29,8 +29,11 @@ class DevisRepository extends ServiceEntityRepository
             d.date_creation,
             d.total,
             d.numero,
-            d.status
+            d.status,
+            e.nom as entreprise_nom
+
         FROM devis d
+        INNER JOIN entreprise e ON d.entreprise = e.id
         WHERE EXTRACT(YEAR FROM d.date_creation) = :year';
 
     $resultSet = $conn->executeQuery($sql, ['year' => $year]);
@@ -48,6 +51,25 @@ public function findByEntreprise($value): array
        ;
    }
 
+   public function findByYearAndCompany($year, $companyId)
+{
+    $conn = $this->getEntityManager()->getConnection(); 
+    $sql = 
+        'SELECT 
+            d.date_creation,
+            d.numero,
+            d.total,
+            d.status,
+            e.nom as entreprise_nom
+        FROM devis d
+        JOIN entreprise e ON d.entreprise = e.id
+        WHERE EXTRACT(YEAR FROM d.date_creation) = :year
+        AND e.id = :companyId';
+
+    $resultSet = $conn->executeQuery($sql, ['year' => $year, 'companyId' => $companyId]);
+
+    return $resultSet->fetchAllAssociative();
+}
 //    /**
 //     * @return Devis[] Returns an array of Devis objects
 //     */

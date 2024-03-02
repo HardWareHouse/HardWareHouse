@@ -49,7 +49,6 @@ class RapportFinancierController extends AbstractController
                 'entrepriseId' => $paiement->getEntrepriseId()->getId()     
             ];
         }
-
         $facturesData = [];
 
         foreach ($factures as $facture) {
@@ -257,13 +256,15 @@ class RapportFinancierController extends AbstractController
 {
     if ($company == 'all' or $company == 'undefined'){
     $factures = $repository->findFacturesByYear($year);
+
     } else {
     $factures = $repository->findByYearAndCompany($year, $company);
     $entreprise = $entrepriseRepository->find($company);
     $companyName = $entreprise->getNom();
     }
 
-    $csvContent = $translator->trans('invoice_number') . '; ' . 
+    $csvContent = $translator->trans('company') . '; ' .
+                    $translator->trans('invoice_number') . '; ' . 
                       $translator->trans('billing_date') . '; ' . 
                       $translator->trans('duedate') . '; ' . 
                       $translator->trans('status') . '; ' . 
@@ -271,29 +272,29 @@ class RapportFinancierController extends AbstractController
 
     foreach ($factures as $facture) {
 
-        $montantTotal = $this->formatTotalAmount($facture['total'], $translator);
+    $montantTotal = $this->formatTotalAmount($facture['total'], $translator);
 
-        $translatedStatus = [];
+    $translatedStatus = ''; // Initialize with an empty string
 
-        if ($facture['statut_paiement'] == 'Payé')
-            $translatedStatus = $translator->trans('paid');
-        ;
-        if ($facture['statut_paiement'] == 'Non-payé')
-            $translatedStatus = $translator->trans('unpaid');
-        ;
-        if ($facture['statut_paiement'] == 'En retard')
-            $translatedStatus = $translator->trans('late');
-        ;
+    if ($facture['statut_paiement'] == 'Payé')
+        $translatedStatus = $translator->trans('paid');
+    elseif ($facture['statut_paiement'] == 'Non-payé')
+        $translatedStatus = $translator->trans('unpaid');
+    elseif ($facture['statut_paiement'] == 'En retard')
+        $translatedStatus = $translator->trans('late');
 
-        $csvContent .= sprintf(
-            "%s; %s; %s; %s; %s\n",
-            $facture['numero'],
-            $facture['date_facturation'],
-            $facture['date_paiement_due'], 
-            $translatedStatus,
-            $montantTotal,  
-        );
-    }
+    // Ensure $translatedStatus is always a string
+    $csvContent .= sprintf(
+        "%s; %s; %s; %s; %s; %s\n",
+        $facture["entreprise_nom"],
+        $facture['numero'],
+        $facture['date_facturation'],
+        $facture['date_paiement_due'], 
+        $translatedStatus,
+        $montantTotal
+    );
+}
+
 
     $response = new Response($csvContent);
 
@@ -308,14 +309,22 @@ class RapportFinancierController extends AbstractController
 }
 
 #[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-devis/{company}/{year}', name: 'app_csv_devis')]
-    public function csvDevis(DevisRepository $repository, TranslatorInterface $translator, $year): Response
+    public function csvDevis(DevisRepository $repository, EntrepriseRepository $entrepriseRepository, TranslatorInterface $translator, $year, $company): Response
 {
-    $devis = $repository->findByYear($year);
+    if ($company == 'all' or $company == 'undefined'){
+        $devis = $repository->findByYear($year);
+    } else {
+        $devis = $repository->findByYearAndCompany($year, $company);
+        $entreprise = $entrepriseRepository->find($company);
+        $companyName = $entreprise->getNom();
+    }
 
-    $csvContent = $translator->trans('number') . '; ' . 
-                      $translator->trans('created_on') . '; ' . 
-                      $translator->trans('status') . '; ' . 
-                      $translator->trans('total_amount') . "\n";
+
+    $csvContent = $translator->trans('company') . '; ' . 
+              $translator->trans('number') . '; ' . 
+              $translator->trans('created_on') . '; ' . 
+              $translator->trans('status') . '; ' . 
+              $translator->trans('total_amount') . "\n";
 
     foreach ($devis as $devis) {
 
@@ -334,26 +343,37 @@ class RapportFinancierController extends AbstractController
         ;
 
         $csvContent .= sprintf(
-            "%s; %s; %s; %s\n",
-            $devis['numero'],
-            $devis['date_creation'],
-            $translatedStatus,
-            $montantTotal,  
-        );
+        "\"%s\";\"%s\";\"%s\";\"%s\";\"%s\"\n",
+        $devis['entreprise_nom'],
+        $devis['numero'],
+        $devis['date_creation'],
+        $translatedStatus,
+        $montantTotal
+    );
     }
 
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
+    if ($company == 'all' or $company == 'undefined'){
     $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('estimates') . '_' . $year . '.csv"');
+    } else {
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('estimates') . '_' . $companyName . '_' . $year . '.csv"');
+    }
 
     return $response;
 }
 
-#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-revenue/{company}/{year}', name: 'app_csv_devis')]
-    public function csvRevenue(PaiementRepository $repository, TranslatorInterface $translator, $year): Response
+#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-revenue/{company}/{year}', name: 'app_csv_revenue')]
+    public function csvRevenue(PaiementRepository $repository, EntrepriseRepository $entrepriseRepository, TranslatorInterface $translator, $year, $company): Response
 {
-    $payments = $repository->findPaymentsByYear($year);
+    if ($company == 'all' or $company == 'undefined'){
+        $payments = $repository->findPaymentsByYear($year);
+    } else {
+        $payments = $repository->findByYearAndCompany($year, $company);
+        $entreprise = $entrepriseRepository->find($company);
+        $companyName = $entreprise->getNom();
+    }
 
     $csvContent = $translator->trans('month') . '; ' . 
                       $translator->trans('total_amount') . "\n";
@@ -387,7 +407,11 @@ class RapportFinancierController extends AbstractController
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
-    $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('revenue') . '_' . $year . '.csv"');
+    if ($company == 'all' or $company == 'undefined'){
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('revenue') . '_' . $year . '.csv"');
+    } else {
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('revenue') . '_' . $companyName . '_' . $year . '.csv"');
+    }
 
     return $response;
 }
