@@ -56,8 +56,8 @@
         </svg>
     </div>
 
-    <div class="w-2/5 flex flex-col justify-center px-12">
-        {% for flash_error in app.flashes('verify_email_error') %}
+    <div class="w-2/5 flex flex-col justify-start px-12 overflow-y-auto max-h-screen pt-12"> {% for flash_error in
+        app.flashes('verify_email_error') %}
         <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700">
             {{ flash_error }}
         </div>
@@ -68,69 +68,80 @@
         {{ form_start(companyCreationForm, {'attr': {'class': 'space-y-4'}}) }}
         <div class="space-y-2">
             <label for="companyCreationForm_nom" class="text-blue-600">{{'Nom'|trans}}</label>
-            {{ form_widget(companyCreationForm.nom, {'id': 'companyCreationForm_nom', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.nom, {'id': 'companyCreationForm_nom', 'attr': {'class': 'w-full px-4
+            py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.nom) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_adresse" class="text-blue-600">{{'Adresse'|trans}}</label>
-            {{ form_widget(companyCreationForm.adresse, {'id': 'companyCreationForm_adresse', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.adresse, {'id': 'companyCreationForm_adresse', 'attr': {'class': 'w-full
+            px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.adresse) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_codePostal" class="text-blue-600">{{'postcode'|trans}}</label>
-            {{ form_widget(companyCreationForm.codePostal, {'id': 'companyCreationForm_codePostal', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.codePostal, {'id': 'companyCreationForm_codePostal', 'attr': {'class':
+            'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.codePostal) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_ville" class="text-blue-600">{{'city'|trans}}</label>
-            {{ form_widget(companyCreationForm.ville, {'id': 'companyCreationForm_ville', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.ville, {'id': 'companyCreationForm_ville', 'attr': {'class': 'w-full px-4
+            py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.ville) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_email" class="text-blue-600">{{'email'|trans}}</label>
-            {{ form_widget(companyCreationForm.email, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.email, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full px-4
+            py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.email) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_telephone" class="text-blue-600">{{'phone'|trans}}</label>
-            {{ form_widget(companyCreationForm.telephone, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.telephone, {'id': 'companyCreationForm_email', 'attr': {'class': 'w-full
+            px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.telephone) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_description" class="text-blue-600">{{'Description'|trans}}</label>
-            {{ form_widget(companyCreationForm.description, {'id': 'companyCreationForm_description', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.description, {'id': 'companyCreationForm_description', 'attr': {'class':
+            'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.description) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_siren" class="text-blue-600">SIREN / SIRET</label>
-            {{ form_widget(companyCreationForm.siren, {'id': 'companyCreationForm_siren', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.siren, {'id': 'companyCreationForm_siren', 'attr': {'class': 'w-full px-4
+            py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.siren) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_siteWeb" class="text-blue-600">Site web</label>
-            {{ form_widget(companyCreationForm.siteWeb, {'id': 'companyCreationForm_siteWeb', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.siteWeb, {'id': 'companyCreationForm_siteWeb', 'attr': {'class': 'w-full
+            px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.siteWeb) }}
         </div>
 
         <div class="space-y-2">
             <label for="companyCreationForm_logo" class="text-blue-600">{{'Logo de votre entreprise'|trans}}</label>
-            {{ form_widget(companyCreationForm.logo, {'id': 'companyCreationForm_logo', 'attr': {'class': 'w-full px-4 py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
+            {{ form_widget(companyCreationForm.logo, {'id': 'companyCreationForm_logo', 'attr': {'class': 'w-full px-4
+            py-2 border focus:outline-none focus:ring focus:ring-blue-500'}}) }}
             {{ form_errors(companyCreationForm.logo) }}
         </div>
 
-        
-        <button type="submit"
-            class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none">
-            {{'Créer'|trans}}
-        </button>
+        <div class="pb-12">
+            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 hover:bg-blue-700 focus:outline-none">
+                {{'Créer'|trans}}
+            </button>
+        </div>
+
 
         {{ form_end(companyCreationForm) }}
     </div>
