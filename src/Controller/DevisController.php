@@ -175,6 +175,7 @@ class DevisController extends AbstractController
         }
 
         $form = $this->createForm(DevisType::class, $devi);
+        $numero = $devi->getNumero();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -191,7 +192,8 @@ class DevisController extends AbstractController
             $tauxTVA = 0.2;
             $totalTTC = $totalDevis * (1 + $tauxTVA);
             $devi->setTotalTTC($totalTTC);
-
+            $devi->setNumero($numero);
+            
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);

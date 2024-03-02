@@ -31,11 +31,9 @@ class DevisType extends AbstractType
         $user = $this->security->getUser();
         $entreprise = $user->getEntreprise();
 
-        // Vérifier si le formulaire contient déjà un numéro de devis
         $devis = $builder->getData();
         $numeroDevisExiste = $devis && $devis->getNumero();
         
-        // Si le formulaire ne contient pas déjà un numéro de devis
         if (!$numeroDevisExiste) {
             $dernierDevis = $entreprise->getDevisId()->last();
             if ($dernierDevis !== null) {
@@ -47,7 +45,6 @@ class DevisType extends AbstractType
             }
             $numero = sprintf("DEVIS#%03d", $count);
         } else {
-            // Si le numéro de devis existe déjà dans le formulaire, utilisez-le
             $numero = $devis->getNumero();
         }
 
@@ -56,8 +53,8 @@ class DevisType extends AbstractType
             ->add('numero', TextType::class, [
                 'attr' => [
                     'placeholder' => 'estimate_placeholder',
-                    'readonly' => 'readonly', // Rend le champ non modifiable
-                    'value' => $numero, // Attribue la valeur dynamique
+                    'readonly' => 'readonly',
+                    'value' => $numero,
                 ],
                 'mapped' => false,
             ])       
