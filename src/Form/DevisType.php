@@ -36,7 +36,7 @@ class DevisType extends AbstractType
         
         if (!$numeroDevisExiste) {
             $dernierDevis = $entreprise->getDevisId()->last();
-            if ($dernierDevis !== null) {
+            if ($dernierDevis) {
                 $numeroDernierDevis = $dernierDevis->getNumero();
                 $numeroParties = explode('#', $numeroDernierDevis);
                 $count = intval($numeroParties[1]) + 1;
