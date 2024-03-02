@@ -62,7 +62,7 @@
     </div>
 
     <div class="w-full flex flex-col justify-center px-12 sm:w-2/5">
-        <img  class="w-full h-fit" src="{{ asset('assets/icon/hwh.png') }}" alt="">
+        <img  class="w-full h-fit md:hidden" src="{{ asset('assets/icon/hwh.png') }}" alt="">
         {% for flash_error in app.flashes('verify_email_error') %}
         <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700">
             {{ flash_error }}
