@@ -7,8 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[UniqueEntity(fields: 'telephone', message: 'Ce numéro de téléphone est déjà utilisé par un autre client.')]
+#[UniqueEntity(fields: 'email', message: 'Cet email avec cette adresse est déjà utilisé par un autre client.')]
 class Client
 {
     #[ORM\Id]
@@ -19,10 +23,14 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $adresse = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(message: 'L\'adresse email n\'est pas valide.')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -44,9 +52,11 @@ class Client
     private Collection $factureId;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(pattern: '/^\d{5}$/', message: 'Le code postal doit être composé de 5 chiffres.')]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$/', message: 'La ville ne doit contenir que des lettres et peut inclure des tirets.')]
     private ?string $ville = null;
 
     public function __construct()
@@ -218,6 +228,18 @@ class Client
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }
