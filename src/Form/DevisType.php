@@ -31,15 +31,25 @@ class DevisType extends AbstractType
         $user = $this->security->getUser();
         $entreprise = $user->getEntreprise();
 
-        $dernierDevis = $entreprise->getDevisId()->last();
-        if ($dernierDevis !== null) {
-            $numeroDernierDevis = $dernierDevis->getNumero();
-            $numeroParties = explode('#', $numeroDernierDevis);
-            $count = intval($numeroParties[1]) + 1;
+        // Vérifier si le formulaire contient déjà un numéro de devis
+        $devis = $builder->getData();
+        $numeroDevisExiste = $devis && $devis->getNumero();
+        
+        // Si le formulaire ne contient pas déjà un numéro de devis
+        if (!$numeroDevisExiste) {
+            $dernierDevis = $entreprise->getDevisId()->last();
+            if ($dernierDevis !== null) {
+                $numeroDernierDevis = $dernierDevis->getNumero();
+                $numeroParties = explode('#', $numeroDernierDevis);
+                $count = intval($numeroParties[1]) + 1;
+            } else {
+                $count = 1;
+            }
+            $numero = sprintf("DEVIS#%03d", $count);
         } else {
-            $count = 1;
+            // Si le numéro de devis existe déjà dans le formulaire, utilisez-le
+            $numero = $devis->getNumero();
         }
-        $numero = sprintf("DEVIS#%03d", $count);
 
 
         $builder
