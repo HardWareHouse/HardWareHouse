@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mx-auto my-8 p-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white">{{'payments'|trans}}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'payments'|trans}}</h1>
         <a href="{{ path('app_paiement_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759]">
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
             <i class="fas fa-plus mr-2"></i> {{'payment_new'|trans}}
         </a>
     </div>
@@ -15,12 +15,12 @@
         <table id="paiementTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'payment_date'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'amount'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'payment_method'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'payment_date'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'amount'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'payment_method'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
                 </tr>
-                <tr class="forest:bg-[#786759]">
+                <tr class="forest:bg-[#786759] love:bg-[#FB6F92]">
                     <th><input type="text" placeholder="Date du paiement..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Montant..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Méthode de paiement..." class="form-control form-control-sm" /></th>

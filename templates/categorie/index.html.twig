@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mx-auto my-8 p-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white">{{'categories'|trans}}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'categories'|trans}}</h1>
         <a href="{{ path('app_categorie_new') }}"
-           class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759]">
+           class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
             <i class="fas fa-plus mr-2"></i> {{'new_category'|trans}}
         </a>
     </div>
@@ -16,13 +16,13 @@
         <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'name'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'description'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'name'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'description'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'the_company'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'created_on'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'created_on'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
