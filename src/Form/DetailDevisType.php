@@ -43,8 +43,24 @@ class DetailDevisType extends AbstractType
                     'min' => 1,
                     'max' => 25,
                 ],
+                'constraints' => [
+                    new Callback([
+                        'callback' => [$this, 'validateQuantite'],
+                    ]),
+                ],
             ])
         ;
+    }
+    public function validateQuantite($value, ExecutionContextInterface $context)
+    {
+        $detailDevis = $context->getObject();
+        $produit = $detailDevis->getProduit();
+        $stockRestant = $produit->getStock();
+
+        if ($value > $stockRestant) {
+            $context->buildViolation('La quantité dépasse le stock restant pour ce produit.')
+            ->addViolation();
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)
