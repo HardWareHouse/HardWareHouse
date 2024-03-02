@@ -67,8 +67,12 @@ class CategorieController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response
     {
-        $userEntreprise = $this->getUser()->getEntreprise();
+        if (!$categorie) {
+            throw $this->createNotFoundException('La catégorie demandée n\'existe pas.');
+        }
 
+        $userEntreprise = $this->getUser()->getEntreprise();
+        
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $categorie->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_categorie_index');
@@ -76,6 +80,7 @@ class CategorieController extends AbstractController
 
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
+            'produits' => $categorie->getProduitId(),
         ]);
     }
 

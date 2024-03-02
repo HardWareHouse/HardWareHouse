@@ -37,6 +37,10 @@
                         <td class="px-6 py-4">{{ produit.stock }}</td>
                     </tr>
                     <tr>
+                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">Catégorie du produit</th>
+                        <td class="px-6 py-4">{{ produit.categorieId.nom }}</td>
+                    </tr>
+                    <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'created_on'|trans}}</th>
                         <td class="px-6 py-4">{{ produit.CreatedAt ? produit.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                     </tr>
