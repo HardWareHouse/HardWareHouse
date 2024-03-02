@@ -126,11 +126,15 @@
 
     <div class="info-section">
         <div class="info-block">
+            {% if entreprise is defined %}
             <h3>Entreprise : {{ entreprise.nom }}</h3>
             <p>{{ entreprise.adresse }}</p>
             <p>{{ entreprise.codepostal }} {{ entreprise.ville }} </p>
             <p>{{ entreprise.email }}</p>
             <p>Téléphone : {{ entreprise.telephone }}</p>
+            {% else %}
+            <p> test </p>
+            {% endif %}
         </div>
         <div class="info-block">
             {% if client is defined %}
