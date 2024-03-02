@@ -218,3 +218,6 @@ city: Ville
 siren: Siren
 postcode: Code postal
 phone: Téléphone
+product_name: Nom du produit
+quantity: Quantité
+price_tax_included: Prix TTC
