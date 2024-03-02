@@ -65,10 +65,10 @@ export function processData(
 
   function updateCsvDownloadLinks(selectedYear, selectedCompanyId) {
     var currentLocale = document.documentElement.lang;
-    var csvMethodsLink = `/${currentLocale}/admin/csv-methodes/${selectedYear}`;
-    var csvFactureLink = `/${currentLocale}/admin/csv-factures/${selectedYear}`;
-    var csvDevisLink = `/${currentLocale}/admin/csv-devis/${selectedYear}`;
-    var csvRevenueLink = `/${currentLocale}/admin/csv-revenue/${selectedYear}`;
+    var csvMethodsLink = `/${currentLocale}/admin/csv-methodes/${selectedCompanyId}/${selectedYear}`;
+    var csvFactureLink = `/${currentLocale}/admin/csv-factures/${selectedCompanyId}/${selectedYear}`;
+    var csvDevisLink = `/${currentLocale}/admin/csv-devis/${selectedCompanyId}/${selectedYear}`;
+    var csvRevenueLink = `/${currentLocale}/admin/csv-revenue/${selectedCompanyId}/${selectedYear}`;
 
     document.getElementById("csvMethods").href = csvMethodsLink;
     document.getElementById("csvFacture").href = csvFactureLink;

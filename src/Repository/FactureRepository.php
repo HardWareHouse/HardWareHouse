@@ -47,6 +47,20 @@ public function findFacturesByYear($year)
            ->getResult()
        ;
    }
+
+   public function findByYearAndCompany($total, $entrepriseId)
+{
+    $qb = $this->createQueryBuilder('f');
+
+    $qb->select('f')
+       ->andWhere($qb->expr()->eq('f.entrepriseId', ':entrepriseId'))
+       ->andWhere($qb->expr()->eq('f.total', ':total'))
+       ->setParameter('entrepriseId', $entrepriseId)
+       ->setParameter('total', $total);
+
+    return $qb->getQuery()->getResult();
+}
+   
 //    /**
 //     * @return Facture[] Returns an array of Facture objects
 //     */

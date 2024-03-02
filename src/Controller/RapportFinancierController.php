@@ -197,10 +197,16 @@ class RapportFinancierController extends AbstractController
             'controller_name' => 'RapportFinancierController', 'paiements' => json_encode($paiementsArray), 'translatedMonths' => json_encode($translatedMonths), 'facturesData' => json_encode($facturesData), 'devisData' => json_encode($devisData), 'translatedMethods' => json_encode($translatedMethods), 'translatedStatusFacture' => json_encode($translatedStatusFacture), 'translatedStatusDevis' => json_encode($translatedStatusDevis)
         ]);}
     
-    #[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-methodes/{year}', name: 'app_csv_methodes')]
-    public function csvMethodes(PaiementRepository $repository, TranslatorInterface $translator, $year): Response
+    #[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-methodes/{company}/{year}', name: 'app_csv_methodes')]
+    public function csvMethodes(PaiementRepository $repository, EntrepriseRepository $entrepriseRepository, TranslatorInterface $translator, $year, $company): Response
 {
+    if ($company == 'all' or $company == 'undefined'){
     $paiements = $repository->findPaymentsByYear($year);
+    } else {
+    $paiements = $repository->findByYearAndCompany($year, $company);
+    $entreprise = $entrepriseRepository->find($company);
+    $companyName = $entreprise->getNom();
+    }
 
     $csvContent = $translator->trans('payment_date') . '; ' . 
                       $translator->trans('amount') . '; ' . 
@@ -236,16 +242,26 @@ class RapportFinancierController extends AbstractController
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
+    if ($company == 'all' or $company == 'undefined'){
     $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('payment_method') . '_' . $year . '.csv"');
+    } else {
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('payment_method') . '_' . $companyName . '_' . $year . '.csv"');
+    }
 
 
     return $response;
 }
 
-#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-factures/{year}', name: 'app_csv_factures')]
-    public function csvFactures(FactureRepository $repository, TranslatorInterface $translator, $year): Response
+#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-factures/{company}/{year}', name: 'app_csv_factures')]
+    public function csvFactures(FactureRepository $repository, EntrepriseRepository $entrepriseRepository, TranslatorInterface $translator, $year, $company): Response
 {
+    if ($company == 'all' or $company == 'undefined'){
     $factures = $repository->findFacturesByYear($year);
+    } else {
+    $factures = $repository->findByYearAndCompany($year, $company);
+    $entreprise = $entrepriseRepository->find($company);
+    $companyName = $entreprise->getNom();
+    }
 
     $csvContent = $translator->trans('invoice_number') . '; ' . 
                       $translator->trans('billing_date') . '; ' . 
@@ -282,12 +298,16 @@ class RapportFinancierController extends AbstractController
     $response = new Response($csvContent);
 
     $response->headers->set('Content-Type', 'text/csv');
+    if ($company == 'all' or $company == 'undefined'){
     $response->headers->set('Content-Disposition', 'attachment; filename="' . $translator->trans('invoices') . '_' . $year . '.csv"');
-
+    } else {
+    $response->headers->set('Content-Disposition','attachment; filename="' . $translator->trans('invoices') . '_' . $companyName . '_' . $year . '.csv"');
+    }
+    
     return $response;
 }
 
-#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-devis/{year}', name: 'app_csv_devis')]
+#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-devis/{company}/{year}', name: 'app_csv_devis')]
     public function csvDevis(DevisRepository $repository, TranslatorInterface $translator, $year): Response
 {
     $devis = $repository->findByYear($year);
@@ -330,7 +350,7 @@ class RapportFinancierController extends AbstractController
     return $response;
 }
 
-#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-revenue/{year}', name: 'app_csv_devis')]
+#[Route(path: '/{_locale<%app.supported_locales%>}/admin/csv-revenue/{company}/{year}', name: 'app_csv_devis')]
     public function csvRevenue(PaiementRepository $repository, TranslatorInterface $translator, $year): Response
 {
     $payments = $repository->findPaymentsByYear($year);
