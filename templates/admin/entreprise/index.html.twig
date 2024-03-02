@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mx-auto my-8 flex-grow p-6 forest:bg-[#BAACA0]">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white">{{'company_list'|trans}}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'company_list'|trans}}</h1>
         <a href="{{ path('app_entreprise_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 love:bg-[#FB6F92]">
             <i class="fas fa-plus mr-2"></i> {{'company_new'|trans}}
         </a>
     </div>
@@ -16,13 +16,13 @@
         <table id="entrepriseTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="forest:bg-[#786759] forest:text-white">
-                    <th scope="col" class="py-3 px-6">Nom</th>
-                    <th scope="col" class="py-3 px-6">Adresse</th>
-                    <th scope="col" class="py-3 px-6">Description</th>
-                    <th scope="col" class="py-3 px-6">Information Fiscale</th>
-                    <th scope="col" class="py-3 px-6">Actions</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Nom</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Adresse</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Description</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Information Fiscale</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Actions</th>
                 </tr>
-                <tr class="forest:bg-[#786759] forest:text-white">
+                <tr class="forest:bg-[#786759] forest:text-white love:bg-[#FB6F92]">
                     <th><input type="text" placeholder="Nom entreprise..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Adresse entreprise..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Description..." class="form-control form-control-sm" /></th>
