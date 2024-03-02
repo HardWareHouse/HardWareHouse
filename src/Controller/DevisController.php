@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Devis;
 use App\Entity\Entreprise;
+use App\Entity\User;
 use App\Form\DevisType;
 use App\Repository\DevisRepository;
 use App\Service\PdfService;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -94,14 +96,17 @@ class DevisController extends AbstractController
                 'entreprise' => $userEntreprise,
             ]);
             $pdfContent = $pdfService->generatePdfContent($html);
-
+//            $user = $this->getUser()->getName();
+            $emailContent = $this->renderView('devis/email.html.twig', [
+//                'username' => $user,
+            ]);
             // Créer l'email
             $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
             $email = (new Email())
                 ->from('devis@hardwarehouse.com')
                 ->to($userEmail)
                 ->subject('Votre devis')
-                ->html('Voici votre devis en pièce jointe.')
+                ->html($emailContent)
                 ->attach($pdfContent, 'devis.pdf', 'application/pdf');
 
             // Envoyer l'email

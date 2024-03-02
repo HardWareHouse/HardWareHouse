@@ -1,0 +1,56 @@
+<div class="container">
+    <img src="{{ asset('assets/icon/hwh.png') }}" alt="">
+    <div class="header">{{ 'email_devis_quote_available_title'|trans }}</div>
+    <div class="message">
+{#        <h1 style="color: #333; font-size: 24px; font-weight: bold; margin-bottom: 20px;">{{ 'email_greeting'|trans({'%username%': username}) }}</h1>#}
+        <h3 style="color: #666; font-size: 18px; margin-bottom: 15px;">{{ 'email_quote_ready_body'|trans }}</h3>
+        <a href="https://hardwarehouse.duckdns.org/fr/devis" class="button">{{ 'email_view_quote'|trans }}</a>
+        <div class="footer">
+            {{ 'email_devis_footer'|trans }}
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .header {
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .message {
+        color: #666;
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+    .button {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .footer {
+        margin-top: 40px;
+        font-size: 12px;
+        color: #999;
+    }
+</style>

@@ -103,6 +103,18 @@ email_header: Welcome %username% dans la famille !
 email_body: Nous vous remercions de vous être inscrit sur notre site web. Veuillez cliquer sur le lien ci-dessous pour activer votre compte.
 email_footer: Si vous n'avez pas demandé cet e-mail, veuillez l'ignorer.
 click_here: Cliquez ici !
+email_devis_quote_available_title: Devis Disponible
+email_greeting: Bonjour %username%
+email_quote_ready_body: Nous sommes heureux de vous informer que votre devis est prêt et peut être consulté.
+email_view_quote: Voir le devis sur le site
+email_devis_footer: Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à contacter notre service client.
+
+email_facture_quote_available_title: Facture Disponible
+email_facture_greeting: Bonjour %username%
+email__facture_quote_ready_body: Nous sommes heureux de vous informer que votre facture est prêt et peut être consulté.
+email_facture_view_quote: Voir la facture sur le site
+email_facture_footer: Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à contacter notre service client.
+
 #Entreprise
 company_edit: Modifier Entreprise
 companies: Entreprises

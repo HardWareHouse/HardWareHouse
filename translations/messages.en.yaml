@@ -103,6 +103,10 @@ email_header: Welcome to the family %username%!
 email_body: Thank you for signing up on our website. Please click on the link below to activate your account.
 email_footer: If you did not request this email, please ignore it.
 click_here: Click here!
+email_greeting: Hello %username%
+email_quote_ready_body: We are pleased to inform you that your quote is ready and available for review.
+email_view_quote: View Quote
+email_devis_footer: If you have any questions or need assistance, please do not hesitate to contact our customer service.
 #Company
 company_edit: Edit Company
 companies: Companies
