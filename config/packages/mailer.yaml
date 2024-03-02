@@ -1,3 +1,4 @@
 framework:
     mailer:
-        dsn: '%env(MAILER_DSN)%'
+        dsn: 'smtp://ariaaman@outlook.fr:6wTLvbgAImCS2DQx@smtp-relay.brevo.com:587'
+

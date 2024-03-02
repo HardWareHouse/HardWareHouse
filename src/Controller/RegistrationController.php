@@ -50,20 +50,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // $roles = $user->getRoles();
-
-            // // For example, adding a new role
-            // $roles[] = 'ROLE_ADMIN';
-
-            // // Set the modified roles array back to the user
-            // $user->setRoles($roles);
-
             $entityManager->persist($user);
             $entityManager->flush();
 
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('ariaaman@outlook.fr', 'HardWareHouse'))
+                    ->from(new Address('hardwarehouse@outlook.fr', 'HardWareHouse'))
                     ->to($user->getMail())
                     ->subject('Veuillez confirmer votre adresse mail')
                     ->htmlTemplate('emails/registration.html.twig')
@@ -86,17 +78,19 @@ class RegistrationController extends AbstractController
     {
         $user = $this->getUser();
 
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $user);
+            try {
+                $this->emailVerifier->handleEmailConfirmation($request, $user);
 
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-            return $this->redirectToRoute('app_register');
-        }
+            } catch (VerifyEmailExceptionInterface $exception) {
+                $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+                return $this->redirectToRoute('app_register');
+            }
+
         $this->addFlash('success', 'Your email address has been verified.');
         return $this->redirectToRoute('app_home');
 
     }
+
 
     #[Route('/{_locale<%app.supported_locales%>}/register/cgu', name: 'app_cgu')]
     public function cgu(): Response

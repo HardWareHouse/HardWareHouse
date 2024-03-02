@@ -140,7 +140,7 @@ class UserController extends AbstractController
     private function sendEmailConfirmation(User $user): void
     {
         $email = (new TemplatedEmail())
-            ->from(new Address('ariaaman@outlook.fr', 'HardWareHouse'))
+            ->from(new Address('hardwarehouse@outlook.fr', 'HardWareHouse'))
             ->to($user->getMail())
             ->subject('Veuillez confirmer votre adresse mail')
             ->htmlTemplate('emails/registration.html.twig')

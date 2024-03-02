@@ -28,7 +28,7 @@ class HomeController extends AbstractController
     #[Route('/')]
     public function indexNoLocale(): Response
     {
-    return $this->redirectToRoute('app_home', ['_locale' => 'fr']);
+    return $this->redirectToRoute('app_freemium', ['_locale' => 'fr']);
     }
     
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
