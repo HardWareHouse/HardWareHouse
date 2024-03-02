@@ -221,3 +221,6 @@ city: City
 siren: Siren
 postcode: Postcode
 phone: Phone
+product_name: Product name
+quantity: Quantity
+price_tax_included: Price Tax Included

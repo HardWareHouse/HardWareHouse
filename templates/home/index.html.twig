@@ -43,8 +43,8 @@
                 {% for product in bestSellers %}
                     <tr class="border-b">
                         <td class="w-2/4 text-left py-2 dark:text-white forest:text-white">{{product.nom}}</td>
-                        <td class="italic font-extralight w-1/4 text-right py-2 dark:text-white forest:text-white"> {{'sold'|trans}}: {{100 - product.stock}}</td>
-                        <td class="italic w-1/4 text-right py-2 dark:text-white forest:text-white">{{(product.prix * (100 - product.stock))| number_format(2, ',', ' ')}} €</td>
+                        <td class="italic font-extralight w-1/4 text-right py-2 dark:text-white forest:text-white"> {{'sold'|trans}}: {{product.total_sales}}</td>
+                        <td class="italic w-1/4 text-right py-2 dark:text-white forest:text-white">{{(product.prix * product.total_sales)| number_format(2, ',', ' ')}} €</td>
                     </tr>
                     {% endfor %}
                 </tbody>

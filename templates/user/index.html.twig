@@ -16,11 +16,11 @@
         <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] text-white">Roles</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] text-white">Nom</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] text-white">Mail</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] text-white">Entreprise</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] text-white">Actions</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">Roles</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">Nom</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">Mail</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">Entreprise</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -46,6 +46,7 @@
                     </td>
                     <td class="py-4 px-6">{{ user.username }}</td>
                     <td class="py-4 px-6">{{ user.mail }}</td>
+                    <td class="py-4 px-6">{{ user.entreprise }}</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-center">
                             <a href="{{ path('app_my_user_show', {'uuid': user.uuid}) }}"

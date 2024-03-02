@@ -70,6 +70,13 @@ class FactureController extends AbstractController
 
         // Ajout des détails de la facture
         foreach ($devi->getDetailDevis() as $detaildevis) {
+            $detaildevis->getProduit()->setStock($detaildevis->getProduit()->getStock() - $detaildevis->getQuantite());
+
+            if ($detaildevis->getProduit()->getStock() < 0) {
+                $this->addFlash('danger', 'Le stock du produit '.$detaildevis->getProduit()->getNom().' est insuffisant pour valider le devis.');
+                return $this->redirectToRoute('app_devis_index');
+            }
+
             $detailFacture = new DetailFacture();
             $detailFacture->setPrix($detaildevis->getPrix());
             $detailFacture->setQuantite($detaildevis->getQuantite());
