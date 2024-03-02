@@ -30,7 +30,15 @@ class DevisType extends AbstractType
     {
         $user = $this->security->getUser();
         $entreprise = $user->getEntreprise();
-        $count = $entreprise->getDevisId()->count() + 1;
+
+        $dernierDevis = $entreprise->getDevisId()->last();
+        if ($dernierDevis !== null) {
+            $numeroDernierDevis = $dernierDevis->getNumero();
+            $numeroParties = explode('#', $numeroDernierDevis);
+            $count = intval($numeroParties[1]) + 1;
+        } else {
+            $count = 1;
+        }
         $numero = sprintf("DEVIS#%03d", $count);
 
 

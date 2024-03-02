@@ -55,9 +55,17 @@ class DevisController extends AbstractController
 
         $totalDevis = 0;
         if ($form->isSubmitted() && $form->isValid()) {
-            $count = $userEntreprise->getDevisId()->count() + 1;
+
+            $dernierDevis = $userEntreprise->getDevisId()->last();
+            if ($dernierDevis !== null) {
+                $numeroDernierDevis = $dernierDevis->getNumero();
+                $numeroParties = explode('#', $numeroDernierDevis);
+                $count = intval($numeroParties[1]) + 1;
+            } else {
+                $count = 1;
+            }
             $numero = sprintf("DEVIS#%03d", $count);
-            
+
             $devi = $form->getData();
             $devi->setNumero($numero);
             foreach ($devi->getDetailDevis() as $detaildevis) {
@@ -225,13 +233,12 @@ class DevisController extends AbstractController
     public function delete(Request $request, Devis $devi): Response
     {   
         $userEntreprise = $this->getUser()->getEntreprise();
-        
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
         } 
         
-        elseif (!$this->isGranted('ROLE_ADMIN') || $devi->getStatus() === "Approuvé"){
+        elseif (!$this->isGranted('ROLE_ADMIN') && $devi->getStatus() === "Approuvé"){
             $this->addFlash('danger', 'Un devis ayant été confirmé ne peut être supprimé !');
             return $this->redirectToRoute('app_devis_index');
         }
