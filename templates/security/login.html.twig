@@ -60,8 +60,9 @@
             <p class="text-center text-white text-lg p-2">{{'slug'|trans}}</p>
         </div>
     </div>
+
     <div class="w-full flex flex-col justify-center px-12 sm:w-2/5">
-     
+        <img  class="w-full h-fit" src="{{ asset('assets/icon/hwh.png') }}" alt="">
         {% if error %}
         <div class="text-red-500">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
@@ -118,5 +119,5 @@
         </ul>
     </div>
 </div>
-
+</div>
 {% endblock %}
