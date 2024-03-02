@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class DetailDevisType extends AbstractType
 {   
@@ -41,7 +43,7 @@ class DetailDevisType extends AbstractType
                 'label' => 'Quantité',
                 'attr' => [
                     'min' => 1,
-                    'max' => 25,
+                    'max' => 50,
                 ],
                 'constraints' => [
                     new Callback([
@@ -53,13 +55,18 @@ class DetailDevisType extends AbstractType
     }
     public function validateQuantite($value, ExecutionContextInterface $context)
     {
-        $detailDevis = $context->getObject();
-        $produit = $detailDevis->getProduit();
+        $form = $context->getObject();
+
+        $parentForm = $form->getParent();
+        $data = $parentForm->getData();
+
+        $quantite = $data->getQuantite();
+        $produit = $data->getProduit(); // Obtient le produit sélectionné
         $stockRestant = $produit->getStock();
 
         if ($value > $stockRestant) {
-            $context->buildViolation('La quantité dépasse le stock restant pour ce produit.')
-            ->addViolation();
+            $context->buildViolation('La quantité sélectionnée dépasse le stock restant pour ce produit. Stock restant : '.$stockRestant.'.')
+                ->addViolation();
         }
     }
 
