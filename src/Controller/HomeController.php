@@ -25,12 +25,6 @@ class HomeController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/')]
-    public function indexNoLocale(): Response
-    {
-    return $this->redirectToRoute('app_freemium', ['_locale' => 'fr']);
-    }
-    
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
     public function index(
     Security $security,
