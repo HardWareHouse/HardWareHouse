@@ -52,8 +52,7 @@ class HomeController extends AbstractController
 
     $entrepriseId = $this->getUser()->getEntreprise()->getId();
 
-    $factures = $factureRepository->findByEntreprise(["entrepriseId" => $entrepriseId]);
-    dump($factures);
+    $factures = $factureRepository->findBy(['entrepriseId' => $entrepriseId]);
     $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
     $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
     $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
@@ -72,8 +71,8 @@ class HomeController extends AbstractController
         $devisApprouveMontant += $approuve->getTotal();
     }
 
-    $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'Non-payé']);
-    $facturesLate = $factureRepository->findBy(["statutPaiement" => 'En retard']);
+    $facturesAttente = $factureRepository->findBy(["entrepriseId" => $entrepriseId, "statutPaiement" => 'Impayée']);
+    $facturesLate = $factureRepository->findBy(["entrepriseId" => $entrepriseId, "statutPaiement" => 'En retard']);
     $facturesAttenteCount = count($facturesAttente);
     $facturesLateCount = count($facturesLate);
     $facturesAttenteMontant = 0;
