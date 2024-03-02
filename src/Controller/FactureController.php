@@ -101,14 +101,15 @@ class FactureController extends AbstractController
             'facture' => $facture,
         ]);
         $pdfContent = $pdfService->generatePdfContent($html);
-
+        $emailContent = $this->renderView('facture/email.html.twig', [
+        ]);
         // Création de l'email
         $userEmail = $this->getUser()->getMail();
         $email = (new Email())
             ->from('facture@hardwarehouse.com')
             ->to($userEmail)
             ->subject('Votre facture')
-            ->html('Voici votre facture en pièce jointe.')
+            ->html($emailContent)
             ->attach($pdfContent, 'facture.pdf', 'application/pdf');
 
         // Envoi de l'email
