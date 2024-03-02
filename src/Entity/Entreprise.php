@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: 'nom', message: 'Une entreprise avec ce nom existe déjà.')]
 #[UniqueEntity(fields: 'email', message: 'Un email d\'entreprise avec cette adresse existe déjà.')]
 #[UniqueEntity(fields: 'telephone', message: 'Un numéro de téléphone d\'entreprise avec ce numéro existe déjà.')]
+#[UniqueEntity(fields: 'siren', message: 'Ce numéro SIREN/SIRET est déjà utilisé.')]
 class Entreprise
 {
     #[ORM\Id]
@@ -70,7 +71,7 @@ class Entreprise
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Length(max: 50)]
-    #[Assert\Regex(pattern: '/^[a-zA-Z\s]+$/', message: 'La ville ne doit contenir que des lettres.')]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$/', message: 'La ville ne doit contenir que des lettres et peut inclure des tirets.')]
     private ?string $ville = null;
 
     #[ORM\Column(nullable: true, length: 5)]
