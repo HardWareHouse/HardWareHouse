@@ -18,6 +18,7 @@ use App\Security\EmailVerifier;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/{_locale<%app.supported_locales%>}/admin/user')]
@@ -27,20 +28,29 @@ class UserController extends AbstractController
     private UserPasswordHasherInterface $userPasswordHasher;
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, EmailVerifier $emailVerifier)
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher, 
+                                EmailVerifier $emailVerifier, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->entityManager = $entityManager;
         $this->userPasswordHasher = $userPasswordHasher;
         $this->emailVerifier = $emailVerifier;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {   
         $users = $userRepository->findAll();
+        $filteredUsers = [];
+        foreach ($users as $user) {
+            $rolesUser = $user->getRoles();
+            if (is_array($rolesUser) && !in_array('ROLE_ADMIN', $rolesUser)) {
+                $filteredUsers[] = $user;
+            }
+        }
 
         return $this->render('admin/user/index.html.twig', [
-            'users' => $users,
+            'users' => $filteredUsers,
         ]);
     }
 
@@ -90,7 +100,12 @@ class UserController extends AbstractController
 
     #[Route('/{uuid}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user): Response
-    {
+    {   
+        if ($this->getUser()->getUuid() === $user->getUuid()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_user_index');
+        }
+
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
@@ -108,7 +123,12 @@ class UserController extends AbstractController
 
     #[Route('/{uuid}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
-    {
+    {   
+        if ($this->getUser()->getUuid() === $user->getUuid()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_user_index');
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$user->getUuid(), $request->request->get('_token'))) {
             $this->entityManager->remove($user);
             $this->entityManager->flush();
