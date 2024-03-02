@@ -60,7 +60,7 @@ class EntrepriseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_my_entreprise_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('entreprise/edit.html.twig', [

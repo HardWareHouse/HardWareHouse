@@ -19,7 +19,7 @@
                     <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Nom</th>
                     <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Adresse</th>
                     <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Description</th>
-                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Information Fiscale</th>
+                    <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Telephone</th>
                     <th scope="col" class="py-3 px-6 love:bg-[#FB6F92] love:text-[#FFE5EC]">Actions</th>
                 </tr>
                 <tr class="forest:bg-[#786759] forest:text-white love:bg-[#FB6F92]">
@@ -37,7 +37,7 @@
                     <td class="py-4 px-6">{{ entreprise.nom }}</td>
                     <td class="py-4 px-6">{{ entreprise.adresse }}</td>
                     <td class="py-4 px-6">{{ entreprise.description }}</td>
-                    <td class="py-4 px-6">{{ entreprise.informationFiscale }}</td>
+                    <td class="py-4 px-6">{{ entreprise.telephone }}</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-center">
                             <a href="{{ path('app_entreprise_show', {'id': entreprise.id}) }}"
