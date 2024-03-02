@@ -38,6 +38,16 @@ class DevisRepository extends ServiceEntityRepository
     return $resultSet->fetchAllAssociative();
 }
 
+public function findByEntreprise($value): array
+   {
+       return $this->createQueryBuilder('d')
+           ->andWhere('d.entrepriseId = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 //    /**
 //     * @return Devis[] Returns an array of Devis objects
 //     */

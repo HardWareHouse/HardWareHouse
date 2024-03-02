@@ -64,6 +64,11 @@ class DevisController extends AbstractController
             }
             $devi->setTotal($totalDevis);
 
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+
+
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);
             }
@@ -123,9 +128,22 @@ class DevisController extends AbstractController
             return $this->redirectToRoute('app_devis_index');
         }
 
+        $client = $devi->getClientId();
+        $entreprise = $devi->getEntrepriseId();
+        $telephoneEntreprise = $entreprise->getTelephone();
+
+        $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
+            'logoHwh' => $logoHwh,
             'entreprise' => $devi->getEntrepriseId(),
+            'client' => $client,
+            'entreprise' => $entreprise,
+            'telephoneEntreprise' => $telephoneEntreprise,
         ]);
 
         $pdfService->showPdfFile($html);
@@ -155,7 +173,13 @@ class DevisController extends AbstractController
                 );
                 $totalDevis += $detaildevis->getPrix();
             }
+            
             $devi->setTotal($totalDevis);
+
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);

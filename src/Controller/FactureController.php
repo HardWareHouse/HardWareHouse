@@ -136,9 +136,21 @@ class FactureController extends AbstractController
             return $this->redirectToRoute('app_facture_index');
         }
 
+        $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+
+        $client = $facture->getClientId();
+        $entreprise = $facture->getEntrepriseId();
+
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
-            'client' => $facture->getClientId(),
+            'logoHwh' => $logoHwh,
+            'client' => $client,
+            'entreprise' => $entreprise,
+            
         ]);
 
         $pdfService->showPdfFile($html);

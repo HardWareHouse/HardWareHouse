@@ -85,6 +85,7 @@ estimate_new: Create a new estimate
 estimate: Estimates
 number: Estimate number
 total: Total (€)
+total_ttc: Total Tax Included (€)
 no_estimate: No estimates found
 expires: Expires on
 custumer: Customer
@@ -200,7 +201,6 @@ forgot_password: Forgot your password?
 no_account: Don't have an account?
 logo_company: Company logo
 slug: The essential tool for efficiently managing your hardware business.
-
 created_at: Created at
 month: Month
 January: January
@@ -215,3 +215,7 @@ September: September
 October: October
 November: November
 December: December
+city: City
+siren: Siren
+postcode: Postcode
+phone: Phone
