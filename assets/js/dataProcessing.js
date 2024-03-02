@@ -34,14 +34,15 @@ export function processData(
       updateCharts(selectedYear, selectedCompanyId);
     });
 
-  document
-    .getElementById("companyDropdown")
-    .addEventListener("change", function (event) {
-      selectedCompanyId = event.target.value;
-      updateCharts(selectedYear, selectedCompanyId);
-      paymentMethods = {};
-    });
-
+  if (typeof entreprises !== "undefined") {
+    document
+      .getElementById("companyDropdown")
+      .addEventListener("change", function (event) {
+        selectedCompanyId = event.target.value;
+        updateCharts(selectedYear, selectedCompanyId);
+        paymentMethods = {};
+      });
+  }
   function updateCharts(selectedYear, selectedCompanyId) {
     updateCsvDownloadLinks(selectedYear, selectedCompanyId);
     updatePaymentsChart(selectedYear, selectedCompanyId);
@@ -102,14 +103,31 @@ export function processData(
   }
 
   function updateFacturesChart(selectedYear, selectedCompanyId) {
-    xAxisData = [];
+    var factureStatus;
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      factureStatus = processCompanyFacturesData(
+        filteredFacturesData,
+        selectedYear
+      );
+      console.log("filtered data");
+    } else {
+      factureStatus = processFacturesData(facturesData, selectedYear);
+      console.log("unfiltered data");
+    }
 
-    var statusData = processFacturesData(facturesData, selectedYear);
-    var facturesChartOption = generateFacturesChartOption(statusData);
+    var facturesChartOption = generateFacturesChartOption(factureStatus);
   }
 
   function updateDevisChart(selectedYear, selectedCompanyId) {
-    var devisStatusData = processDevisData(devisData, selectedYear);
+    var devisStatusData;
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      devisStatusData = processCompanyDevisData(
+        filteredDevisData,
+        selectedYear
+      );
+    } else {
+      devisStatusData = processDevisData(devisData, selectedYear);
+    }
     var devisChartOption = generateDevisChartOption(devisStatusData);
   }
 
@@ -176,7 +194,9 @@ export function processData(
     return paymentMethods; // Return the paymentMethods object
   }
   var xAxisData = [];
-
+  for (var i = 0; i < 12; i++) {
+    xAxisData.push(getTranslatedMonthName(i));
+  }
   function processFacturesData(facturesData, selectedYear) {
     var statusData = {
       Payé: Array(12).fill(0),
@@ -205,13 +225,35 @@ export function processData(
         }
       }
     });
+    return statusData;
+  }
 
-    // Return the statusData object
-
-    // Dynamically generate xAxis data array using translated month names
-    for (var i = 0; i < 12; i++) {
-      xAxisData.push(getTranslatedMonthName(i));
-    }
+  function processCompanyFacturesData(filteredFacturesData, selectedYear) {
+    var statusData = {
+      Payé: Array(12).fill(0),
+      "Non-payé": Array(12).fill(0),
+      "En retard": Array(12).fill(0),
+    };
+    // Process Facture data to count status per month
+    filteredFacturesData.forEach(function (facture) {
+      var factureYear = new Date(facture.dateFacturation).getFullYear();
+      var factureMonth = new Date(facture.dateFacturation).getMonth();
+      // Check if the facture belongs to the selected year
+      if (factureYear == selectedYear) {
+        // Increment the count for the corresponding status and month
+        switch (facture.status) {
+          case "Payé":
+            statusData["Payé"][factureMonth]++;
+            break;
+          case "Non-payé":
+            statusData["Non-payé"][factureMonth]++;
+            break;
+          case "En retard":
+            statusData["En retard"][factureMonth]++;
+            break;
+        }
+      }
+    });
     return statusData;
   }
 
@@ -228,7 +270,7 @@ export function processData(
       var devisMonth = new Date(devis.dateFacturation).getMonth();
 
       // Check if the facture belongs to the selected year
-      if (devisYear === selectedYear) {
+      if (devisYear == selectedYear) {
         // Increment the count for the corresponding status and month
         switch (devis.status) {
           case "En attente":
@@ -243,12 +285,37 @@ export function processData(
         }
       }
     });
+    return devisStatusData;
+  }
 
-    // Dynamically generate xAxis data array using translated month names
-    var xAxisData = [];
-    for (var i = 0; i < 12; i++) {
-      xAxisData.push(getTranslatedMonthName(i));
-    }
+  function processCompanyDevisData(filteredDevisData, selectedYear) {
+    var devisStatusData = {
+      "En attente": Array(12).fill(0),
+      Approuvé: Array(12).fill(0),
+      Refusé: Array(12).fill(0),
+    };
+
+    // Process Facture data to count status per month
+    filteredDevisData.forEach(function (devis) {
+      var devisYear = new Date(devis.dateFacturation).getFullYear();
+      var devisMonth = new Date(devis.dateFacturation).getMonth();
+
+      // Check if the facture belongs to the selected year
+      if (devisYear == selectedYear) {
+        // Increment the count for the corresponding status and month
+        switch (devis.status) {
+          case "En attente":
+            devisStatusData["En attente"][devisMonth]++;
+            break;
+          case "Approuvé":
+            devisStatusData["Approuvé"][devisMonth]++;
+            break;
+          case "Refusé":
+            devisStatusData["Refusé"][devisMonth]++;
+            break;
+        }
+      }
+    });
     return devisStatusData;
   }
 
@@ -304,7 +371,6 @@ export function processData(
     };
     paymentsChart.setOption(paymentsChartOption);
   }
-  console.log(paymentMethods);
   // Translate legend labels
   var translatedLegend = [];
   Object.keys(paymentMethods).forEach(function (method) {
