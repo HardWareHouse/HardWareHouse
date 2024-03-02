@@ -20,7 +20,6 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "deploy": "docker-compose up --build -d && composer install && npm install",
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",
