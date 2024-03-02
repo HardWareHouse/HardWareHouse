@@ -30,11 +30,19 @@ class DevisType extends AbstractType
     {
         $user = $this->security->getUser();
         $entreprise = $user->getEntreprise();
+        $count = $entreprise->getDevisId()->count() + 1;
+        $numero = sprintf("DEVIS#%03d", $count);
+
 
         $builder
             ->add('numero', TextType::class, [
-            'attr' => ['placeholder' => 'estimate_placeholder']
-            ])             
+                'attr' => [
+                    'placeholder' => 'estimate_placeholder',
+                    'readonly' => 'readonly', // Rend le champ non modifiable
+                    'value' => $numero, // Attribue la valeur dynamique
+                ],
+                'mapped' => false,
+            ])       
             ->add('dateCreation', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime('now'),

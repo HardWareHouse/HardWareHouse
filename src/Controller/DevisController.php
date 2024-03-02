@@ -55,7 +55,11 @@ class DevisController extends AbstractController
 
         $totalDevis = 0;
         if ($form->isSubmitted() && $form->isValid()) {
+            $count = $userEntreprise->getDevisId()->count() + 1;
+            $numero = sprintf("DEVIS#%03d", $count);
+            
             $devi = $form->getData();
+            $devi->setNumero($numero);
             foreach ($devi->getDetailDevis() as $detaildevis) {
                 $detaildevis->setPrix(
                     $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
