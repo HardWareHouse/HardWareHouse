@@ -86,6 +86,7 @@ estimate_new: Créer un nouveau devis
 estimate: Devis
 number: Numéro de devis
 total: Total (€)
+total_ttc: Total TTC (€)
 no_estimate: Aucun devis trouvé
 expires: Échéance
 billing_info: Facturé à
@@ -213,3 +214,7 @@ September: Septembre
 October: Octobre
 November: Novembre
 December: Décembre
+city: Ville
+siren: Siren
+postcode: Code postal
+phone: Téléphone

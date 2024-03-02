@@ -16,6 +16,7 @@
                     <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'duedate'|trans}}</th>
                     <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'status'|trans}}</th>
                     <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'total'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'total_ttc'|trans}}</th>
                     <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
                 </tr>
                 <tr class="forest:bg-[#786759] love:bg-[#FB6F92]">
@@ -24,6 +25,7 @@
                     <th><input type="text" placeholder="Date de paiement due..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Statut..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Total..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Total TTC..." class="form-control form-control-sm" /></th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -37,6 +39,7 @@
                         }}</td>
                     <td class="py-4 px-6">{{ facture.statutPaiement }}</td>
                     <td class="py-4 px-6">{{ facture.total }}€</td>
+                    <td class="py-4 px-6">{{ facture.devi.totalTTC }}€</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-around">
                             <a href="{{ path('app_facture_pdf', {'id': facture.id}) }}"

@@ -45,6 +45,9 @@ class Devis
     #[ORM\OneToMany(mappedBy: 'devi', targetEntity: Facture::class, orphanRemoval: true)]
     private Collection $factures;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $totalTTC = null;
+
     public function __construct()
     {
         $this->CreatedAt = new \DateTimeImmutable('now');
@@ -198,6 +201,18 @@ class Devis
                 $facture->setDevi(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotalTTC(): ?float
+    {
+        return $this->totalTTC;
+    }
+
+    public function setTotalTTC(float $totalTTC): self
+    {
+        $this->totalTTC = $totalTTC;
 
         return $this;
     }

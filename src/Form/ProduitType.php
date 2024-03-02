@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
+use App\Entity\Categorie;
 
 class ProduitType extends AbstractType
 {   
@@ -23,6 +24,12 @@ class ProduitType extends AbstractType
             ->add('description')
             ->add('prix')
             ->add('stock')
+            ->add('categorieId', EntityType::class, [
+                'class' => Categorie::class,
+                'label' => 'Catégorie',
+                'choice_label' => 'nom', 
+                'placeholder' => 'Sélectionnez la catégorie auquel le produit appartient',
+            ])
         ;
 
         $isAdmin = $this->security->isGranted('ROLE_ADMIN');

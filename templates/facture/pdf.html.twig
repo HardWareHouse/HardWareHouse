@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Devis</title>
+    <title>{{ facture.numero }}</title>
     <style>
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -117,8 +117,9 @@
         </div>
 
         <div class="header-content">
-            <h2>N°Facture : {{ facture.numero }}</h2>
-            <h2>Date de facturation : {{ facture.dateFacturation|date('d/m/Y') }}</h2>
+            <h1>N°Facture : {{ facture.numero }}</h1>
+            <h3>Date de facturation : {{ facture.dateFacturation|date('d/m/Y') }}</h3>
+            <h3>Date d'expiration : {{ facture.dateFacturation|date_modify('+30 days')|date('d/m/Y') }}</h3> {# à changer #}
         </div>
     </div>
 
@@ -126,13 +127,16 @@
     <div class="info-section">
         <div class="info-block">
             <h3>Entreprise : {{ entreprise.nom }}</h3>
-            <p>Adresse : {{ entreprise.adresse }}</p>
-            <p>Téléphone : </p> {# A rajouter #}
+            <p>{{ entreprise.adresse }}</p>
+            <p>{{ entreprise.codepostal }} {{ entreprise.ville }} </p>
+            <p>{{ entreprise.email }}</p>
+            <p>Téléphone : {{ entreprise.telephone }}</p>
         </div>
         <div class="info-block">
             {% if client is defined %}
             <h3>Client : {{ client.nom }}</h3>
-            <p>Adresse : {{ client.adresse }}</p>
+            <p>{{ client.adresse }}</p>
+            <p>{{ client.codepostal }} {{ client.ville }} </p>
             <p>Téléphone : {{ client.telephone }}</p>
             <p>Mail : {{ client.email }}</p>
             {% else %}

@@ -43,6 +43,12 @@ class Client
     #[ORM\JoinColumn(name: "facture", referencedColumnName: "id")]
     private Collection $factureId;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $codePostal = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ville = null;
+
     public function __construct()
     {
         $this->devisId = new ArrayCollection();
@@ -188,6 +194,30 @@ class Client
                 $factureId->setClientId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
 
         return $this;
     }

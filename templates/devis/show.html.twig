@@ -41,6 +41,11 @@
                 <td class="px-6 py-4">{{ devi.total }}</td>
             </tr>
             <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'total_ttc'|trans}}</th>
+                <td class="px-6 py-4">{{ devi.totalTTC }}</td>
+            </tr>
+
+            <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'created_at'|trans }}</th>
                 <td class="px-6 py-4">{{ devi.CreatedAt ? devi.CreatedAt|date('Y-m-d H:i') : '' }}</td>
             </tr>            

@@ -30,12 +30,32 @@
                     <td class="px-6 py-4 forest:text-white">{{ entreprise.adresse }}</td>
                 </tr>
                 <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'postcode'|trans}}</th>
+                    <td class="px-6 py-4 forest:text-white">{{ entreprise.codePostal }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'city'|trans}}</th>
+                    <td class="px-6 py-4 forest:text-white">{{ entreprise.ville }}</td>
+                </tr>
+                <tr>
                     <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'description'|trans}}</th>
                     <td class="px-6 py-4 forest:text-white">{{ entreprise.description }}</td>
                 </tr>
                 <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'phone'|trans}}</th>
+                    <td class="px-6 py-4 forest:text-white">{{ entreprise.telephone }}</td>
+                </tr>
+                <tr>
                     <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'tax_info'|trans}}</th>
                     <td class="px-6 py-4 forest:text-white">{{ entreprise.informationFiscale }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'siren'|trans}}</th>
+                    <td class="px-6 py-4 forest:text-white">{{ entreprise.siren }}</td>
+                </tr>
+                <tr>
+                    <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap forest:text-white">{{'email'|trans}}</th>
+                    <td class="px-6 py-4 forest:text-white">{{ entreprise.email }}</td>
                 </tr>
             </tbody>
         </table>
