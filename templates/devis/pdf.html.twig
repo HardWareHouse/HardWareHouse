@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Devis</title>
+    <title> {{ devis.numero }} </title>
     <style>
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
@@ -36,12 +36,15 @@
         .info-section {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 24px;
-            width: 100%;
         }
 
         .info-block {
-            width: calc(50% - 10px);
+            width: 48%;
+            /* S'assure que chaque bloc n'utilise que 48% de l'espace disponible, laissant de la place pour les marges */
+            box-sizing: border-box;
+            /* Inclut le padding et la bordure dans la largeur et la hauteur du bloc */
         }
 
         .info-block h3 {
@@ -102,6 +105,13 @@
             text-align: right;
             flex-grow: 1;
         }
+
+        @media (max-width: 700px) {
+            .info-block {
+                width: 100%;
+                /* Les blocs prennent toute la largeur pour un affichage en colonne sur les petits écrans */
+            }
+        }
     </style>
 </head>
 
@@ -117,8 +127,9 @@
         </div>
 
         <div class="header-content">
-            <h2>N°Devis : {{ devis.numero }}</h2>
-            <h2>Date de création : {{ devis.dateCreation|date('d/m/Y') }}</h2>
+            <h1>N°Devis : {{ devis.numero }}</h1>
+            <h3>Date de création : {{ devis.dateCreation|date('d/m/Y') }}</h3>
+            <h3>Date d'expiration : {{ devis.dateCreation|date_modify('+30 days')|date('d/m/Y') }}</h3> {# à changer #}
         </div>
     </div>
 
@@ -126,23 +137,24 @@
     <div class="info-section">
         <div class="info-block">
             <h3>Entreprise : {{ entreprise.nom }}</h3>
-            <p>Adresse : {{ entreprise.adresse }}</p>
-            <p>Téléphone : </p> {# A rajouter #}
+            <p>{{ entreprise.adresse }}</p>
+            <p>{{ entreprise.codepostal }} {{ entreprise.ville }} </p>
+            <p>{{ entreprise.email }}</p>
+            <p>Téléphone : {{ entreprise.telephone }}</p>
         </div>
         <div class="info-block">
             {% if client is defined %}
             <h3>Client : {{ client.nom }}</h3>
-            <p>Adresse : {{ client.adresse }}</p>
+            <p>{{ client.adresse }}</p>
+            <p>{{ client.codepostal }} {{ client.ville }} </p>
             <p>Téléphone : {{ client.telephone }}</p>
             <p>Mail : {{ client.email }}</p>
             {% else %}
             <p>test</p>
             {% endif %}
-                
+
         </div>
     </div>
-
-
 
     <table class="table">
         <thead>
@@ -158,21 +170,21 @@
             {% set sousTotalHT = 0 %}
             {% set totalTVA = 0 %}
             {% for detail in devis.getDetailDevis %}
-                {% set prixHT = detail.getPrix() %}
-                {% set montantTVA = prixHT * tauxTVA %}
-                <tr>
-                    <td>{{ detail.getProduit().getNom() }}</td>
-                    <td>{{ detail.getQuantite() }}</td>
-                    <td>{{ prixHT }}€</td>
-                    <td>{{ montantTVA }}€</td>
-                </tr>
-                {% set sousTotalHT = sousTotalHT + prixHT %}
-                {% set totalTVA = totalTVA + montantTVA %}
+            {% set prixHT = detail.getPrix() %}
+            {% set montantTVA = prixHT * tauxTVA %}
+            <tr>
+                <td>{{ detail.getProduit().getNom() }}</td>
+                <td>{{ detail.getQuantite() }}</td>
+                <td>{{ prixHT }}€</td>
+                <td>{{ montantTVA }}€</td>
+            </tr>
+            {% set sousTotalHT = sousTotalHT + prixHT %}
+            {% set totalTVA = totalTVA + montantTVA %}
             {% endfor %}
             {% set totalTTC = sousTotalHT + totalTVA %}
         </tbody>
     </table>
-    
+
     <table class="totals-table">
         <tr>
             <td class="label">Sous-total HT</td>
@@ -187,7 +199,7 @@
             <td class="value">{{ totalTTC }}€</td>
         </tr>
     </table>
-    
+
 
 </body>
 

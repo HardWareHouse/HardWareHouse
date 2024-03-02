@@ -128,20 +128,22 @@ class DevisController extends AbstractController
             return $this->redirectToRoute('app_devis_index');
         }
 
+        $client = $devi->getClientId();
+        $entreprise = $devi->getEntrepriseId();
+        $telephoneEntreprise = $entreprise->getTelephone();
+
         $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
-        $client = $devi->getClientId();
-        $entreprise = $devi->getEntrepriseId();
-
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
-            'entreprise' => $devi->getEntrepriseId(),
             'logoHwh' => $logoHwh,
+            'entreprise' => $devi->getEntrepriseId(),
             'client' => $client,
             'entreprise' => $entreprise,
+            'telephoneEntreprise' => $telephoneEntreprise,
         ]);
 
         $pdfService->showPdfFile($html);
