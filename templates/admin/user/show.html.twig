@@ -17,9 +17,22 @@
                     <tr>
                         <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'rules'|trans}}</th>
                         <td class="px-6 py-4">
+                            {% set isUser = false %}
+                            {% set isComptable = false %}
+
                             {% for role in user.roles %}
-                                {{ role|replace({'ROLE_': ''}) }}
+                                {% if role == 'ROLE_USER' %}
+                                    {% set isUser = true %}
+                                {% elseif role == 'ROLE_COMPTABLE' %}
+                                    {% set isComptable = true %}
+                                {% endif %}
                             {% endfor %}
+
+                            {% if isUser and isComptable %}
+                                Comptable
+                            {% else %}
+                                Utilisateur
+                            {% endif %}
                         </td>
                     </tr>
                     <tr>

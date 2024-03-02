@@ -55,9 +55,19 @@ class UserController extends AbstractController
             ]);
         } else {
             $this->userEntreprise = $this->getUser()->getEntreprise();
+            $users = $userRepository->findBy(["entreprise" => $this->userEntreprise->getId()]);
+
+            foreach ($users as $key => $user) {
+                if ($user->getUuid() === $this->getUser()->getUuid()) {
+                    unset($users[$key]);
+                    break;
+                }
+            }
+
             return $this->render('user/index.html.twig', [
-                'users' => $userRepository->findBy(["entreprise" => $this->userEntreprise->getId()]),
+                'users' => $users,
             ]);
+
         }
     }
 
@@ -116,6 +126,11 @@ class UserController extends AbstractController
             return $response;
         }
 
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser()->getUuid() === $user->getUuid()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_my_user_index');
+        }
+
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -128,6 +143,11 @@ class UserController extends AbstractController
         $response = $this->checkUserAccessToUser($this->userEntreprise, $user);
         if ($response !== null) {
             return $response;
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser()->getUuid() === $user->getUuid()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_my_user_index');
         }
 
         $form = $this->createForm(UserEntrepriseEditType::class, $user);
@@ -153,6 +173,11 @@ class UserController extends AbstractController
         $response = $this->checkUserAccessToUser($this->userEntreprise, $user);
         if ($response !== null) {
             return $response;
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && $this->getUser()->getUuid() === $user->getUuid()) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_my_user_index');
         }
 
         if ($this->isCsrfTokenValid('delete'.$user->getUuid(), $request->request->get('_token'))) {
