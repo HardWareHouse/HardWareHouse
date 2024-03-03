@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class PaiementType extends AbstractType
 {   
@@ -25,7 +26,9 @@ class PaiementType extends AbstractType
         $entreprise = $user->getEntreprise();
 
         $builder
-            ->add('datePaiement')
+            ->add('datePaiement', DateTimeType::class, [
+                'widget' => 'single_text',
+            ])
             ->add('montant')
             ->add('methodePaiement', ChoiceType::class, [
                 'choices' => [
