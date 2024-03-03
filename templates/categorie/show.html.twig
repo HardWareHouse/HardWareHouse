@@ -34,6 +34,33 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Produits dans cette catégorie</h2>
+            <table class="w-full text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3">Nom du produit</th>
+                        <th class="px-6 py-3">Description</th>
+                        <th class="px-6 py-3">Prix (HT)</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for produit in categorie.produitId %}
+                        <tr>
+                            <td class="px-6 py-4">{{ produit.nom }}</td>
+                            <td class="px-6 py-4">{{ produit.description }}</td>
+                            <td class="px-6 py-4">{{ produit.prix }}€</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="px-6 py-4">Pas de produits trouvés</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         <div class="text-center">
             <a href="{{ path('app_categorie_index') }}"
                 class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">

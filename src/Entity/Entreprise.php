@@ -8,8 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use DateTimeImmutable;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
+#[UniqueEntity(fields: 'nom', message: 'Une entreprise avec ce nom existe déjà.')]
+#[UniqueEntity(fields: 'email', message: 'Un email d\'entreprise avec cette adresse existe déjà.')]
+#[UniqueEntity(fields: 'telephone', message: 'Un numéro de téléphone d\'entreprise avec ce numéro existe déjà.')]
+#[UniqueEntity(fields: 'siren', message: 'Ce numéro SIREN/SIRET est déjà utilisé.')]
 class Entreprise
 {
     #[ORM\Id]
@@ -18,16 +24,16 @@ class Entreprise
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 50)]
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(max: 250)]
     private ?string $description = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $informationFiscale = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $CreatedAt = null;
@@ -62,6 +68,36 @@ class Entreprise
 
     #[ORM\OneToOne(inversedBy: 'entreprise', cascade: ['persist', 'remove'])]
     private ?Media $logo = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 50)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z]+(?:[-\s][a-zA-Z]+)*$/', message: 'La ville ne doit contenir que des lettres et peut inclure des tirets.')]
+    private ?string $ville = null;
+
+    #[ORM\Column(nullable: true, length: 5)]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^\d{5}$/', message: 'Le code postal doit être composé de 5 chiffres.')]
+    private ?int $codePostal = null;
+
+    #[ORM\Column(length: 14, nullable: true)]
+    #[Assert\Regex(pattern: '/^(?:[1-2]\d{8}|[1-2]\d{13})$/', message: 'Le SIREN doit contenir 9 chiffres et le SIRET doit contenir 14 chiffres, tous deux commençant par 1 ou 2.')]
+    private ?string $siren = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'L\'URL du site web n\'est pas valide. Veuillez renseigner une URL valide de la forme http://www.example.com')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'L\'URL du site web ne doit pas dépasser {{ limit }} caractères.'
+    )]
+    private ?string $siteWeb = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Email(message: 'L\'email n\'est pas valide.')]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    #[Assert\Regex(pattern: '/^(01|02|03|04|05|09)\d{8}$/', message: 'Le téléphone doit commencer par 01, 02, 03, 04, 05 ou 09 et contenir 10 chiffres.')]
+    private ?string $telephone = null;
 
     public function __construct()
     {
@@ -121,17 +157,6 @@ class Entreprise
         return $this;
     }
 
-    public function getInformationFiscale(): ?string
-    {
-        return $this->informationFiscale;
-    }
-
-    public function setInformationFiscale(string $informationFiscale): static
-    {
-        $this->informationFiscale = $informationFiscale;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -362,6 +387,78 @@ class Entreprise
     public function setLogo(?Media $logo): static
     {
         $this->logo = $logo;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): static
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(?int $codePostal): static
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getSiren(): ?string
+    {
+        return $this->siren;
+    }
+
+    public function setSiren(?string $siren): static
+    {
+        $this->siren = $siren;
+
+        return $this;
+    }
+
+    public function getSiteWeb(): ?string
+    {
+        return $this->siteWeb;
+    }
+
+    public function setSiteWeb(?string $siteWeb): static
+    {
+        $this->siteWeb = $siteWeb;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }

@@ -5,6 +5,7 @@ export var paymentsChart;
 export var methodsChart;
 export var facturesChart;
 export var devisChart;
+export var mostRecentYear;
 
 export function initializeCharts(
   paiementsData,
@@ -29,22 +30,42 @@ export function initializeCharts(
     return new Date(paiement.datePaiement).getFullYear();
   });
 
+  // Find the most recent year
+
   // Remove duplicate years
   years = Array.from(new Set(years));
+  mostRecentYear = Math.max(...years);
 
   // Create dropdown options for years
   var dropdownContainer = document.getElementById("dropdownContainer");
-  var dropdownHTML =
-    '<select id="yearDropdown" class="text-white bg-darkBlue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-blue-800">';
+  var yearDropdownHTML =
+    '<select id="yearDropdown" class="text-white bg-darkBlue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mx-2 dark:focus:ring-blue-800">';
   // Sort the years numerically
   years.sort(function (a, b) {
     return b - a;
   });
   years.forEach(function (year) {
-    dropdownHTML += '<option value="' + year + '">' + year + "</option>";
+    yearDropdownHTML += '<option value="' + year + '">' + year + "</option>";
   });
-  dropdownHTML += "</select>";
-  dropdownContainer.innerHTML = dropdownHTML;
+  yearDropdownHTML += "</select>";
+  dropdownContainer.innerHTML = yearDropdownHTML;
+
+  if (typeof entreprises !== "undefined") {
+    var companies = Array.from(new Set(entreprises));
+    var companyDropdownHTML =
+      '<select id="companyDropdown" class="text-white bg-darkBlue focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mx-2 dark:focus:ring-blue-800">';
+
+    companies.sort();
+    companyDropdownHTML +=
+      '<option value="all">Toutes les entreprises </option>';
+    companies.forEach(function (company) {
+      companyDropdownHTML +=
+        '<option value="' + company.id + '">' + company.nom + "</option>";
+    });
+    companyDropdownHTML += "</select>";
+    dropdownContainer.innerHTML += companyDropdownHTML;
+  }
+
   processData(
     paiementsData,
     facturesData,

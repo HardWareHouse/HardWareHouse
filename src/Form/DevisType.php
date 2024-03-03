@@ -31,10 +31,33 @@ class DevisType extends AbstractType
         $user = $this->security->getUser();
         $entreprise = $user->getEntreprise();
 
+        $devis = $builder->getData();
+        $numeroDevisExiste = $devis && $devis->getNumero();
+        
+        if (!$numeroDevisExiste) {
+            $dernierDevis = $entreprise->getDevisId()->last();
+            if ($dernierDevis) {
+                $numeroDernierDevis = $dernierDevis->getNumero();
+                $numeroParties = explode('#', $numeroDernierDevis);
+                $count = intval($numeroParties[1]) + 1;
+            } else {
+                $count = 1;
+            }
+            $numero = sprintf("DEVIS#%03d", $count);
+        } else {
+            $numero = $devis->getNumero();
+        }
+
+
         $builder
             ->add('numero', TextType::class, [
-            'attr' => ['placeholder' => 'estimate_placeholder']
-            ])             
+                'attr' => [
+                    'placeholder' => 'estimate_placeholder',
+                    'readonly' => 'readonly',
+                    'value' => $numero,
+                ],
+                'mapped' => false,
+            ])       
             ->add('dateCreation', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime('now'),

@@ -20,6 +20,10 @@ $(document).ready(function () {
 
   // On applique ici le filtre de recherche pour chaque colonne de la table
   $("#entrepriseTable thead tr:eq(1) th").each(function (i) {
+    $("input", this).on("click", function (e) {
+      e.stopPropagation();
+    });
+    
     $("input", this).on("keyup change", function () {
       if (table.column(i).search() !== this.value) {
         table.column(i).search(this.value).draw();

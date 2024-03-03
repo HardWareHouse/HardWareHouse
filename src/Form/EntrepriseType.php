@@ -8,16 +8,41 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use App\Form\MediaType as MediaFormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class EntrepriseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('adresse')
-            ->add('description')
-            ->add('informationFiscale')
+            ->add('nom', TextType::class, [
+                'attr' => ['placeholder' => 'Nom de l\'entreprise']
+            ])
+            ->add('adresse', TextType::class, [
+                'attr' => ['placeholder' => 'Adresse de l\'entreprise']
+            ])
+            ->add('codePostal', IntegerType::class, [
+                'attr' => ['placeholder' => 'Code postal']
+            ])
+            ->add('ville', TextType::class, [
+                'attr' => ['placeholder' => 'Ville']
+            ])
+            ->add('description', TextType::class, [
+                'attr' => ['placeholder' => 'Description de l\'entreprise']
+            ])
+            ->add('siren', TextType::class, [
+                'attr' => ['placeholder' => 'SIREN / SIRET']
+            ])
+            ->add('siteWeb', TextType::class, [
+                'attr' => ['placeholder' => 'Site web de l\'entreprise']
+            ])
+            ->add('email', TextType::class, [
+                'attr' => ['placeholder' => 'Email de l\'entreprise']
+            ])
+            ->add('telephone', TextType::class, [
+                'attr' => ['placeholder' => 'Téléphone de l\'entreprise']
+            ])
             ->add('logo', MediaFormType::class)
         ;
     }

@@ -3,89 +3,92 @@
 {% block title %}{{'products'|trans}}{% endblock %}
 
 {% block content %}
-<div class="container mx-auto my-8 p-6">
-    <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">{{'products'|trans}}</h1>
-        <a href="{{ path('app_produit_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-            <i class="fas fa-plus mr-2"></i> {{'product_new'|trans}}
-        </a>
-    </div>
+    <div class="container mx-auto my-8 p-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'products'|trans}}</h1>
+            <a href="{{ path('app_produit_new') }}"
+               class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
+                <i class="fas fa-plus mr-2"></i> {{'product_new'|trans}}
+            </a>
+        </div>
 
-    <div class="overflow-x-auto relative sm:rounded-lg mt-6">
-        <table id="produitTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <div class="overflow-x-auto relative sm:rounded-lg mt-6">
+            <table id="produitTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6">{{'name'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'description'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'name'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'description'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
+                        <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6">{{'price'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'stock'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC] ">{{'price'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'stock'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'created_on'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
                 </tr>
-                <tr>
+                <tr class="forest:bg-[#786759] love:bg-[#FB6F92]">
                     <th><input type="text" placeholder="Nom du produit..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Description du produit..." class="form-control form-control-sm" /></th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th><input type="text" placeholder="Entreprise" class="form-control form-control-sm" /></th>
+                    {% endif %}
                     <th><input type="text" placeholder="Prix..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Stock..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" /></th>
                     <th>&nbsp;</th>
                 </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
                 {% for produit in produits %}
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="py-4 px-6">{{ produit.nom }}</td>
-                    <td class="py-4 px-6">{{ produit.description }}</td>
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <td class="py-4 px-6">{{ produit.entrepriseId.nom }}</td>
-                    {% endif %}
-                    <td class="py-4 px-6">{{ produit.prix }}€</td>
-                    <td class="py-4 px-6">{{ produit.stock }}</td>
-                    <td class="py-4 px-6">{{ produit.CreatedAt ? produit.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    <td class="py-4 px-6">
-                        <div class="flex items-center justify-center">
-                            <a href="{{ path('app_produit_show', {'id': produit.id}) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="{{ path('app_produit_edit', {'id': produit.id}) }}"
-                                class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <div class="ml-4">
-                                {{ include('produit/_delete_form.html.twig', {'produit': produit}) }}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td class="py-4 px-6">{{ produit.nom }}</td>
+                        <td class="py-4 px-6">{{ produit.description }}</td>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <td class="py-4 px-6">{{ produit.entrepriseId.nom }}</td>
+                        {% endif %}
+                        <td class="py-4 px-6">{{ produit.prix }}€</td>
+                        <td class="py-4 px-6">{{ produit.stock }}</td>
+                        <td class="py-4 px-6">{{ produit.CreatedAt ? produit.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td class="py-4 px-6">
+                            <div class="flex items-center justify-center">
+                                <a href="{{ path('app_produit_show', {'id': produit.id}) }}"
+                                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_produit_edit', {'id': produit.id}) }}"
+                                   class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <div class="ml-4">
+                                    {{ include('produit/_delete_form.html.twig', {'produit': produit}) }}
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% else %}
-                <tr>
-                    <td colspan="7" class="py-4 px-6 text-center">{{'no_product'|trans}}</td>
-                </tr>
+                    <tr>
+                        <td colspan="7" class="py-4 px-6 text-center">{{'no_product'|trans}}</td>
+                    </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        {% for message in app.session.flashbag.get('danger') %}
+            <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
     </div>
-    {% for message in app.session.flashbag.get('danger') %}
-    <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
-        <p class="text-center">{{ message }}</p>
-    </div>
-    {% endfor %}
-</div>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
 
-<script src="{{ asset('js/produitDatatable.js', 'local') }}"> </script>
+    <script src="{{ asset('js/produitDatatable.js', 'local') }}"> </script>
 
 {% endblock %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/produit.css', 'local') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/produit.css', 'local') }}">
 {% endblock %}

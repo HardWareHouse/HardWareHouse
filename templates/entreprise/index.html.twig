@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container mx-auto my-8 flex-grow p-6">
-    <h1 class="dark:text-white">{{'companies'|trans}}</h1>
+    <h1 class="dark:text-white forest:text-white">{{'companies'|trans}}</h1>
 
     <table class="table">
         <thead>
@@ -13,7 +13,6 @@
                 <th>{{'name'|trans}}</th>
                 <th>{{'address'|trans}}</th>
                 <th>{{'description'|trans}}</th>
-                <th>{{'tax_info'|trans}}</th>
                 <th>{{'createdon'|trans}}</th>
                 <th>{{'actions'|trans}}</th>
             </tr>
@@ -25,7 +24,6 @@
                 <td>{{ entreprise.nom }}</td>
                 <td>{{ entreprise.adresse }}</td>
                 <td>{{ entreprise.description }}</td>
-                <td>{{ entreprise.informationFiscale }}</td>
                 <td>{{ entreprise.CreatedAt ? entreprise.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_entreprise_show', {'id': entreprise.id}) }}">{{'show'|trans}}</a>

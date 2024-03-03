@@ -41,9 +41,42 @@
                 <td class="px-6 py-4">{{ devi.total }}</td>
             </tr>
             <tr>
+                <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{'total_ttc'|trans}}</th>
+                <td class="px-6 py-4">{{ devi.totalTTC }}</td>
+            </tr>
+
+            <tr>
                 <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ 'created_at'|trans }}</th>
                 <td class="px-6 py-4">{{ devi.CreatedAt ? devi.CreatedAt|date('Y-m-d H:i') : '' }}</td>
             </tr>            
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-8">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Produits du Devis</h2>
+        <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3">{{ 'product_name'|trans }}</th>
+                    <th class="px-6 py-3">{{ 'quantity'|trans }}</th>
+                    <th class="px-6 py-3">{{ 'price'|trans }}</th>
+                    <th class="px-6 py-3">{{ 'price_tax_included'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for detail in devi.detailDevis %}
+                    <tr>
+                        <td class="px-6 py-4">{{ detail.produit.nom }}</td>
+                        <td class="px-6 py-4">{{ detail.quantite }}</td>
+                        <td class="px-6 py-4">{{ detail.prix }}€</td>
+                        <td class="px-6 py-4">{{ detail.prix * 1.20 }}€</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="px-6 py-4">Il n'existe aucun produit dans ce devis.</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

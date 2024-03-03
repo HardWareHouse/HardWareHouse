@@ -25,12 +25,6 @@ class HomeController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/')]
-    public function indexNoLocale(): Response
-    {
-    return $this->redirectToRoute('app_home', ['_locale' => 'fr']);
-    }
-    
     #[Route('/{_locale<%app.supported_locales%>}/', name: 'app_home')]
     public function index(
     Security $security,
@@ -42,20 +36,21 @@ class HomeController extends AbstractController
     $factures = [];
     /** @var \App\Entity\User $user */
     if ($this->authorizationChecker->isGranted('ROLE_ADMIN')) {
-            $factures = $factureRepository->findAll();
-            $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
-            $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
-            $produits = $produitRepository->findLatestProducts();
-            $bestSellers = $produitRepository->findBestSellers();
+            // $factures = $factureRepository->findAll();
+            // $devisAttente = $devisRepository->findBy(["status" => 'En attente']);
+            // $devisApprouve = $devisRepository->findBy(["status" => 'Approuvé']);
+            // $produits = $produitRepository->findLatestProducts();
+            // $bestSellers = $produitRepository->findBestSellers();
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         } else {
-            $entrepriseId = $this->getUser()->getEntreprise()->getId();
 
-            $factures = $factureRepository->findBy(["entrepriseId" => $entrepriseId]);
-            $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
-            $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
-            $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
-            $bestSellers = $produitRepository->findBestSellersByEntreprise($entrepriseId);
+    $entrepriseId = $this->getUser()->getEntreprise()->getId();
+
+    $factures = $factureRepository->findBy(['entrepriseId' => $entrepriseId]);
+    $devisAttente = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'En attente']);
+    $devisApprouve = $devisRepository->findBy(["entrepriseId" => $entrepriseId, "status" => 'Approuvé']);
+    $produits = $produitRepository->findLatestProductsByEntrepriseId($entrepriseId);
+    $bestSellers = $produitRepository->findBestSellersByEntreprise($entrepriseId);
         }
 
         
@@ -70,8 +65,8 @@ class HomeController extends AbstractController
         $devisApprouveMontant += $approuve->getTotal();
     }
 
-    $facturesAttente = $factureRepository->findBy(["statutPaiement" => 'Non-payé']);
-    $facturesLate = $factureRepository->findBy(["statutPaiement" => 'En retard']);
+    $facturesAttente = $factureRepository->findBy(["entrepriseId" => $entrepriseId, "statutPaiement" => 'Impayée']);
+    $facturesLate = $factureRepository->findBy(["entrepriseId" => $entrepriseId, "statutPaiement" => 'En retard']);
     $facturesAttenteCount = count($facturesAttente);
     $facturesLateCount = count($facturesLate);
     $facturesAttenteMontant = 0;
@@ -104,8 +99,9 @@ class HomeController extends AbstractController
     
 
     foreach ($factures as $facture) {
+        dump($facture);
         $paiements = $facture->getPaiementId();
-
+        dump($paiements);
         foreach ($paiements as $paiement) {
             $totalPaiements += $paiement->getMontant();
             $datePaiement = $paiement->getDatePaiement();

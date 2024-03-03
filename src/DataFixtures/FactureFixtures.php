@@ -12,12 +12,15 @@ class FactureFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function getOrder(): int
     {
-        return 3;
+        return 4;
     }
 
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+        // Get all existing Devis entities
+        $existingDevis = $manager->getRepository(\App\Entity\Devis::class)->findAll();
 
         for ($i = 0; $i < 30; $i++) {
             $facture = new Facture();
@@ -28,7 +31,16 @@ class FactureFixtures extends Fixture implements OrderedFixtureInterface
                     ->setTotal($faker->randomFloat(2, 100, 10000))
                     ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()))
                     ->setEntrepriseId($this->getReference('entreprise-'.rand(0, 9)));
-                    // ->setClientId($this->getReference('client-'.rand(0, 9)));
+
+            // Inside the load method of FactureFixtures class
+
+            // Fetch the Devis entity based on its Numero
+            $randomDevis = $faker->randomElement($existingDevis);
+            $devisEntity = $manager->getRepository(\App\Entity\Devis::class)->findOneBy(['numero' => $randomDevis->getNumero()]);
+
+            // Set the Devis entity instead of just its Numero
+            $facture->setDevi($devisEntity);
+
 
             $manager->persist($facture);
         }

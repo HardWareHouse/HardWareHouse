@@ -2,14 +2,12 @@
 
 {% block title %}{{'new_category'|trans}}{% endblock %}
 
-{% block body %}
+{% block content %}
 
-{% include 'component/sidebar.html.twig' %}
-
-    <div class="flex w-full flex-col items-center justify-start pt-4 min-h-screen">
+    <div class="flex w-full flex-col items-center justify-start pt-4 min-h-screen forest:bg-[#BAACA0] love:bg-[#FFB3C6]">
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">{{'new_category'|trans}}</h1>
-            <a href="{{ path('app_categorie_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4 forest:text-white love:text-[#FFE5EC]">{{'new_category'|trans}}</h1>
+            <a href="{{ path('app_categorie_index') }}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 forest:text-white love:bg-[#FB6F92] forest:bg-[#786759]">
                 <i class="fas fa-arrow-left mr-2"></i> {{'back_to_list'|trans}}
             </a>
         </div>

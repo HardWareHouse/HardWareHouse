@@ -29,8 +29,8 @@ class UserEntrepriseType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'label' => 'roles',
                 'choices' => [
-                    'user' => 'ROLE_USER',
-                    'accountant' => 'ROLE_COMPTABLE',
+                    'Utilisateur' => 'ROLE_USER',
+                    'Comptable' => 'ROLE_COMPTABLE',
                 ],
                 'expanded' => true,
                 'multiple' => true,

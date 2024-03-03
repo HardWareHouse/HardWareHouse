@@ -49,7 +49,7 @@ new_category: New Category
 #Client
 client_modification: Modify a client
 client_list: Client list
-add_client: Add a new client
+add_client: New client
 address: Address
 email: Email
 telephone: Telephone
@@ -73,18 +73,19 @@ my_user_edit: Modify My employee
 company_list: Company list
 user_list: User list
 my_user_list: My employee list
-company_new: Create a new company
+company_new: New company
 company_details: Company details
-user_new: Create a new user
-my_user_new: Create a new employee
+user_new: New user
+my_user_new: New employee
 no_company: No companies found
 no_user: No users found
 no_my_user: No employees found
 estimate_list: Estimates
-estimate_new: Create a new estimate
+estimate_new: New estimate
 estimate: Estimates
 number: Estimate number
 total: Total (€)
+total_ttc: Total Tax Included (€)
 no_estimate: No estimates found
 expires: Expires on
 custumer: Customer
@@ -97,9 +98,15 @@ refused: Refused
 estimate_placeholder: EST####
 
 #Email
+email_title: Welcome to HARDWAREHOUSE!
 email_header: Welcome to the family %username%!
 email_body: Thank you for signing up on our website. Please click on the link below to activate your account.
+email_footer: If you did not request this email, please ignore it.
 click_here: Click here!
+email_greeting: Hello %username%
+email_quote_ready_body: We are pleased to inform you that your quote is ready and available for review.
+email_view_quote: View Quote
+email_devis_footer: If you have any questions or need assistance, please do not hesitate to contact our customer service.
 #Company
 company_edit: Edit Company
 companies: Companies
@@ -108,7 +115,7 @@ tax_info: Tax information
 #Invoice
 invoice_modify: Modify invoice
 invoice_list: Invoices
-invoice_new: Add a new invoice
+invoice_new: New invoice
 duedate: Due date
 no_invoice: No invoice found
 invoice: Invoice
@@ -118,16 +125,16 @@ billing_date: Billing date
 total_amount: Total amount
 #Payment
 payment_modify: Modify payment
-payment_new: Add a new payment
+payment_new: New payment
 payment_date: Date of payment
 no_payment: No payments found.
 payment_details: Payment details
 #Product
 product_modify: Modify product
-product_new: Add a product
+product_new: New product
 stock: Stock
 no_product: No products found
-product: Producte
+product: Product
 product_details: Product details
 #Reports
 financial_reports: Financial Reports
@@ -200,7 +207,6 @@ forgot_password: Forgot your password?
 no_account: Don't have an account?
 logo_company: Company logo
 slug: The essential tool for efficiently managing your hardware business.
-
 created_at: Created at
 month: Month
 January: January
@@ -215,3 +221,10 @@ September: September
 October: October
 November: November
 December: December
+city: City
+siren: Siren
+postcode: Postcode
+phone: Phone
+product_name: Product name
+quantity: Quantity
+price_tax_included: Price Tax Included

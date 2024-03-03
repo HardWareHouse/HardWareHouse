@@ -1,51 +1,205 @@
 {% block body %}
-    <div style="max-width: 640px; margin: auto; padding: 40px; background: white; box-shadow: 0px 0px 10px rgba(150, 150, 150, 0.1);">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
-            <h1 style="font-size: 24px; font-weight: bold;">{{'invoice'|trans}} {{ facture.numero }}</h1>
-            <img src="../../public/assets/icon/hwh_logo.png" alt="Logo" style="height: 80px;">
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ facture.numero }}</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .header,
+        .info-section,
+        .totals-table {
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header img {
+            height: 50px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .info-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .info-block {
+            width: calc(50% - 10px);
+        }
+
+        .info-block h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .info-block p {
+            margin: 2px 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+
+        .totals-table {
+            margin-top: 24px;
+        }
+
+        .totals-table td {
+            padding: 8px;
+            text-align: right;
+        }
+
+        .totals-table .label {
+            font-weight: bold;
+        }
+
+        .totals-table .value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+
+        .header-content {
+            text-align: right;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div>
+            {% if logoHwh is defined %}
+            <img src="{{ logoHwh }}" />
+            {% else %}
+            <img src="#" />
+            {% endif %}
         </div>
-        <div style="margin-bottom: 32px;">
-            <div style="font-size: 14px;">
-                {{'created_on'|trans}}: {{ facture.dateFacturation ? facture.dateFacturation|date('d/m/Y') : '' }}<br>
-                {{'duedate'|trans}}: {{ facture.datePaiementDue ? facture.datePaiementDue|date('d/m/Y') : '' }}
-            </div>
-        </div>
-{#        <div style="display: flex; margin-bottom: 40px; flex-direction: row;">#}
-{#            <div>#}
-{#                <h2 style="font-weight: bold;">{{'billing_info'|trans}}</h2>#}
-{#                <p>{{ client.nom }}</p>#}
-{#                <p>{{ client.email }}</p>#}
-{#                <p>{{ client.adresse }}</p>#}
-{#            </div>#}
-{#            <div>#}
-{#                <h2 style="font-weight: bold;">{{'shipping_info'|trans}}</h2>#}
-{#                <p>{{ client.nom }}</p>#}
-{#                <p>{{ client.email }}</p>#}
-{#                <p>{{ client.adresse }}</p>#}
-{#            </div>#}
-{#        </div>#}
-        <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #e5e7eb;">
-            <span style="font-weight: bold;">{{'payment_method'|trans}}</span>
-            <span>{{ facture.statutPaiement }}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px; background-color: #f3f4f6;">
-            <span style="font-weight: bold;">{{'amount'|trans}}</span>
-            <span>{{ facture.total }}€</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px; border-bottom: 2px solid #e5e7eb;">
-            <span style="color: #4b5563;">{{'item'|trans}}</span>
-            <span style="color: #4b5563;">{{'price'|trans}}</span>
-{#        {% for produit in produits %}#}
-{#            <div style="display: flex; justify-content: space-between; padding: 8px;">#}
-{#                <span>{{ produit.nom }}</span>#}
-{#                <span>{{ produit.prix }}€</span>#}
-{#            </div>#}
-{#        {% endfor %}#}
-        <div style="display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 2px solid #e5e7eb;">
-            <span style="font-size: 18px; font-weight: bold;">{{'total'|trans}}</span>
-            <span style="font-size: 18px; font-weight: bold;">{{ facture.total }}€</span>
+
+        <div class="header-content">
+            <h1>N°Facture : {{ facture.numero }}</h1>
+            <h3>Date de facturation : {{ facture.dateFacturation|date('d/m/Y') }}</h3>
+            <h3>Date d'expiration : {{ facture.dateFacturation|date_modify('+30 days')|date('d/m/Y') }}</h3> {# à changer #}
         </div>
     </div>
+
+
+    <div class="info-section">
+        <div class="info-block">
+            {% if entreprise is defined %}
+            <h3>Entreprise : {{ entreprise.nom }}</h3>
+            <p>{{ entreprise.adresse }}</p>
+            <p>{{ entreprise.codepostal }} {{ entreprise.ville }} </p>
+            <p>{{ entreprise.email }}</p>
+            <p>Téléphone : {{ entreprise.telephone }}</p>
+            {% else %}
+            <p> test </p>
+            {% endif %}
+        </div>
+        <div class="info-block">
+            {% if client is defined %}
+            <h3>Client : {{ client.nom }}</h3>
+            <p>{{ client.adresse }}</p>
+            <p>{{ client.codepostal }} {{ client.ville }} </p>
+            <p>Téléphone : {{ client.telephone }}</p>
+            <p>Mail : {{ client.email }}</p>
+            {% else %}
+            <p>test</p>
+            {% endif %}
+                
+        </div>
+    </div>
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>QTE</th>
+                <th>Prix HT</th>
+                <th>Montant TVA</th>
+                <th>Montant TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set sousTotalHT = 0 %}
+            {% set tauxTVA = 0.20 %}
+            {% for detail in facture.getDetailFacture %}
+                {% set prixHT = detail.getPrix() %}
+                {% set montantTVA = prixHT * tauxTVA %}
+                {% set prixTTC = prixHT + montantTVA %}
+                <tr>
+                    <td>{{ detail.getProduit().getNom() }}</td>
+                    <td>{{ detail.getQuantite() }}</td>
+                    <td>{{ prixHT }}€</td>
+                    <td>{{ montantTVA }}€</td>
+                    <td>{{ prixTTC }}€</td>
+                </tr>
+                {% set sousTotalHT = sousTotalHT + prixHT %}
+            {% endfor %}
+            {% set totalTVA = sousTotalHT * tauxTVA %}
+            {% set totalTTC = sousTotalHT + totalTVA %}
+        </tbody>
+    </table>
+    
+    <table class="totals-table">
+        <tr>
+            <td class="label">Sous-total HT</td>
+            <td class="value">{{ sousTotalHT }}€</td>
+        </tr>
+        <tr>
+            <td class="label">Total TVA (20%)</td>
+            <td class="value">{{ totalTVA }}€</td>
+        </tr>
+        <tr>
+            <td class="label">Total TTC</td>
+            <td class="value">{{ totalTTC }}€</td>
+        </tr>
+    </table>    
+
+</body>
+
+</html>
+
 {% endblock %}
-
-

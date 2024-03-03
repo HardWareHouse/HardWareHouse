@@ -36,7 +36,7 @@ class UserEditType extends AbstractType
                 'label' => 'Rôles de l\'utilisateur',
                 'choices' => [
                     // 'Admin' => 'ROLE_ADMIN',
-                    'User' => 'ROLE_USER',
+                    'Utilisateur' => 'ROLE_USER',
                     'Comptable' => 'ROLE_COMPTABLE',
                 ],
                 'expanded' => true,

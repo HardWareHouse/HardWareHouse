@@ -7,12 +7,14 @@
         {{ form_label(form.nom, 'name'|trans) }}
         {{ form_widget(form.nom, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.nom) }}
     </div>
 
     <div class="mb-4">
         {{ form_label(form.description, 'description'|trans) }}
         {{ form_widget(form.description, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
         text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.description) }}
     </div>
 
     {% if is_granted('ROLE_ADMIN') %}
@@ -24,7 +26,7 @@
 
     <div class="flex items-center justify-center">
         <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline love:bg-[#FB6F92] forest:bg-[#786759]"
             type="submit">
             {{ button_label|default('save'|trans) }}
         </button>

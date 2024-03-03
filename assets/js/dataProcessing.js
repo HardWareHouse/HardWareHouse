@@ -3,6 +3,7 @@ import {
   methodsChart,
   facturesChart,
   devisChart,
+  mostRecentYear,
 } from "./chartModules.js";
 
 export function processData(
@@ -16,55 +17,114 @@ export function processData(
 ) {
   var selectedYear = new Date().getFullYear();
 
+  var selectedCompanyId;
+  var filteredPaiementsData;
+  var filteredFacturesData;
+  var filteredDevisData;
   // Event listener for dropdown change
   document
     .getElementById("yearDropdown")
     .addEventListener("change", function (event) {
       selectedYear = parseInt(event.target.value);
-      updateCharts(selectedYear);
+      paymentMethods = {};
+      updateCharts(selectedYear, selectedCompanyId);
     });
 
-  function updateCharts(selectedYear) {
-    updateCsvDownloadLinks(selectedYear);
-    updatePaymentsChart(selectedYear);
-    updateMethodsChart(selectedYear);
-    updateFacturesChart(selectedYear);
-    updateDevisChart(selectedYear);
+  if (typeof entreprises !== "undefined") {
+    document
+      .getElementById("companyDropdown")
+      .addEventListener("change", function (event) {
+        selectedCompanyId = event.target.value;
+        paymentMethods = {};
+        updateCharts(selectedYear, selectedCompanyId);
+      });
   }
+  function updateCharts(selectedYear, selectedCompanyId) {
+    filteredPaiementsData = paiementsData.filter(function (paiement) {
+      return paiement.entrepriseId == selectedCompanyId;
+    });
 
-  function updateCsvDownloadLinks(selectedYear) {
+    filteredFacturesData = facturesData.filter(function (facture) {
+      return facture.entrepriseId == selectedCompanyId;
+    });
+
+    filteredDevisData = devisData.filter(function (devis) {
+      return devis.entrepriseId == selectedCompanyId;
+    });
+    updateCsvDownloadLinks(selectedYear, selectedCompanyId);
+    updatePaymentsChart(selectedYear, selectedCompanyId);
+    updateMethodsChart(selectedYear, selectedCompanyId);
+    updateFacturesChart(selectedYear, selectedCompanyId);
+    updateDevisChart(selectedYear, selectedCompanyId);
+  }
+  function updateCsvDownloadLinks(selectedYear, selectedCompanyId) {
     var currentLocale = document.documentElement.lang;
-    var csvMethodsLink = `/${currentLocale}/csv-methodes/${selectedYear}`;
-    var csvFactureLink = `/${currentLocale}/csv-factures/${selectedYear}`;
-    var csvDevisLink = `/${currentLocale}/csv-devis/${selectedYear}`;
-    var csvRevenueLink = `/${currentLocale}/csv-revenue/${selectedYear}`;
 
-    document.getElementById("csvMethods").href = csvMethodsLink;
-    document.getElementById("csvFacture").href = csvFactureLink;
-    document.getElementById("csvRevenue").href = csvRevenueLink;
-    document.getElementById("csvDevis").href = csvDevisLink;
+    var csvMethodsLink = `/${currentLocale}/admin/csv-methodes/${selectedCompanyId}/${selectedYear}`;
+
+    var csvFactureLink = `/${currentLocale}/admin/csv-factures/${selectedCompanyId}/${selectedYear}`;
+
+    var csvDevisLink = `/${currentLocale}/admin/csv-devis/${selectedCompanyId}/${selectedYear}`;
+
+    var csvRevenueLink = `/${currentLocale}/admin/csv-revenue/${selectedCompanyId}/${selectedYear}`;
+
+    if (document.getElementById("csvMethods")) {
+      document.getElementById("csvMethods").href = csvMethodsLink;
+      document.getElementById("csvFacture").href = csvFactureLink;
+      document.getElementById("csvRevenue").href = csvRevenueLink;
+      document.getElementById("csvDevis").href = csvDevisLink;
+    }
   }
+  var paymentsPerMonth;
 
-  function updatePaymentsChart(selectedYear) {
-    var paymentsPerMonth = processPaymentsData(paiementsData, selectedYear);
+  function updatePaymentsChart(selectedYear, selectedCompanyId) {
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      paymentsPerMonth = processCompanyPaymentsData(
+        paiementsData,
+        selectedYear
+      );
+    } else {
+      paymentsPerMonth = processPaymentsData(paiementsData, selectedYear);
+    }
     var paymentsChartOption = generatePaymentsChartOption(paymentsPerMonth);
   }
-  var paymentMethods;
-  function updateMethodsChart(selectedYear) {
-    paymentMethods = processPaymentMethodsData(paiementsData, selectedYear);
+  var paymentMethods = {};
+  function updateMethodsChart(selectedYear, selectedCompanyId) {
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      paymentMethods = processCompanyPaymentMethodsData(
+        filteredPaiementsData,
+        selectedYear
+      );
+    } else {
+      paymentMethods = processPaymentMethodsData(paiementsData, selectedYear);
+    }
     var methodsChartOption = generateMethodsChartOption(paymentMethods);
     methodsChart.resize();
   }
+  function updateFacturesChart(selectedYear, selectedCompanyId) {
+    var factureStatus;
 
-  function updateFacturesChart(selectedYear) {
-    xAxisData = [];
-
-    var statusData = processFacturesData(facturesData, selectedYear);
-    var facturesChartOption = generateFacturesChartOption(statusData);
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      factureStatus = processCompanyFacturesData(
+        filteredFacturesData,
+        selectedYear
+      );
+    } else {
+      factureStatus = processFacturesData(facturesData, selectedYear);
+    }
+    var facturesChartOption = generateFacturesChartOption(factureStatus);
   }
 
-  function updateDevisChart(selectedYear) {
-    var devisStatusData = processDevisData(devisData, selectedYear);
+  function updateDevisChart(selectedYear, selectedCompanyId) {
+    var devisStatusData;
+    if (selectedCompanyId && selectedCompanyId != "all") {
+      devisStatusData = processCompanyDevisData(
+        filteredDevisData,
+        selectedYear
+      );
+    } else {
+      devisStatusData = processDevisData(devisData, selectedYear);
+    }
     var devisChartOption = generateDevisChartOption(devisStatusData);
   }
 
@@ -83,10 +143,41 @@ export function processData(
     });
     return paymentsPerMonth;
   }
-  var paymentMethods = {};
+
+  function processCompanyPaymentsData(paiementsData, selectedYear) {
+    var paymentsPerMonth = new Array(12).fill(0); // Initialize array to hold payments per month
+
+    filteredPaiementsData.forEach(function (paiement) {
+      var paiementYear = new Date(paiement.datePaiement).getFullYear();
+      var paiementMonth = new Date(paiement.datePaiement).getMonth();
+
+      // Check if the paiement belongs to the selected year
+      if (paiementYear === selectedYear) {
+        paymentsPerMonth[paiementMonth] += paiement.montant;
+      }
+    });
+    return paymentsPerMonth;
+  }
 
   function processPaymentMethodsData(paiementsData, selectedYear) {
     paiementsData.forEach(function (paiement) {
+      var paiementYear = new Date(paiement.datePaiement).getFullYear();
+      if (paiementYear === selectedYear) {
+        if (!paymentMethods[paiement.methodePaiement]) {
+          paymentMethods[paiement.methodePaiement] = 1;
+        } else {
+          paymentMethods[paiement.methodePaiement]++;
+        }
+      }
+    });
+    return paymentMethods; // Return the paymentMethods object
+  }
+
+  function processCompanyPaymentMethodsData(
+    filteredPaiementsData,
+    selectedYear
+  ) {
+    filteredPaiementsData.forEach(function (paiement) {
       var paiementYear = new Date(paiement.datePaiement).getFullYear();
       if (paiementYear === selectedYear) {
         if (!paymentMethods[paiement.methodePaiement]) {
@@ -100,7 +191,9 @@ export function processData(
     return paymentMethods; // Return the paymentMethods object
   }
   var xAxisData = [];
-
+  for (var i = 0; i < 12; i++) {
+    xAxisData.push(getTranslatedMonthName(i));
+  }
   function processFacturesData(facturesData, selectedYear) {
     var statusData = {
       Payé: Array(12).fill(0),
@@ -129,13 +222,35 @@ export function processData(
         }
       }
     });
+    return statusData;
+  }
 
-    // Return the statusData object
-
-    // Dynamically generate xAxis data array using translated month names
-    for (var i = 0; i < 12; i++) {
-      xAxisData.push(getTranslatedMonthName(i));
-    }
+  function processCompanyFacturesData(filteredFacturesData, selectedYear) {
+    var statusData = {
+      Payé: Array(12).fill(0),
+      "Non-payé": Array(12).fill(0),
+      "En retard": Array(12).fill(0),
+    };
+    // Process Facture data to count status per month
+    filteredFacturesData.forEach(function (facture) {
+      var factureYear = new Date(facture.dateFacturation).getFullYear();
+      var factureMonth = new Date(facture.dateFacturation).getMonth();
+      // Check if the facture belongs to the selected year
+      if (factureYear == selectedYear) {
+        // Increment the count for the corresponding status and month
+        switch (facture.status) {
+          case "Payé":
+            statusData["Payé"][factureMonth]++;
+            break;
+          case "Non-payé":
+            statusData["Non-payé"][factureMonth]++;
+            break;
+          case "En retard":
+            statusData["En retard"][factureMonth]++;
+            break;
+        }
+      }
+    });
     return statusData;
   }
 
@@ -152,7 +267,7 @@ export function processData(
       var devisMonth = new Date(devis.dateFacturation).getMonth();
 
       // Check if the facture belongs to the selected year
-      if (devisYear === selectedYear) {
+      if (devisYear == selectedYear) {
         // Increment the count for the corresponding status and month
         switch (devis.status) {
           case "En attente":
@@ -167,12 +282,37 @@ export function processData(
         }
       }
     });
+    return devisStatusData;
+  }
 
-    // Dynamically generate xAxis data array using translated month names
-    var xAxisData = [];
-    for (var i = 0; i < 12; i++) {
-      xAxisData.push(getTranslatedMonthName(i));
-    }
+  function processCompanyDevisData(filteredDevisData, selectedYear) {
+    var devisStatusData = {
+      "En attente": Array(12).fill(0),
+      Approuvé: Array(12).fill(0),
+      Refusé: Array(12).fill(0),
+    };
+
+    // Process Facture data to count status per month
+    filteredDevisData.forEach(function (devis) {
+      var devisYear = new Date(devis.dateFacturation).getFullYear();
+      var devisMonth = new Date(devis.dateFacturation).getMonth();
+
+      // Check if the facture belongs to the selected year
+      if (devisYear == selectedYear) {
+        // Increment the count for the corresponding status and month
+        switch (devis.status) {
+          case "En attente":
+            devisStatusData["En attente"][devisMonth]++;
+            break;
+          case "Approuvé":
+            devisStatusData["Approuvé"][devisMonth]++;
+            break;
+          case "Refusé":
+            devisStatusData["Refusé"][devisMonth]++;
+            break;
+        }
+      }
+    });
     return devisStatusData;
   }
 
@@ -228,7 +368,6 @@ export function processData(
     };
     paymentsChart.setOption(paymentsChartOption);
   }
-
   // Translate legend labels
   var translatedLegend = [];
   Object.keys(paymentMethods).forEach(function (method) {
@@ -394,7 +533,5 @@ export function processData(
         return "";
     }
   }
-  // Initial update of charts with the current year
-  var currentYear = new Date().getFullYear();
-  updateCharts(currentYear);
+  updateCharts(mostRecentYear);
 }

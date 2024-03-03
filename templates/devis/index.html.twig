@@ -3,12 +3,13 @@
 {% block title %}{{'estimate'|trans}}{% endblock %}
 
 {% block content %}
-{#    #}
+{# #}
 <div class="container mx-auto my-8 flex-grow p-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white">{{'estimate_list'|trans}}</h1>
-        <a href="{{ path('app_devis_new') }}" 
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'estimate_list'|trans}}
+        </h1>
+        <a href="{{ path('app_devis_new') }}"
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
             <i class="fas fa-plus mr-2"></i> {{'estimate_new'|trans}}
         </a>
     </div>
@@ -16,31 +17,34 @@
     <div class="overflow-x-auto relative sm:rounded-lg mt-6">
         <table id="devisTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="py-3 px-6">{{'number'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'created_on'|trans}}</th>
+                <tr class="love:bg-[#FB6F92] love:text-[#FFE5EC]">
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white ">{{'number'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white ">{{'created_on'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col" class="py-3 px-6">{{'the_company'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6">{{'custumer'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'status'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'total'|trans}}</th>
-                    <th scope="col" class="py-3 px-6">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'custumer'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'status'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'total'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'total_ttc'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'actions'|trans}}</th>
                 </tr>
-                <tr>
+                <tr class="forest:bg-[#786759] love:bg-[#FB6F92] love:text-[#FFE5EC]">
                     <th><input type="text" placeholder="Numéro du devis..." class="form-control form-control-sm" /></th>
-                    <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" />
+                    </th>
                     {% if is_granted('ROLE_ADMIN') %}
                     <th><input type="text" placeholder="Entreprise..." class="form-control form-control-sm" /></th>
                     {% endif %}
                     <th><input type="text" placeholder="Client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Statut..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Total..." class="form-control form-control-sm" /></th>
+                    <th><input type="text" placeholder="Total TTC..." class="form-control form-control-sm" /></th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-            {% for devi in devis %}
+                {% for devi in devis %}
                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="py-4 px-6">{{ devi.numero }}</td>
                     <td class="py-4 px-6">{{ devi.dateCreation ? devi.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
@@ -49,17 +53,20 @@
                     {% endif %}
                     <td class="py-4 px-6">{{ devi.clientId.nom }}</td>
                     <td class="py-4 px-6">{{ devi.status }}</td>
-                    <td class="py-4 px-6">{{ devi.total }}€</td>
+                    <td class="py-4 px-6">{{ devi.total }}€ (HT)</td>
+                    <td class="py-4 px-6">{{ devi.totalTTC }}€ (TTC)</td>
                     <td>
                         <div class="flex items-center justify-around">
                             <a href="{{ path('app_devis_pdf', {'id': devi.id}) }}"
-                               class="font-medium text-red-600 dark:text-red-500 hover:underline mr-4">
+                                class="font-medium text-red-600 dark:text-red-500 hover:underline mr-4">
                                 <i class="bi bi-file-earmark-arrow-down-fill"></i>
                             </a>
-                            <a href="{{ path('app_devis_show', {'id': devi.id}) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            <a href="{{ path('app_devis_show', {'id': devi.id}) }}"
+                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ path('app_devis_edit', {'id': devi.id}) }}" class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
+                            <a href="{{ path('app_devis_edit', {'id': devi.id}) }}"
+                                class="font-medium text-green-600 dark:text-green-500 hover:underline ml-4">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                             <div class="ml-4">
@@ -68,18 +75,18 @@
                         </div>
                     </td>
                 </tr>
-            {% else %}
+                {% else %}
                 <tr>
                     <td colspan="7" class="py-4 px-6 text-center">{{'no_estimate'|trans}}</td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
             </tbody>
         </table>
     </div>
     {% for message in app.session.flashbag.get('danger') %}
-        <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
-            <p class="text-center">{{ message }}</p>
-        </div>
+    <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
+        <p class="text-center">{{ message }}</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

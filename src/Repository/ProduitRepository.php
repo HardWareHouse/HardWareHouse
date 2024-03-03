@@ -51,13 +51,17 @@ class ProduitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBestSellersByEntreprise(int $entrepriseId, int $limit = 10): array
+    public function findBestSellersByEntreprise($companyId)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.entrepriseId = :entrepriseId')
-            ->setParameter('entrepriseId', $entrepriseId)
-            ->orderBy('p.stock', 'ASC') // Sort by stock level in ascending order
-            ->setMaxResults($limit)
+            ->select('p.nom, p.prix, COUNT(df.id) as total_sales')
+            ->leftJoin('p.detailFactures', 'df')
+            ->leftJoin('df.facture', 'f')
+            ->leftJoin('f.entrepriseId', 'e')
+            ->andWhere('e.id = :companyId')
+            ->setParameter('companyId', $companyId)
+            ->groupBy('p.id')
+            ->orderBy('total_sales', 'DESC')
             ->getQuery()
             ->getResult();
     }

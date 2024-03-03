@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Devis;
 use App\Entity\Entreprise;
+use App\Entity\User;
 use App\Form\DevisType;
 use App\Repository\DevisRepository;
 use App\Service\PdfService;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -55,7 +57,19 @@ class DevisController extends AbstractController
 
         $totalDevis = 0;
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $dernierDevis = $userEntreprise->getDevisId()->last();
+            if ($dernierDevis) {
+                $numeroDernierDevis = $dernierDevis->getNumero();
+                $numeroParties = explode('#', $numeroDernierDevis);
+                $count = intval($numeroParties[1]) + 1;
+            } else {
+                $count = 1;
+            }
+            $numero = sprintf("DEVIS#%03d", $count);
+
             $devi = $form->getData();
+            $devi->setNumero($numero);
             foreach ($devi->getDetailDevis() as $detaildevis) {
                 $detaildevis->setPrix(
                     $detaildevis->getProduit()->getPrix() * $detaildevis->getQuantite()
@@ -63,6 +77,11 @@ class DevisController extends AbstractController
                 $totalDevis += $detaildevis->getPrix();
             }
             $devi->setTotal($totalDevis);
+
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+
 
             if (!$this->isGranted('ROLE_ADMIN')) {
                 $devi->setEntrepriseId($userEntreprise);
@@ -77,14 +96,17 @@ class DevisController extends AbstractController
                 'entreprise' => $userEntreprise,
             ]);
             $pdfContent = $pdfService->generatePdfContent($html);
-
+//            $user = $this->getUser()->getName();
+            $emailContent = $this->renderView('devis/email.html.twig', [
+//                'username' => $user,
+            ]);
             // Créer l'email
             $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
             $email = (new Email())
                 ->from('devis@hardwarehouse.com')
                 ->to($userEmail)
                 ->subject('Votre devis')
-                ->html('Voici votre devis en pièce jointe.')
+                ->html($emailContent)
                 ->attach($pdfContent, 'devis.pdf', 'application/pdf');
 
             // Envoyer l'email
@@ -123,6 +145,10 @@ class DevisController extends AbstractController
             return $this->redirectToRoute('app_devis_index');
         }
 
+        $client = $devi->getClientId();
+        $entreprise = $devi->getEntrepriseId();
+        $telephoneEntreprise = $entreprise->getTelephone();
+
         $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
@@ -130,8 +156,11 @@ class DevisController extends AbstractController
 
         $html = $this->renderView('devis/pdf.html.twig', [
             'devis' => $devi,
-            'entreprise' => $devi->getEntrepriseId(),
             'logoHwh' => $logoHwh,
+            'entreprise' => $devi->getEntrepriseId(),
+            'client' => $client,
+            'entreprise' => $entreprise,
+            'telephoneEntreprise' => $telephoneEntreprise,
         ]);
 
         $pdfService->showPdfFile($html);
@@ -151,6 +180,7 @@ class DevisController extends AbstractController
         }
 
         $form = $this->createForm(DevisType::class, $devi);
+        $numero = $devi->getNumero();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -161,7 +191,14 @@ class DevisController extends AbstractController
                 );
                 $totalDevis += $detaildevis->getPrix();
             }
+            
             $devi->setTotal($totalDevis);
+
+            $tauxTVA = 0.2;
+            $totalTTC = $totalDevis * (1 + $tauxTVA);
+            $devi->setTotalTTC($totalTTC);
+            $devi->setNumero($numero);
+            
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -203,13 +240,12 @@ class DevisController extends AbstractController
     public function delete(Request $request, Devis $devi): Response
     {   
         $userEntreprise = $this->getUser()->getEntreprise();
-        
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
             $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
         } 
         
-        elseif (!$this->isGranted('ROLE_ADMIN') || $devi->getStatus() === "Approuvé"){
+        elseif (!$this->isGranted('ROLE_ADMIN') && $devi->getStatus() === "Approuvé"){
             $this->addFlash('danger', 'Un devis ayant été confirmé ne peut être supprimé !');
             return $this->redirectToRoute('app_devis_index');
         }

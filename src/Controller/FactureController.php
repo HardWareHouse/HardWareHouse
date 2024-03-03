@@ -70,6 +70,13 @@ class FactureController extends AbstractController
 
         // Ajout des détails de la facture
         foreach ($devi->getDetailDevis() as $detaildevis) {
+            $detaildevis->getProduit()->setStock($detaildevis->getProduit()->getStock() - $detaildevis->getQuantite());
+
+            if ($detaildevis->getProduit()->getStock() < 0) {
+                $this->addFlash('danger', 'Le stock du produit '.$detaildevis->getProduit()->getNom().' est insuffisant pour valider le devis.');
+                return $this->redirectToRoute('app_devis_index');
+            }
+
             $detailFacture = new DetailFacture();
             $detailFacture->setPrix($detaildevis->getPrix());
             $detailFacture->setQuantite($detaildevis->getQuantite());
@@ -94,14 +101,15 @@ class FactureController extends AbstractController
             'facture' => $facture,
         ]);
         $pdfContent = $pdfService->generatePdfContent($html);
-
+        $emailContent = $this->renderView('facture/email.html.twig', [
+        ]);
         // Création de l'email
         $userEmail = $this->getUser()->getMail();
         $email = (new Email())
             ->from('facture@hardwarehouse.com')
             ->to($userEmail)
             ->subject('Votre facture')
-            ->html('Voici votre facture en pièce jointe.')
+            ->html($emailContent)
             ->attach($pdfContent, 'facture.pdf', 'application/pdf');
 
         // Envoi de l'email
@@ -136,9 +144,21 @@ class FactureController extends AbstractController
             return $this->redirectToRoute('app_facture_index');
         }
 
+        $path = $this->getParameter('kernel.project_dir') . '/public/assets/icon/hwh.png';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logoHwh = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+
+        $client = $facture->getClientId();
+        $entreprise = $facture->getEntrepriseId();
+
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
-            'client' => $facture->getClientId(),
+            'logoHwh' => $logoHwh,
+            'client' => $client,
+            'entreprise' => $entreprise,
+            
         ]);
 
         $pdfService->showPdfFile($html);
