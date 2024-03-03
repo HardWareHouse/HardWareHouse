@@ -99,9 +99,7 @@ class HomeController extends AbstractController
     
 
     foreach ($factures as $facture) {
-        dump($facture);
         $paiements = $facture->getPaiementId();
-        dump($paiements);
         foreach ($paiements as $paiement) {
             $totalPaiements += $paiement->getMontant();
             $datePaiement = $paiement->getDatePaiement();

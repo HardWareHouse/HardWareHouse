@@ -14,8 +14,7 @@ class LanguageController extends AbstractController
     public function changeLanguage(Request $request, string $locale): Response
     {
         $locale = $request->getLocale();
-        var_dump($locale);
-
+        // Store the selected locale in the session
         $request->getSession()->set('locale', $locale);
 
         return new Response('Language changed successfully to:' . $locale);
