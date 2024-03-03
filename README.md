@@ -37,11 +37,12 @@ Moussa Seydou TRAORE - GitHub : MoussaST - https://github.com/MoussaST
 Lien : https://github.com/HardWareHouse/HardWareHouse
 
 
-### Tâches réalisées
+# Tâches réalisées
 
-Attribution des tâches : 
+### Attribution des tâches : 
 
-Sami : 
+### Sami : 
+
 Front login/register/sidebar
 
 Création de la base de données et liaison des entitées
@@ -78,7 +79,10 @@ Listing des Produits dans les Devis et Catégories
 
 Auto Incrementation des createdAt
 
-Aria :  
+
+
+### Aria : 
+
 Authentification (Connexion/Inscription) Partie Back-End
 
 Envoie de Mail lors de l’Inscription Partie Back-End et Front-End
@@ -119,9 +123,7 @@ Installation et configurations du premier Echart.js
 
 
 
-
-
-Moussa :
+### Moussa :
 
 Crud User 
 
@@ -165,7 +167,10 @@ Auto-incrémentation des numéro de Devis
 
 Vérification du compte utilisateur avant login 
 
-Jay : 
+
+
+### Jay :
+
 Charte graphique (logo, couleurs)
 
 Organisation de la gestion de projet (Notion / Trello)
