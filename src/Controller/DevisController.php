@@ -142,6 +142,7 @@ class DevisController extends AbstractController
             ->attach($pdfContent, 'devis.pdf', 'application/pdf');
 
         $mailer->send($email);
+        $this->addFlash('danger', 'Le devis a été envoyé par mail!');
         return $this->redirectToRoute('app_devis_index');
     }
 
@@ -151,7 +152,7 @@ class DevisController extends AbstractController
         $userEntreprise = $this->getUser()->getEntreprise();
 
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
-            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            $this->addFlash('succes', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
         }
 

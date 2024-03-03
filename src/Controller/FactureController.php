@@ -143,7 +143,8 @@ class FactureController extends AbstractController
 
         // Envoi de l'email
         $mailer->send($email);
-        return $this->redirectToRoute('app_devis_index');
+        $this->addFlash('succes', 'La facture a été envoyée par mail !');
+        return $this->redirectToRoute('app_facture_index');
     }
 
     #[Route('/{id}', name: 'app_facture_show', methods: ['GET'])]

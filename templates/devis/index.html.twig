@@ -93,6 +93,11 @@
         <p class="text-center">{{ message }}</p>
     </div>
     {% endfor %}
+    {% for message in app.session.flashbag.get('succes') %}
+        <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-gray-900">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
