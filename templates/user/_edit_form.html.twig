@@ -5,22 +5,29 @@
 
     <div class="mb-4">
         {{ form_label(form.mail) }}
-        {{ form_widget(form.mail, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_widget(form.mail, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
+        text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.mail) }}
     </div>
 
     <div class="mb-4">
         {{ form_label(form.username) }}
-        {{ form_widget(form.username, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_widget(form.username, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3
+        text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.username) }}
     </div>
 
     <div class="mb-4">
-    {{ form_label(form.roles) }}
-    {{ form_widget(form.roles, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_label(form.roles) }}
+        {{ form_widget(form.roles, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight
+        focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.roles) }}
     </div>
 
     {# <div class="mb-4">
-    {{ form_label(form.isVerified) }}
-    {{ form_widget(form.isVerified, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_label(form.isVerified) }}
+        {{ form_widget(form.isVerified, {'attr': {'class': 'rounded w-full py-2 px-3 text-gray-700 leading-tight
+        focus:outline-none focus:shadow-outline'}}) }}
     </div> #}
 
     <div class="flex items-center justify-center">
