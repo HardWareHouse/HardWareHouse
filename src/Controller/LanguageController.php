@@ -15,11 +15,10 @@ class LanguageController extends AbstractController
     {
         $locale = $request->getLocale();
         var_dump($locale);
-        // Store the selected locale in the session
+
         $request->getSession()->set('locale', $locale);
 
         return new Response('Language changed successfully to:' . $locale);
-        // return $this->redirect($request->headers->get('referer'));
     }
 
 }

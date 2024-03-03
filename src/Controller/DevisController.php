@@ -90,7 +90,6 @@ class DevisController extends AbstractController
             $this->entityManager->persist($devi);
             $this->entityManager->flush();
 
-            // Générer le contenu du PDF
             $html = $this->renderView('devis/pdf.html.twig', [
                 'devis' => $devi,
                 'entreprise' => $userEntreprise,
@@ -100,16 +99,15 @@ class DevisController extends AbstractController
             $emailContent = $this->renderView('devis/email.html.twig', [
 //                'username' => $user,
             ]);
-            // Créer l'email
-            $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
+
+            $userEmail = $this->getUser()->getMail();
             $email = (new Email())
                 ->from('devis@hardwarehouse.com')
                 ->to($userEmail)
                 ->subject('Votre devis')
                 ->html($emailContent)
                 ->attach($pdfContent, 'devis.pdf', 'application/pdf');
-
-            // Envoyer l'email
+                
             $mailer->send($email);
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
