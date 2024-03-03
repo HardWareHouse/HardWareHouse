@@ -120,6 +120,33 @@ class FactureController extends AbstractController
         return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[Route('/{id}', name: 'app_facture_envoies', methods: ['POST'])]
+    public function SendEmail(Facture $facture, Request $request, MailerInterface $mailer, PdfService $pdfService): Response
+    {
+        $form = $this->createForm(FactureType::class, $facture);
+        $form->handleRequest($request);
+
+        $html = $this->renderView('facture/pdf.html.twig', [
+            'facture' => $facture,
+        ]);
+
+        $pdfContent = $pdfService->generatePdfContent($html);
+        $emailContent = $this->renderView('facture/email.html.twig', []);
+
+        $userEmail = $this->getUser()->getMail();
+        $email = (new Email())
+            ->from('facture@hardwarehouse.com')
+            ->to($userEmail)
+            ->subject('Votre facture')
+            ->html($emailContent)
+            ->attach($pdfContent, 'facture.pdf', 'application/pdf');
+
+        // Envoi de l'email
+        $mailer->send($email);
+        $this->addFlash('succes', 'La facture a été envoyée par mail !');
+        return $this->redirectToRoute('app_facture_index');
+    }
+
     #[Route('/{id}', name: 'app_facture_show', methods: ['GET'])]
     public function show(Facture $facture): Response
     {   

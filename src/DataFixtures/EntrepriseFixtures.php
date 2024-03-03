@@ -6,15 +6,10 @@ use App\Entity\Entreprise;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class EntrepriseFixtures extends Fixture implements OrderedFixtureInterface
+class EntrepriseFixtures extends Fixture
 {
-    public function getOrder(): int
-    {
-        return 1;
-    }
-
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -23,14 +18,20 @@ class EntrepriseFixtures extends Fixture implements OrderedFixtureInterface
             $entreprise = new Entreprise();
             $entreprise->setNom($faker->company)
                        ->setAdresse($faker->address)
-                       ->setDescription($faker->text)
-                       ->setInformationFiscale($faker->randomNumber(9, true))
-                       ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisDecade()));
+                       ->setDescription($faker->realText(200))
+                       ->setCreatedAt(new \DateTimeImmutable())
+                       ->setEmail($faker->companyEmail)
+                       ->setTelephone($faker->numerify('0#########'))
+                       ->setSiren($faker->numerify('1########'))
+                       ->setCodePostal($faker->postcode)
+                       ->setVille($faker->city)
+                       ->setSiteWeb($faker->url)
+                       ->setLogo(null);
 
             $manager->persist($entreprise);
-            $this->addReference('entreprise-'.$i, $entreprise);
         }
 
         $manager->flush();
     }
+
 }

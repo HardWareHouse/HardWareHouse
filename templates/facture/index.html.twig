@@ -42,6 +42,11 @@
                     <td class="py-4 px-6">{{ facture.devi.totalTTC }}€</td>
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-around">
+                            <form action="{{ path('app_facture_envoies', {'id': facture.id}) }}" method="post" class="bg-yellow pr-4">
+                                <button type="submit" class="font-medium text-yellow dark:text-yellow hover:underline">
+                                    <i class="bi bi-send-fill"></i>
+                                </button>
+                            </form>
                             <a href="{{ path('app_facture_pdf', {'id': facture.id}) }}"
                                class="font-medium text-red-600 dark:text-red-500 hover:underline mr-4">
                                 <i class="bi bi-file-earmark-arrow-down-fill"></i>

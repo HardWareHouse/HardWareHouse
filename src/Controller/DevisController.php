@@ -33,7 +33,7 @@ class DevisController extends AbstractController
 
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
-    {   
+    {
         $userEntreprise = $this->getUser()->getEntreprise();
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -90,7 +90,6 @@ class DevisController extends AbstractController
             $this->entityManager->persist($devi);
             $this->entityManager->flush();
 
-            // Générer le contenu du PDF
             $html = $this->renderView('devis/pdf.html.twig', [
                 'devis' => $devi,
                 'entreprise' => $userEntreprise,
@@ -100,8 +99,8 @@ class DevisController extends AbstractController
             $emailContent = $this->renderView('devis/email.html.twig', [
 //                'username' => $user,
             ]);
-            // Créer l'email
-            $userEmail = $this->getUser()->getMail(); // ou getMail(), selon votre implémentation de l'entité User
+
+            $userEmail = $this->getUser()->getMail();
             $email = (new Email())
                 ->from('devis@hardwarehouse.com')
                 ->to($userEmail)
@@ -109,7 +108,6 @@ class DevisController extends AbstractController
                 ->html($emailContent)
                 ->attach($pdfContent, 'devis.pdf', 'application/pdf');
 
-            // Envoyer l'email
             $mailer->send($email);
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -121,13 +119,40 @@ class DevisController extends AbstractController
         ]);
     }
 
+    #[Route('/{id}', name: 'app_devis_envoies', methods: ['POST'])]
+    public function SendEmail(Devis $devi, Request $request, MailerInterface $mailer, PdfService $pdfService): Response
+    {
+        $userEntreprise = $this->getUser()->getEntreprise();
+        $form = $this->createForm(DevisType::class, $devi);
+        $form->handleRequest($request);
+
+        $html = $this->renderView('devis/pdf.html.twig', [
+            'devis' => $devi,
+            'entreprise' => $userEntreprise,
+        ]);
+        $pdfContent = $pdfService->generatePdfContent($html);
+        $emailContent = $this->renderView('devis/email.html.twig', []);
+
+        $userEmail = $this->getUser()->getMail();
+        $email = (new Email())
+            ->from('devis@hardwarehouse.com')
+            ->to($userEmail)
+            ->subject('Votre devis')
+            ->html($emailContent)
+            ->attach($pdfContent, 'devis.pdf', 'application/pdf');
+
+        $mailer->send($email);
+        $this->addFlash('danger', 'Le devis a été envoyé par mail!');
+        return $this->redirectToRoute('app_devis_index');
+    }
+
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
     public function show(Devis $devi): Response
     {   
         $userEntreprise = $this->getUser()->getEntreprise();
 
         if (!$this->isGranted('ROLE_ADMIN') && $userEntreprise->getId() !== $devi->getEntrepriseId()->getId()) {
-            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            $this->addFlash('succes', 'La requête que vous essayez de faire est illégale !');
             return $this->redirectToRoute('app_devis_index');
         }
 

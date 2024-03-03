@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -74,21 +75,27 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/{_locale<%app.supported_locales%>}/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
-        $user = $this->getUser();
 
-            try {
-                $this->emailVerifier->handleEmailConfirmation($request, $user);
+        $id = $request->query->get('id');
+        if (null === $id) {
+            return $this->redirectToRoute('app_home');
+        }
+        $user = $userRepository->find($id);
+        if (null === $user) {
+            return $this->redirectToRoute('app_home');
+        }
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
+        } catch (VerifyEmailExceptionInterface $exception) {
+            $this->addFlash('verify_email_error', $exception->getReason());
 
-            } catch (VerifyEmailExceptionInterface $exception) {
-                $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-                return $this->redirectToRoute('app_register');
-            }
+            return $this->redirectToRoute('app_register');
+        }
 
-        $this->addFlash('success', 'Your email address has been verified.');
+        // Redirect to the home page after successful verification
         return $this->redirectToRoute('app_home');
-
     }
 
 
