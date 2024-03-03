@@ -55,7 +55,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
         if (!$user->isVerified()) {
             $this->tokenStorage->setToken(null);
             $request->getSession()->getFlashBag()->add('warning', 'Veuillez confirmer votre compte en cliquant sur le lien de confirmation que nous vous avons envoyé par e-mail.');
-            return new RedirectResponse($this->urlGenerator->generate('app_login') . '?verified=false');
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
