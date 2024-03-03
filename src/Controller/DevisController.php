@@ -33,7 +33,7 @@ class DevisController extends AbstractController
 
     #[Route('/', name: 'app_devis_index', methods: ['GET'])]
     public function index(DevisRepository $devisRepository): Response
-    {   
+    {
         $userEntreprise = $this->getUser()->getEntreprise();
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -107,7 +107,7 @@ class DevisController extends AbstractController
                 ->subject('Votre devis')
                 ->html($emailContent)
                 ->attach($pdfContent, 'devis.pdf', 'application/pdf');
-                
+
             $mailer->send($email);
 
             return $this->redirectToRoute('app_devis_index', [], Response::HTTP_SEE_OTHER);
@@ -117,6 +117,32 @@ class DevisController extends AbstractController
             'devi' => $devi,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_devis_envoies', methods: ['POST'])]
+    public function SendEmail(Devis $devi, Request $request, MailerInterface $mailer, PdfService $pdfService): Response
+    {
+        $userEntreprise = $this->getUser()->getEntreprise();
+        $form = $this->createForm(DevisType::class, $devi);
+        $form->handleRequest($request);
+
+        $html = $this->renderView('devis/pdf.html.twig', [
+            'devis' => $devi,
+            'entreprise' => $userEntreprise,
+        ]);
+        $pdfContent = $pdfService->generatePdfContent($html);
+        $emailContent = $this->renderView('devis/email.html.twig', []);
+
+        $userEmail = $this->getUser()->getMail();
+        $email = (new Email())
+            ->from('devis@hardwarehouse.com')
+            ->to($userEmail)
+            ->subject('Votre devis')
+            ->html($emailContent)
+            ->attach($pdfContent, 'devis.pdf', 'application/pdf');
+
+        $mailer->send($email);
+        return $this->redirectToRoute('app_devis_index');
     }
 
     #[Route('/{id}', name: 'app_devis_show', methods: ['GET'])]
