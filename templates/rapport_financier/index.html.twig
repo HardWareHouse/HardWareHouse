@@ -4,39 +4,43 @@
 
 {% block content %}
 
-<div class=" items-center text-center justify-around min-h-screen overflow-auto dark:bg-[#101827]">
-<h1 class="text-4xl font-semibold my-5 dark:text-white forest:text-white">{{'details_year'|trans}}</h1>
-<div id="dropdownContainer"></div>
-    <div class="flex flex-col align-center w-full h-fit justify-center px-6 md:flex-row gap-8">
-        <div class="border border-gray-300 h-72 w-full my-4 items-center ">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center dark:">
-                <h3 class="text-darkBlue font-bold dark:text-white">{{'revenue'|trans}}</h3>
+    <div class=" items-center text-center justify-around min-h-screen overflow-auto dark:bg-[#101827] ">
+        <h1 class="text-4xl font-semibold my-5 dark:text-white forest:text-white">{{'details_year'|trans}}</h1>
+        <div id="dropdownContainer"></div>
+        <div class="flex flex-col align-center w-full h-fit justify-center px-6 md:flex-row gap-8 ">
+            <div class="border border-gray-300 h-72 w-full my-4 items-center ">
+                <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center love:bg-[#FB6F92] forest:bg-[#786759]">
+                    <h3 class="text-darkBlue font-bold dark:text-white forest:text-white love:text-white">{{'revenue'|trans}}</h3>
+                    <a class="text-darkBlue ml-5" id="csvRevenue"><i class="fa-solid fa-download mr-2"></i></a>
+                </div>
+                <div id="paiementsAnnee" class="w-full h-full"></div>
             </div>
-            <div id="paiementsAnnee" class="w-full h-full"></div>
+
         </div>
-        
-</div>
-    <div class="flex flex-col mx-6 gap-8 md:flex-row">
-        <div class="border border-gray-300 w-full gap-8 h-72 my-4 md:gap-8 ">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
-                <h3 class="text-darkBlue font-bold dark:text-white">{{'my_invoices'|trans}}</h3>
+        <div class="flex flex-col mx-6 gap-8 md:flex-row">
+            <div class="border border-gray-300 w-full gap-8 h-72 my-4 md:gap-8 ">
+                <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center love:bg-[#FB6F92] forest:bg-[#786759]">
+                    <h3 class="text-darkBlue font-bold dark:text-white forest:text-white love:text-white">{{'my_invoices'|trans}}</h3>
+                    <a class="text-darkBlue ml-5 forest:text-white love:text-white" id="csvFacture"><i class="fa-solid fa-download mr-2"></i></a>
+                </div>
+                <div id="facturesChart" class="w-full h-full"></div>
             </div>
-            <div id="facturesChart" class="w-full h-full"></div>
-        </div>
-        <div class="border border-gray-300 h-72 w-full my-4">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center">
-                <h3 class="text-darkBlue font-bold dark:text-white">{{'my_estimates'|trans}}</h3>
+            <div class="border border-gray-300 h-72 w-full my-4">
+                <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center  love:bg-[#FB6F92] forest:bg-[#786759]">
+                    <h3 class="text-darkBlue font-bold dark:text-white forest:text-white love:text-white">{{'my_estimates'|trans}}</h3>
+                    <a class="text-darkBlue ml-5 forest:text-white love:text-white" id="csvDevis"><i class="fa-solid fa-download mr-2"></i></a>
+                </div>
+                <div id="devisChart" class="w-full h-full"></div>
             </div>
-            <div id="devisChart" class="w-full h-full"></div>
-        </div>
-        <div class="border border-gray-300 h-72 w-full my-4 flex flex-col overflow-y-scroll">
-            <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center shrink-0 sticky top-0">
-                <h3 class="text-darkBlue font-bold dark:text-white"> {{'payment_method'|trans}}</h3>
+            <div class="border border-gray-300 h-72 w-full my-4 flex flex-col overflow-y-scroll">
+                <div class="bg-lightBlue w-full h-12 flex items-center text-center justify-center shrink-0 sticky top-0  love:bg-[#FB6F92] forest:bg-[#786759]">
+                    <h3 class="text-darkBlue font-bold dark:text-white forest:text-white love:text-white"> {{'payment_method'|trans}}</h3>
+                    <a class="text-darkBlue ml-5 forest:text-white love:text-white" id="csvMethods"><i class="fa-solid fa-download mr-2"></i></a>
+                </div>
+                <div id="methodes" class="w-full h-full"></div>
             </div>
-            <div id="methodes" class="w-full h-full"></div>
         </div>
     </div>
-</div>
     
 {{ encore_entry_script_tags('line_chart') }}
 

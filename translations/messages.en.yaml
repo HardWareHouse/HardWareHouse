@@ -49,7 +49,7 @@ new_category: New Category
 #Client
 client_modification: Modify a client
 client_list: Client list
-add_client: Add a new client
+add_client: New client
 address: Address
 email: Email
 telephone: Telephone
@@ -73,15 +73,15 @@ my_user_edit: Modify My employee
 company_list: Company list
 user_list: User list
 my_user_list: My employee list
-company_new: Create a new company
+company_new: New company
 company_details: Company details
-user_new: Create a new user
-my_user_new: Create a new employee
+user_new: New user
+my_user_new: New employee
 no_company: No companies found
 no_user: No users found
 no_my_user: No employees found
 estimate_list: Estimates
-estimate_new: Create a new estimate
+estimate_new: New estimate
 estimate: Estimates
 number: Estimate number
 total: Total (€)
@@ -115,7 +115,7 @@ tax_info: Tax information
 #Invoice
 invoice_modify: Modify invoice
 invoice_list: Invoices
-invoice_new: Add a new invoice
+invoice_new: New invoice
 duedate: Due date
 no_invoice: No invoice found
 invoice: Invoice
@@ -125,16 +125,16 @@ billing_date: Billing date
 total_amount: Total amount
 #Payment
 payment_modify: Modify payment
-payment_new: Add a new payment
+payment_new: New payment
 payment_date: Date of payment
 no_payment: No payments found.
 payment_details: Payment details
 #Product
 product_modify: Modify product
-product_new: Add a product
+product_new: New product
 stock: Stock
 no_product: No products found
-product: Producte
+product: Product
 product_details: Product details
 #Reports
 financial_reports: Financial Reports

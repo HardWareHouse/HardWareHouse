@@ -5,11 +5,11 @@
 {% block content %}
 <div class="flex flex-col items-center text-center justify-around h-screen ml-8 overflow-scroll">
     <div>
-        <h1 class="text-4xl font-semibold my-2 text-blue-500">Interface Administrateur</h1>
-        <h2>Votre Dashboard Admin</h2>
+        <h1 class="text-4xl font-semibold my-2 text-blue-500 dark:text-white forest:text-white love:text-[#FFE5EC]">Interface Administrateur</h1>
+        <h2 class="dark:text-white forest:text-white love:text-[#FFE5EC]">Votre Dashboard Admin</h2>
     </div>
 
-    <div class="flex flex-col md:flex-row w-full">
+    <div class="flex flex-col md:flex-row w-full dark:text-white forest:text-white ">
         {% set cards = [
             {
                 'title': 'Nombre d\'utilisateurs',
@@ -34,13 +34,13 @@
         ] %}
 
         {% for card in cards %}
-            <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4">
-                <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center">
-                    <h3 class="text-white font-bold">{{ card.title }}</h3>
+            <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4 flex flex-col justify-between dark:text-white forest:text-white">
+                <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center love:bg-[#FB6F92] forest:bg-[#786759]">
+                    <h3 class="text-white font-bold ">{{ card.title }}</h3>
                 </div>
 
-                <p class="py-4">{{ card.count }}</p>
-                <a href="{{ card.path }}" class="bg-blue-500 text-white px-4 py-2 rounded">Voir en détails</a>
+                <p class="py-4 love:text-white">{{ card.count }}</p>
+                <a href="{{ card.path }}" class="bg-blue-500 text-white px-4 py-2 rounded love:bg-[#FB6F92] forest:bg-[#786759]">Voir en détails</a>
             </div>
         {% endfor %}
     </div>
@@ -49,23 +49,23 @@
         {% set userCards = latest_users|slice(0, 5) %}
         {% set entrepriseCards = latest_entreprises|slice(0, 5) %}
 
-        <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4">
-            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center">
-                <h3 class="text-white font-bold">Gestion des utilisateurs : les 5 derniers inscrits</h3>
+        <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4 ">
+            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-[#FB6F92] forest:bg-[#786759]">
+                <h3 class="text-white font-bold dark:text-white" >Gestion des utilisateurs : les 5 derniers inscrits</h3>
             </div>
 
             {% for user in userCards %}
-                <p class="py-4">{{ user.username }} - {{ user.mail }} - {{ user.entreprise.nom }}</p>
+                <p class="py-4 dark:text-white forest:text-white love:text-white ">{{ user.username }} - {{ user.mail }} - {{ user.entreprise.nom }}</p>
             {% endfor %}
         </div>
 
         <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4">
-            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center">
+            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-[#FB6F92] forest:bg-[#786759]">
                 <h3 class="text-white font-bold">Gestion des entreprises : les 5 dernières créées</h3>
             </div>
 
             {% for entreprise in entrepriseCards %}
-                <p class="py-4">{{ entreprise.nom }} - {{ entreprise.email }} - {{ entreprise.ville }}</p>
+                <p class="py-4 dark:text-white forest:text-white love:text-white ">{{ entreprise.nom }} - {{ entreprise.email }} - {{ entreprise.ville }}</p>
             {% endfor %}
         </div>
     </div>

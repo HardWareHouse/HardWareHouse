@@ -36,9 +36,9 @@ company_list: Liste des entreprise
 custumer: Client
 user_list: Liste des utilisateurs
 my_user_list: Liste de mes employés
-company_new: Ajouter une entreprise
-user_new: Ajouter un utilisateur
-my_user_new: Ajouter un employé
+company_new: Nouvelle entreprise
+user_new: Nouvel utilisateur
+my_user_new: Nouvel employé
 no_company: Il n'existe aucune entreprise.
 no_user: Il n'existe aucun utilisateur
 no_my_user: Il n'existe pas d'employé
@@ -66,7 +66,7 @@ new_category: Nouvelle Categorie
 #Client
 client_modification: Modification du client
 client_list: Liste des clients
-add_client: Ajouter un nouveau client
+add_client: Nouveau client
 address: Adresse
 email: Email
 telephone: Téléphone
@@ -82,7 +82,7 @@ estimate_details: Détails du devis
 add: Ajouter
 estimate_edit: Modifier le devis
 estimate_list: Liste des devis
-estimate_new: Créer un nouveau devis
+estimate_new: Nouveau devis
 estimate: Devis
 number: Numéro de devis
 total: Total (€)
@@ -123,7 +123,7 @@ company_details: Détails de l'entreprise
 #Facture
 invoice_modify: Modifier la facture
 invoice_list: Liste des factures
-invoice_new: Ajouter une nouvelle facture
+invoice_new: Nouvelle facture
 duedate: Date de paiement due
 no_invoice: Aucune facture trouvée
 invoice: Facture
@@ -132,13 +132,13 @@ billing_date: Date de facturation
 total_amount: Montant total
 #Paiement
 payment_modify: Modifier le paiement
-payment_new: Ajouter un nouveau paiement
+payment_new: Nouveau paiement
 payment_date: Date et heure de paiement
 no_payment: Il n'existe aucun paiement.
 payment_details: Détails du paiement
 #Product
 product_modify: Modifier le produit
-product_new: Ajouter un nouveau produit
+product_new: Nouveau produit
 stock: Stock
 no_product: Aucun produit trouvé
 product: Produit
