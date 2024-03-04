@@ -108,6 +108,16 @@
         </p>
         {% for message in app.session.flashbag.get('warning') %}
             <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-blue-600">
+                <p class="text-center">{{ message|raw }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('danger') %}
+            <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-blue-600">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.session.flashbag.get('succes') %}
+            <div class="relative w-full p-4 mt-2 text-white rounded-lg bg-blue-600">
                 <p class="text-center">{{ message }}</p>
             </div>
         {% endfor %}
