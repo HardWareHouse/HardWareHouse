@@ -1,6 +1,6 @@
 <form method="post" action="{{ path('app_devis_confirm', {'id': devi.id}) }}" onsubmit="return confirm('Are you sure you want to confim this estimate?');">
     <input type="hidden" name="_token" value="{{ csrf_token('confirm' ~ devi.id) }}">
-    <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700">
+    <button type="submit" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-darkBlue hover:bg-blue-700">
         <i class="fas fa-check mr-2"></i> {{'estimate_confirm'|trans}}
     </button>
 </form>

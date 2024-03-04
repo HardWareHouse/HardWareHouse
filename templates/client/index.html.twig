@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'client_list'|trans}}</h1>
         <a href="{{ path('app_client_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-darkBlue hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
 ">
             <i class="fas fa-plus mr-2"></i> {{'add_client'|trans}}
         </a>
@@ -64,7 +64,7 @@
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-center">
                             <a href="{{ path('app_client_show', {'id': client.id}) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                class="font-medium text-darkBlue dark:text-darkBlue hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ path('app_client_edit', {'id': client.id}) }}"
