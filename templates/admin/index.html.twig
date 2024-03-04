@@ -5,7 +5,7 @@
 {% block content %}
 <div class="flex flex-col items-center text-center justify-around h-screen ml-8 overflow-scroll">
     <div>
-        <h1 class="text-4xl font-semibold my-2 text-blue-500 dark:text-white forest:text-white love:text-[#FFE5EC]">Interface Administrateur</h1>
+        <h1 class="text-4xl font-semibold my-2 text-primaire dark:text-white forest:text-white love:text-[#FFE5EC]">Interface Administrateur</h1>
         <h2 class="dark:text-white forest:text-white love:text-[#FFE5EC]">Votre Dashboard Admin</h2>
     </div>
 
@@ -35,12 +35,14 @@
 
         {% for card in cards %}
             <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4 flex flex-col justify-between dark:text-white forest:text-white">
-                <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center love:bg-[#FB6F92] forest:bg-[#786759]">
+                <div class="bg-primaire w-full h-12 flex items-center text-center justify-center love:bg-darkLove
+ forest:bg-darkBrown">
                     <h3 class="text-white font-bold ">{{ card.title }}</h3>
                 </div>
 
                 <p class="py-4 love:text-white">{{ card.count }}</p>
-                <a href="{{ card.path }}" class="bg-blue-500 text-white px-4 py-2 rounded love:bg-[#FB6F92] forest:bg-[#786759]">Voir en détails</a>
+                <a href="{{ card.path }}" class="bg-primaire text-white px-4 py-2 rounded love:bg-darkLove
+ forest:bg-darkBrown">Voir en détails</a>
             </div>
         {% endfor %}
     </div>
@@ -50,7 +52,8 @@
         {% set entrepriseCards = latest_entreprises|slice(0, 5) %}
 
         <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4 ">
-            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-[#FB6F92] forest:bg-[#786759]">
+            <div class="bg-primaire w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-darkLove
+ forest:bg-darkBrown">
                 <h3 class="text-white font-bold dark:text-white" >Gestion des utilisateurs : les 5 derniers inscrits</h3>
             </div>
 
@@ -60,7 +63,8 @@
         </div>
 
         <div class="border border-gray-300 h-72 w-full md:w-3/4 m-4 overflow-auto">
-            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-[#FB6F92] forest:bg-[#786759]">
+            <div class="bg-primaire w-full h-12 flex items-center text-center justify-center forest:text-white love:bg-darkLove
+ forest:bg-darkBrown">
                 <h3 class="text-white font-bold">Gestion des entreprises : les 5 dernières créées</h3>
             </div>
 

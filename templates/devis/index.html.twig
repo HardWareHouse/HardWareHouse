@@ -9,7 +9,8 @@
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'estimate_list'|trans}}
         </h1>
         <a href="{{ path('app_devis_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primaire hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
+">
             <i class="fas fa-plus mr-2"></i> {{'estimate_new'|trans}}
         </a>
     </div>
@@ -17,19 +18,21 @@
     <div class="overflow-x-auto relative sm:rounded-lg mt-6">
         <table id="devisTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr class="love:bg-[#FB6F92] love:text-[#FFE5EC]">
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white ">{{'number'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white ">{{'created_on'|trans}}</th>
+                <tr class="love:bg-darkLove
+ love:text-[#FFE5EC]">
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white ">{{'number'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white ">{{'created_on'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'the_company'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'custumer'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'status'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'total'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'total_ttc'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'custumer'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'status'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'total'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'total_ttc'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white">{{'actions'|trans}}</th>
                 </tr>
-                <tr class="forest:bg-[#786759] love:bg-[#FB6F92] love:text-[#FFE5EC]">
+                <tr class="forest:bg-darkBrown love:bg-darkLove
+ love:text-[#FFE5EC]">
                     <th><input type="text" placeholder="Numéro du devis..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Date de création..." class="form-control form-control-sm" />
                     </th>
@@ -67,7 +70,7 @@
                                 <i class="bi bi-file-earmark-arrow-down-fill"></i>
                             </a>
                             <a href="{{ path('app_devis_show', {'id': devi.id}) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                class="font-medium text-primaire dark:text-primaire hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ path('app_devis_edit', {'id': devi.id}) }}"
