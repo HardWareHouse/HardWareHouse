@@ -4,13 +4,15 @@
 
 {% block content %}
 
-<div class="w-full dark:bg-[#101827] forest:bg-[#BAACA0] love:bg-[#FFB3C6]">
+<div class="w-full dark:bg-[#101827] forest:bg-lightBrown love:bg-lightLove">
     <div class="text-center mb-8 mt-8">
         <h1 class="text-3xl font-bold text-gray-800 mb-4 dark:text-white forest:text-white love:text-[#FFE5EC]">Détails de mon entreprise</h1>
     </div>
-    <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 forest:bg-[#BAACA0] love:bg-[#FB6F92]">
+    <div class="max-w-2xl mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 forest:bg-lightBrown love:bg-darkLove
+">
         <table class="w-full text-sm text-left text-gray-500 ">
-            <tbody class="bg-white divide-y divide-gray-200 forest:bg-[#BAACA0] love:bg-[#FB6F92]">
+            <tbody class="bg-white divide-y divide-gray-200 forest:bg-lightBrown love:bg-darkLove
+">
                 <tr>
                     {% if entreprise.logo %}
                     <div class="text-center mb-4 love:text-[#FFE5EC]">
@@ -61,7 +63,8 @@
 
     <div class="text-center">
         <a href="{{ path('app_my_entreprise_edit') }}"
-            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
+            class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
+">
             <i class="fas fa-edit mr-2"></i>{{'company_edit'|trans}}
         </a>
     </div>

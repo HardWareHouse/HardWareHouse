@@ -13,6 +13,10 @@ module.exports = {
         tertiaire: "#F4EBD9",
         quaternaire: "#001242",
         grey: "#DCDCDD",
+        darkBrown: "#786759",
+        lightBrown: "#BAACA0",
+        darkLove: "#FB6F92",
+        lightLove: "#FFB3C6"
       },
     },
   },

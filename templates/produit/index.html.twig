@@ -7,7 +7,8 @@
         <div class="flex justify-between items-center">
             <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'products'|trans}}</h1>
             <a href="{{ path('app_produit_new') }}"
-               class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
+               class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
+">
                 <i class="fas fa-plus mr-2"></i> {{'product_new'|trans}}
             </a>
         </div>
@@ -16,17 +17,22 @@
             <table id="produitTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'name'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'description'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-darkLove
+ love:text-[#FFE5EC]">{{'name'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-darkLove
+ love:text-[#FFE5EC]">{{'description'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'the_company'|trans}}</th>
+                        <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-darkLove
+ love:text-[#FFE5EC]">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC] ">{{'price'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'stock'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'created_on'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-darkLove
+ love:text-[#FFE5EC] ">{{'price'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-darkLove
+ love:text-[#FFE5EC]">{{'stock'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'created_on'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-darkBrown forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
                 </tr>
-                <tr class="forest:bg-[#786759] love:bg-[#FB6F92]">
+                <tr class="forest:bg-darkBrown love:bg-[#FB6F92]">
                     <th><input type="text" placeholder="Nom du produit..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Description du produit..." class="form-control form-control-sm" /></th>
                     {% if is_granted('ROLE_ADMIN') %}
