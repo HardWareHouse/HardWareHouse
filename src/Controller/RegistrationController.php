@@ -74,6 +74,33 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    #[Route('/verifyMail/resend/{mail}', name: 'app_resend_verify_email')]
+    public function resendVerifyEmail(Request $request, UserRepository $userRepository): Response
+    {   
+        $mail = $request->attributes->get('mail');
+        if (null === $mail) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_login');
+        }
+        $user = $userRepository->findOneBy(['mail' => $mail]);
+        if (null === $user) {
+            $this->addFlash('danger', 'La requête que vous essayez de faire est illégale !');
+            return $this->redirectToRoute('app_login');
+        }
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('hardwarehouse@outlook.fr', 'HardWareHouse'))
+                    ->to($user->getMail())
+                    ->subject('Veuillez confirmer votre adresse mail')
+                    ->htmlTemplate('emails/registration.html.twig')
+                    ->context([
+                        'username' => $user->getUsername()
+                    ])
+            );
+        $this->addFlash('succes', 'Votre e-mail de confirmation a bien été renvoyé !');
+        return $this->redirectToRoute('app_login');
+    }
+
     #[Route('/{_locale<%app.supported_locales%>}/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {

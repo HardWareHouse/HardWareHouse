@@ -53,8 +53,12 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
     {
         $user = $token->getUser();
         if (!$user->isVerified()) {
+            $mail = $token->getUser()->getMail();
+            $message = 'Veuillez confirmer votre compte en cliquant sur le lien de confirmation que nous vous avons envoyé par e-mail. Si vous souhaitez que nous vous renvoyions nos e-mails de confirmation, veuillez cliquer <a href="' . $this->urlGenerator->generate('app_resend_verify_email', ['mail' => $mail]) . '">ici</a>.';
+
             $this->tokenStorage->setToken(null);
-            $request->getSession()->getFlashBag()->add('warning', 'Veuillez confirmer votre compte en cliquant sur le lien de confirmation que nous vous avons envoyé par e-mail.');
+            $request->getSession()->getFlashBag()->add('warning',$message);
+
             return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
         
