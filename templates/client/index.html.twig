@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mx-auto my-8 p-6">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'client_list'|trans}}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-loveWhite">{{'client_list'|trans}}</h1>
         <a href="{{ path('app_client_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]">
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-darkBlue hover:bg-blue-700 forest:bg-[#786759] love:bg-lovePink">
             <i class="fas fa-plus mr-2"></i> {{'add_client'|trans}}
         </a>
     </div>
@@ -16,18 +16,18 @@
         <table id="clientTable" class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'name'|trans}} et prénom</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'address'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'postcode'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'city'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'name'|trans}} et prénom</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'address'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'postcode'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'city'|trans}}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'the_company'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'the_company'|trans}}</th>
                     {% endif %}
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'email'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'telephone'|trans}}</th>
-                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">{{'actions'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'email'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'telephone'|trans}}</th>
+                    <th scope="col" class="py-3 px-6 forest:bg-[#786759] forest:text-white love:bg-lovePink love:text-loveWhite">{{'actions'|trans}}</th>
                 </tr>
-                <tr class="forest:bg-[#786759] love:bg-[#FB6F92]">
+                <tr class="forest:bg-[#786759] love:bg-lovePink">
                     <th><input type="text" placeholder="Nom et prénom du client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Adresse client..." class="form-control form-control-sm" /></th>
                     <th><input type="text" placeholder="Code postal..." class="form-control form-control-sm" /></th>
@@ -56,7 +56,7 @@
                     <td class="py-4 px-6">
                         <div class="flex items-center justify-center">
                             <a href="{{ path('app_client_show', {'id': client.id}) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                class="font-medium text-darkBlue dark:text-darkBlue hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ path('app_client_edit', {'id': client.id}) }}"

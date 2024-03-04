@@ -15,6 +15,7 @@ module.exports = {
         grey: "#DCDCDD",
         loveWhite: "#FFE5EC",
         lovePink: "#FB6F92",
+        loveLightPink: "#FFB3C6",
       },
     },
   },
