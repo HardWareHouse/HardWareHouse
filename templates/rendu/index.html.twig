@@ -15,7 +15,7 @@
     <h1 class="text-4xl font-bold text-center">Design Guide de HardWareHouse</h1>
     <h3 class="text-center">Nos couleurs</h3>
     <div class="flex w-1/3 mx-auto">
-        <div class="bg-darkBlue w-16 h-16 mx-auto"></div>
+        <div class="bg-primaire w-16 h-16 mx-auto"></div>
         <div class="bg-lightBlue w-16 h-16 mx-auto"></div>
         <div class="bg-darkBlue w-16 h-16 mx-auto"></div>
         <div class="bg-secondaire w-16 h-16 mx-auto"></div>
@@ -26,7 +26,7 @@
         <div class="flex mx-auto w-1/3">
             <div class="mx-auto">
                 <p class="text-center">Petit bouton avec icône</p>
-                <div class="flex text-sm font-medium bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md mx-auto">
+                <div class="flex text-sm font-medium bg-primaire hover:bg-lightBlue w-28 h-10 place-items-center place-content-center rounded-md mx-auto">
                     <ul class="text-white">
                         <li>
                             <a class="dropdown-item" href="#">
@@ -40,16 +40,14 @@
             <div class="mx-auto">
                 <p class="text-center">Grand bouton sans icône</p>
                 <a href="{{ path('app_client_new') }}"
-                    class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
-"> {{'add_client'|trans}}
+                    class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-darkBlue hover:bg-blue-700 forest:bg-[#786759] love:bg-[#FB6F92]"> {{'add_client'|trans}}
                 </a>
             </div>
         </div>
         <p class="text-center">Grand element du dashboard</p>
     <div class="flex flex-col align-center w-1/2 mx-auto justify-center px-6 md:flex-row gap-8 dark:text-white forest:text-white ">
        <div class="border border-gray-300 h-72 w-full my-4 items-center">
-            <div class="bg-darkBlue w-full h-12 flex items-center text-center justify-center forest:bg-darkBrown love:bg-darkLove
-" >
+            <div class="bg-darkBlue w-full h-12 flex items-center text-center justify-center forest:bg-[#786759] love:bg-[#FB6F92]" >
                 <h3 class="text-white font-bold dark:text-white forest:text-white love:text-[#FFE5EC]">{{'revenue'|trans}}</h3>
             </div>
             <h5 class="text-center italic text-sm text-gray-600 pt-5 py-2 dark:text-white love:text-[#FFE5EC]">{{'global'|trans}}</h5>
@@ -76,8 +74,6 @@
 
     <div class="flex flex-col gap-8 w-1/4 mx-auto md:flex-row">
         <div class="border border-gray-300 w-full gap-8 h-72 my-4 md:gap-8 ">
-            <div class="bg-blue-500 w-full h-12 flex items-center text-center justify-center forest:bg-darkBrown love:bg-darkLove
-">
             <div class="bg-darkBlue w-full h-12 flex items-center text-center justify-center forest:bg-[#786759] love:bg-[#FB6F92]">
                 <h3 class="text-white font-bold dark:text-white forest:text-white love:text-[#FFE5EC]">{{'my_invoices'|trans}}</h3>
             </div>

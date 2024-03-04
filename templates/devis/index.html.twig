@@ -9,7 +9,7 @@
         <h1 class="text-2xl font-semibold text-gray-700 dark:text-white forest:text-white love:text-[#FFE5EC]">{{'estimate_list'|trans}}
         </h1>
         <a href="{{ path('app_devis_new') }}"
-            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
+            class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primaire hover:bg-blue-700 forest:bg-darkBrown love:bg-darkLove
 ">
             <i class="fas fa-plus mr-2"></i> {{'estimate_new'|trans}}
         </a>
@@ -70,7 +70,7 @@
                                 <i class="bi bi-file-earmark-arrow-down-fill"></i>
                             </a>
                             <a href="{{ path('app_devis_show', {'id': devi.id}) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                class="font-medium text-primaire dark:text-primaire hover:underline">
                                 <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ path('app_devis_edit', {'id': devi.id}) }}"
