@@ -1,6 +1,6 @@
 {% block body %}
 <div class="dark:bg-blue-600 h-full">
-  <div class="sidebar h-full w-full left-0 p-2 overflow-y-auto text-center bg-[#101827] love:bg-[#FB6F92] forest:bg-[#786759] border-r-2 color-black bottom-0 top-0 md:w-72">
+  <div class="sidebar h-full w-full left-0 overflow-y-auto text-center bg-[#101827] love:bg-[#FB6F92] forest:bg-[#786759] border-r-2 color-black bottom-0 top-0 md:w-72">
     <div class="">
     <div class="text-black text-xl">
       <div class="p-2.5 mt-1 flex items-center w-full">
@@ -54,7 +54,7 @@
           </g>
         </svg>
         <h1 class="font-bold text-white text-[15px] ml-3">HardWareHouse</h1>
-        <i class="bi bi-x cursor-pointer ml-28 text-white" onclick="openSidebar()"></i>
+        <i class="bi bi-x cursor-pointer ml-16 text-white" onclick="openSidebar()"></i>
       </div>
       <div class="my-2 bg-gray-600 h-[1px] forest:bg-[#BAACA0] love:bg-[#FFB3C6]"></div>
     </div>
@@ -179,12 +179,12 @@
 
         <div class="my-4 bg-gray-600 h-[1px] forest:bg-[#BAACA0] love:bg-[#FFB3C6]"></div>
         <div
-          class="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6]">
+          class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6]">
           <i class="bi bi-box-arrow-in-right"></i>
           <a href="{{ path('app_logout') }}"><span class="text-[15px] ml-4 font-bold">{{'logout'|trans}}</span></a>
         </div>
 
-        <div class="flex text-sm font-medium ms-20 mt-10 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md dark:bg-blue-700 forest:bg-[#BAACA0] forest:text-white love:bg-[#FFB3C6]" >
+        <div class="flex text-sm font-medium ms-20 mt-6 bg-darkBlue w-28 h-10 place-items-center place-content-center rounded-md dark:bg-blue-700 forest:bg-[#BAACA0] forest:text-white love:bg-[#FFB3C6]" >
             <ul class="text-white">
               {% if app.request.locale == 'fr' %}
                 <li><a class="dropdown-item" href="{{ path("app_home", {_locale: 'en'}) }}"><span class="fi fi-gb me-1"></span> English</a></li>
@@ -194,17 +194,17 @@
             </ul>
         </div>
       <div class="flex align-center w-full items-stretch justify-around ">
-        <button id="theme-toggle" type="button" class="mt-10 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC] ">
+        <button id="theme-toggle" type="button" class="mt-2 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC] ">
           <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
           <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
         </button>
 
-        <button id="theme-toggle1" type="button" class=" mt-10 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">
+        <button id="theme-toggle1" type="button" class=" mt-2 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">
           <i id="theme-toggle-forest-icon" class="bi bi-tree-fill"></i>
           <svg id="theme-toggle-light-icon1" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
         </button>
 
-        <button id="theme-toggle2" type="button" class=" mt-10 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] dark:hover:bg-gray-700 focus:outline-none focus:ring-4 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">
+        <button id="theme-toggle2" type="button" class=" mt-2 text-gray-500 dark:text-white hover:bg-blue-600 dark:hover:bg-blue-600 forest:hover:bg-[#BAACA0] love:hover:bg-[#FFB3C6] dark:hover:bg-gray-700 focus:outline-none focus:ring-4 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 text-white love:bg-[#FB6F92] love:text-[#FFE5EC]">
           <i id="theme-toggle-love-icon" class="bi bi-arrow-through-heart-fill"></i>
           <svg id="theme-toggle-light-icon2" class="hidden w-5 h-5 color-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
