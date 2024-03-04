@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
+const plugin = require("tailwindcss/plugin");
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: ["./assets/**/*.js", "./templates/**/*.html.twig"],
   theme: {
     extend: {
@@ -13,23 +13,25 @@ module.exports = {
         tertiaire: "#F4EBD9",
         quaternaire: "#001242",
         grey: "#DCDCDD",
+        loveWhite: "#FFE5EC",
+        lovePink: "#FB6F92",
       },
     },
   },
-    plugins: [
-      plugin(function({ addVariant, e }) {
-        addVariant('forest', ({ modifySelectors, separator }) => {
-          modifySelectors(({ className }) => {
-            return `.forest .${e(`forest${separator}${className}`)}`;
-          });
+  plugins: [
+    plugin(function ({ addVariant, e }) {
+      addVariant("forest", ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.forest .${e(`forest${separator}${className}`)}`;
         });
-      }),
-      plugin(function({ addVariant, e }) {
-        addVariant('love', ({ modifySelectors, separator }) => {
-          modifySelectors(({ className }) => {
-            return `.love .${e(`love${separator}${className}`)}`;
-          });
+      });
+    }),
+    plugin(function ({ addVariant, e }) {
+      addVariant("love", ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.love .${e(`love${separator}${className}`)}`;
         });
-      }),
-    ],
-  };
+      });
+    }),
+  ],
+};
